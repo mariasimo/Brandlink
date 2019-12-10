@@ -11,7 +11,7 @@ const bcryptSalt = 10;
 const salt = bcrypt.genSaltSync(bcryptSalt);
 
 router.post("/signup", (req, res, next) => {
-  const { username, password, picture } = req.body;
+  const { username, password } = req.body;
 
   if (!username || !password) {
     res.status(400).json({ message: "Provide username and password" });
@@ -42,8 +42,7 @@ router.post("/signup", (req, res, next) => {
 
     const newUser = new User({
       username: username,
-      password: hashPass,
-      picture
+      password: hashPass
     });
 
     newUser.save(err => {

@@ -24,7 +24,9 @@ export default class Signup extends React.Component {
         .then(
           (user) => {
             setUser(user);
-            history.push("/")
+
+            // todo This should redirect me to the admin panel
+            history.push(`/panel/${user.username}`)
           },
           (error) => {
             console.error(error)
