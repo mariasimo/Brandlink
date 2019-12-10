@@ -13,7 +13,9 @@ const salt = bcrypt.genSaltSync(bcryptSalt);
 router.post("/signup", (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password || password.length === 0 || username.length === 0) {
+  console.log(req.body)
+
+  if (!username || !password ) {
     return res.status(400).json({ message: "Provide username and password" });
   }
 
@@ -112,13 +114,13 @@ router.get("/loggedin", (req, res, next) => {
 });
 
 
-router.post("/edit/:id", (req, res, next) => {
+router.put("/edit/:id", (req, res, next) => {
   const { id } = req.params;
   User.findByIdAndUpdate(
     id,
     {
       username: req.body.username,
-      password: bcrypt.hashSync(req.body.password, salt)
+      picture : req.body.picture
     },
     { new: true }
   ).then(userUpdated => {
@@ -126,6 +128,7 @@ router.post("/edit/:id", (req, res, next) => {
   })
   .catch(err => res.json(err))
 });
+
 
 router.post('/upload', uploader.single('picture'), (req, res) => {
   if(req.file){

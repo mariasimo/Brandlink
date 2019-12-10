@@ -10,6 +10,7 @@ import PrivateRoute from './guards/PrivateRoute';
 import { LandingPage } from './components/landingPage/LandingPage';
 import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login/Login';
+import Profile from './components/auth/profile/Profile';
 
 
 export default class App extends React.Component {
@@ -31,20 +32,27 @@ export default class App extends React.Component {
         .then(
           (user) => {
             this.setUser(user)
-            console.log({message: "User set", user})
           },
           (error) => {
             this.setUser(false)
-            console.log({message: "User set error", error})
           }
         )
         .catch((error) => {
           this.setUser(false)
-          console.log({message: "User set error", error})
-
         })
     }
   }
+
+  logout = () => {
+    this.authService
+      .logout()
+      .then(payload => {
+        this.setState({...this.state, user : null})
+
+      })
+      .catch(err => console.log(err));
+  };
+
 
 
   componentDidMount() {
@@ -59,7 +67,7 @@ export default class App extends React.Component {
       <div className="App">
         {/* The navbar has to pass the username to the profile menu link */}
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
-        <Navbar user={user}></Navbar>
+        <Navbar user={user} logout={this.logout}></Navbar>
         <div className="section is-medium">
           <Switch>
             <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
@@ -67,7 +75,10 @@ export default class App extends React.Component {
             <Route exact path="/" component={LandingPage} />
 
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
-            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/" component={ProjectList} />
+            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/login" component={ProjectList} />
+            {/* <PrivateRoute exact path="/project/" user={user} redirectPath="/" component={Profile} /> */}
+            <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
+
           </Switch>
         </div>
         

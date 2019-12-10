@@ -8,15 +8,6 @@ export default class Navbar extends Component {
     this.authService = new AuthService();
   }
 
-  logout = () => {
-    this.authService
-      .logout()
-      .then(payload => {
-        console.log(payload);
-      })
-      .catch(err => console.log(err));
-  };
-
   render() {
     const user = this.props.user;
 
@@ -47,10 +38,10 @@ export default class Navbar extends Component {
               )}
               {user && (
                 <React.Fragment>
-                  <Link to="/profile" className="navbar-item">
+                  <Link to={`/profile/${user.id}`} className="navbar-item">
                     Hi, {user.username}
                   </Link>
-                  <Link to="/" onClick={this.logout} className="button is-rounded">
+                  <Link to="/" onClick={(e) => this.props.logout(e)} className="button is-rounded">
                     Logout
                   </Link>
                 </React.Fragment>
