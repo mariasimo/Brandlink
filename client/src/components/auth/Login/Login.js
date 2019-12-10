@@ -1,5 +1,6 @@
 import React from 'react'
 import AuthService from '../../../services/AuthService';
+import Hero from '../../layout/Hero';
 
 export default class Login extends React.Component {
     constructor(props){
@@ -39,13 +40,14 @@ export default class Login extends React.Component {
         return (
             <div>
                 {/* todo Here goes another component for the left para of the screen */}
+                <Hero></Hero>
                 <form onSubmit={this.handleFormSubmit}>
                     <label htmlFor="username">Username:</label>
                     <input type="text" name="username" id="username" value={username} onChange={this.handleChange}/>
                     <label htmlFor="password">Password:</label>
                     <input type="password" name="password" id="password" value={password} onChange={this.handleChange}/>
 
-                    <input type="submit" value="Create account"/>
+                    <input type="submit" value="Log in"/>
                 </form>
             </div>
         )

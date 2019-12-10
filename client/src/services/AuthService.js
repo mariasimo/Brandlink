@@ -22,12 +22,23 @@ class AuthService {
 
   loggedInUser = () => {
     return this.instance.get('/loggedin')
-    .then(res => Promise.resolve(res.data))
-    .catch(error => console.error(error))
+    .then(res => {
+      Promise.resolve(res.data)
+    })
+    .catch(
+      error => {
+        console.error({message:error})
+    })
   }
 
   upload = (picture) => {
     return this.instance.post('/upload', picture)
+    .then(res => Promise.resolve(res.data))
+    .catch(error => console.error(error))
+  }
+
+  logout = () => {
+    return this.instance.post('/logout')
     .then(res => Promise.resolve(res.data))
     .catch(error => console.error(error))
   }

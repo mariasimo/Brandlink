@@ -30,13 +30,17 @@ export default class App extends React.Component {
         .then(
           (user) => {
             this.setUser(user)
+            console.log({message: "User set", user})
           },
           (error) => {
             this.setUser(false)
+            console.log({message: "User set error", error})
           }
         )
-        .catch(() => {
+        .catch((error) => {
           this.setUser(false)
+          console.log({message: "User set error", error})
+
         })
     }
   }
@@ -52,19 +56,19 @@ export default class App extends React.Component {
 
     return (
       <div className="App">
-        <Navbar></Navbar>
+        {/* The navbar has to pass the username to the profile menu link */}
+        {/* I need to pass match (the props) so I cant redirect to home after logout*/}
+        <Navbar user={user} ></Navbar>
+
         <Switch>
           <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
           <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
           <Route exact path="/" component={LandingPage} />
 
           {/* This is a private route, as you have to be loggedin to access your admin panel */}
-          {/* Should this path contain the user username? How can i achieve this?*/}
-          {/* <Route exact path="/" render={() => <ProjectList user={this.state.user}></ProjectList>}/> */}
-          {/* <PrivateRoute exact path="" user={this.state.user} component={ProjectList} /> */}
-
-          <PrivateRoute exact path="/panel/:username" user={this.state.user} component={ProjectList} />
+          <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/" component={ProjectList} />
         </Switch>
+        
       </div>
     );
   }

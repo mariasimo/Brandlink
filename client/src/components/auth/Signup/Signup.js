@@ -1,5 +1,6 @@
 import React from 'react'
 import AuthService from '../../../services/AuthService'
+import Hero from '../../layout/Hero';
 
 export default class Signup extends React.Component {
     constructor(props){
@@ -39,6 +40,7 @@ export default class Signup extends React.Component {
         const { username, password } = this.state;
         return (
             <div>
+                <Hero></Hero>
                 <form onSubmit={this.handleFormSubmit}>
                     <label htmlFor="username">Username:</label>
                     <input type="text" name="username" id="username" value={username} onChange={this.handleChange}/>
