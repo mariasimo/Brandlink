@@ -8,6 +8,7 @@ import ProjectList from './components/project/ProjectList';
 import PrivateRoute from './guards/PrivateRoute';
 import { LandingPage } from './components/landingPage/LandingPage';
 import Navbar from './components/navbar/Navbar';
+import Login from './components/auth/Login/Login';
 
 
 export default class App extends React.Component {
@@ -53,6 +54,7 @@ export default class App extends React.Component {
       <div className="App">
         <Navbar></Navbar>
         <Switch>
+          <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
           <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
           <Route exact path="/" component={LandingPage} />
 
