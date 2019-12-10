@@ -14,13 +14,25 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item">
+          {!user && (
+            <Link to="/" className="navbar-item">
             <img
               src="../../../logo.svg"
               height="24"
               alt="BrandLink"
             ></img>
           </Link>
+          )}
+
+          {user && (
+            <Link to={`/panel/${user.username}`} className="navbar-item">
+            <img
+              src="../../../logo.svg"
+              height="24"
+              alt="BrandLink"
+            ></img>
+          </Link>
+          )}
         </div>
         
         <div className="navbar-end">
@@ -38,12 +50,18 @@ export default class Navbar extends Component {
               )}
               {user && (
                 <React.Fragment>
+                   <Link to={`/panel/${user.username}`} className="navbar-item">
+                    Admin Panel
+                  </Link>
+
                   <Link to={`/profile/${user.id}`} className="navbar-item">
                     Hi, {user.username}
                   </Link>
+
                   <Link to="/" onClick={(e) => this.props.logout(e)} className="button is-rounded">
                     Logout
                   </Link>
+                  
                 </React.Fragment>
               )}
             </div>
