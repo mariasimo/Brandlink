@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+
 
 import { Switch, Route } from 'react-router-dom';
 import AuthService from './services/AuthService'
@@ -7,7 +8,7 @@ import Signup from './components/auth/Signup/Signup';
 import ProjectList from './components/project/ProjectList';
 import PrivateRoute from './guards/PrivateRoute';
 import { LandingPage } from './components/landingPage/LandingPage';
-import Navbar from './components/navbar/Navbar';
+import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login/Login';
 
 
@@ -58,16 +59,17 @@ export default class App extends React.Component {
       <div className="App">
         {/* The navbar has to pass the username to the profile menu link */}
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
-        <Navbar user={user} ></Navbar>
+        <Navbar user={user}></Navbar>
+        <div className="section">
+          <Switch>
+            <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
+            <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
+            <Route exact path="/" component={LandingPage} />
 
-        <Switch>
-          <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
-          <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
-          <Route exact path="/" component={LandingPage} />
-
-          {/* This is a private route, as you have to be loggedin to access your admin panel */}
-          <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/" component={ProjectList} />
-        </Switch>
+            {/* This is a private route, as you have to be loggedin to access your admin panel */}
+            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/" component={ProjectList} />
+          </Switch>
+        </div>
         
       </div>
     );

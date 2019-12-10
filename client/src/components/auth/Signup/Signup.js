@@ -39,16 +39,22 @@ export default class Signup extends React.Component {
     render() {
         const { username, password } = this.state;
         return (
-            <div>
-                <Hero></Hero>
-                <form onSubmit={this.handleFormSubmit}>
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" name="username" id="username" value={username} onChange={this.handleChange}/>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" name="password" id="password" value={password} onChange={this.handleChange}/>
+            <div className="container columns">
+                <div className="column is-half">
+                    {/* todo Here goes another component for the left para of the screen */}
+                    <Hero></Hero>
+                </div>
 
-                    <input type="submit" value="Create account"/>
-                </form>
+                <div className="column is-half">
+                    <form onSubmit={this.handleFormSubmit}>
+                        <label htmlFor="username">Username:</label>
+                        <input type="text" name="username" id="username" value={username} onChange={this.handleChange}/>
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" name="password" id="password" value={password} onChange={this.handleChange}/>
+
+                        <input type="submit" value="Create account"/>
+                    </form>
+                </div>
             </div>
         )
     }

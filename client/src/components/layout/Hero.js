@@ -4,7 +4,7 @@ export default class Hero extends Component {
     render() {
         return (
             <div>
-                <h2>Brand & tagline Main page</h2>
+                <h2 className="title is-1">Brand & tagline<br></br> Main page</h2>
             </div>
         )
     }
