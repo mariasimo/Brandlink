@@ -60,7 +60,7 @@ export default class App extends React.Component {
         {/* The navbar has to pass the username to the profile menu link */}
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
         <Navbar user={user}></Navbar>
-        <div className="section">
+        <div className="section is-medium">
           <Switch>
             <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
             <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />

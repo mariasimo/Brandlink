@@ -10,6 +10,7 @@
 // $brown: #757763;
 // $beige-light: #d0d1cd;
 // $beige-lighter: #eff0eb;
+$blue: #3C5AC3;
 
 // // Update Bulma's global variables
 // $family-sans-serif: 'Nunito', sans-serif;
@@ -25,10 +26,15 @@
 // $control-border-width: 2px;
 // $input-border-color: transparent;
 // $input-shadow: none;
+$is-primary: $blue;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";
 
+
+#root, .App, body, html {
+    height: 100%;
+}
 
 .navbar-brand{
     h1{
@@ -36,7 +42,12 @@
     }
 }
 
-.form-container{
-    border: 1px solid gray;
+.hero{
     padding: 2rem 3rem;
+}
+
+.form-container{
+    border: 1px solid $grey-light;
+    padding: 2rem 3rem;
+    border-radius: 4px;
 }

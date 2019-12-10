@@ -5,7 +5,6 @@ export default function PrivateRoute({component: Component, user, redirectPath, 
  
    <Route {...rest} render={(props) => {
     {if(user) {
-      console.log(redirectPath)
       return <Component loggedInUser={user} {...props}/>
      } else {
        return <Redirect to={{pathname: redirectPath}}/>

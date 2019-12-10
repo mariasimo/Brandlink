@@ -24,27 +24,14 @@ export default class Navbar extends Component {
       <nav className="navbar">
         <div className="navbar-brand">
           <Link to="/" className="navbar-item">
-            <h1>BrandLink</h1>
-            {/* <img
-              src=""
-              width="112"
-              height="28"
+            <img
+              src="../../../logo.svg"
+              height="24"
               alt="BrandLink"
-            ></img> */}
+            ></img>
           </Link>
-
-          <a
-            role="button"
-            className="navbar-burger burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
         </div>
+        
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">

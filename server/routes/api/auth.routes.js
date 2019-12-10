@@ -13,9 +13,8 @@ const salt = bcrypt.genSaltSync(bcryptSalt);
 router.post("/signup", (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    res.status(400).json({ message: "Provide username and password" });
-    return;
+  if (!username || !password || password.length === 0 || username.length === 0) {
+    return res.status(400).json({ message: "Provide username and password" });
   }
 
   if (password.length < 2) {

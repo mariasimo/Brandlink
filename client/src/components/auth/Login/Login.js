@@ -43,7 +43,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className="column is-half form-container">
-          <h3 class="title">Login</h3>
+          <h3 className="title">Login</h3>
           <form onSubmit={this.handleFormSubmit}>
             <div className="field">
               <label className="label" htmlFor="username">
@@ -51,7 +51,7 @@ export default class Login extends React.Component {
               </label>
               <div className="control">
                 <input
-                  class="input"
+                  className="input"
                   type="text"
                   name="username"
                   id="username"
@@ -76,8 +76,8 @@ export default class Login extends React.Component {
               </div>
             </div>
 
-            <div class="control">
-              <input type="submit" class="button is-link" value="Log in"></input>
+            <div className="control">
+              <input type="submit" className="button is-link" value="Log in"></input>
             </div>
           </form>
         </div>
