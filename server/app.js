@@ -10,11 +10,12 @@ const path         = require('path');
 const session    = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
+
 const cors = require('cors');
 
 require('./configs/db.config')
 require('./configs/passport.config')
-// require('./config/cloudinary.config')
+require('./configs/cloudinary.config')
 
 
 const app_name = require('./package.json').name;
