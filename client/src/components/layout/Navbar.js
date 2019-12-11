@@ -55,6 +55,7 @@ export default class Navbar extends Component {
                   </Link>
 
                   <Link to={`/profile/${user.id}`} className="navbar-item">
+                    <div className="is-rounded profile-picture" style={{backgroundImage: `url(${user.picture})`}}></div>
                     Hi, {user.username}
                   </Link>
 
