@@ -68,18 +68,31 @@ export default class App extends React.Component {
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
         <Navbar user={user} logout={this.logout}></Navbar>
         <div className="section is-medium">
-          <Switch>
+         
+          {user && <Switch>
+            <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
+            <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
+            <Route exact path="/" component={LandingPage} />
+            
+            {/* This is a private route, as you have to be loggedin to access your admin panel */}
+            <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
+            <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList} />
+            <PrivateRoute exact path="/project/new" user={user}  component={NewProject}/>
+
+          </Switch> }
+
+          {!user && <Switch>
             <Route exact path="/login" render={(match) => <Login {...match} setUser={this.setUser} />} />
             <Route exact path="/signup" render={(match) => <Signup {...match} setUser={this.setUser} />} />
             <Route exact path="/" component={LandingPage} />
 
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
-            <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
+            {/* <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
+            <PrivateRoute exact path="/panel/:username" user={user}  redirectPath="/login" component={ProjectList} />
+            <PrivateRoute exact path="/project/new" user={user}  redirectPath="/login" component={NewProject}/> */}
 
-            <PrivateRoute exact path="/panel/:username" user={user} component={ProjectList} />
-            <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
+          </Switch> }
 
-          </Switch>
         </div>
         
       </div>
