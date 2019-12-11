@@ -5,7 +5,7 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 2 },
   picture: { type: String, default: 'https://i.stack.imgur.com/l60Hf.png' },
-  projects: [{type: Schema.Types.ObjectId, ref: "Projects"}],
+  projects: [{type: Schema.Types.ObjectId, ref: "Project"}],
 }, {
   timestamps: true,
   toJSON: {
