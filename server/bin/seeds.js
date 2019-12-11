@@ -74,6 +74,14 @@ const users = [
 //   }
 ];
 
+//   Hash password before insert in db
+users.map(user => {
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(user.password, salt);
+
+  user.password = hashPass;
+})
+
 let projectsArr = [];
 
 
