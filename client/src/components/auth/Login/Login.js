@@ -8,7 +8,8 @@ export default class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      picture: ""
+      picture: "",
+      projects: []
     };
     this.authService = new AuthService();
   }
@@ -20,8 +21,9 @@ export default class Login extends React.Component {
 
   handleFormSubmit = e => {
     e.preventDefault();
+    const {username, password} = this.state
     const { history, setUser } = this.props;
-    this.authService.login(this.state).then(
+    this.authService.login({username, password}).then(
       user => {
         setUser(user);
         // todo This should redirect me to the admin panel

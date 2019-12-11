@@ -1,8 +1,7 @@
 @charset "utf-8";
 
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,900&display=swap');
-
+@import url("https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,900&display=swap");
 
 // // Set your brand colors
 // $purple: #8a4d76;
@@ -10,7 +9,7 @@
 // $brown: #757763;
 // $beige-light: #d0d1cd;
 // $beige-lighter: #eff0eb;
-$blue: #3C5AC3;
+$blue: #3c5ac3;
 
 // // Update Bulma's global variables
 // $family-sans-serif: 'Nunito', sans-serif;
@@ -26,37 +25,69 @@ $blue: #3C5AC3;
 // $control-border-width: 2px;
 // $input-border-color: transparent;
 // $input-shadow: none;
+$primary: $blue;
 $is-primary: $blue;
+$has-text-primary: $blue;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";
 
-
-#root, .App, body, html {
-    height: 100%;
+#root,
+.App,
+body,
+html {
+  // height: 100%;
 }
 
-.navbar-brand{
-    h1{
-        font-weight: 900;
-    }
+.navbar-brand {
+  h1 {
+    font-weight: 900;
+  }
 }
 
-.hero{
-    padding: 2rem 3rem;
+.hero {
+  padding: 2rem 3rem;
 }
 
-.form-container{
-    border: 1px solid $grey-light;
-    padding: 2rem 3rem;
-    border-radius: 4px;
+.form-container {
+  border: 1px solid $grey-light;
+  padding: 2rem 3rem;
+  border-radius: 4px;
 }
 
-.profile-picture{
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: 50%;
-    background-repeat: no-repeat;
+.profile-picture {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.projects-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.project-card {
+  width: 45%;
+  min-width: 10rem;
+  min-height: 10rem;
+  border: 1px solid $grey-light;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem;
+
+  .title{
+    margin-bottom: 1rem
+  }
+
+  .button {
+    margin-right: 0.5rem;
+  }
+}
+
+.project-presets-list{
+  li{
+    margin-bottom: 1.5em
+  }
 }

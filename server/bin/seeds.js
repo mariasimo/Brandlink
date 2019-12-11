@@ -14,19 +14,19 @@ require("../configs/db.config");
 const projects = [
   {
     title: "Projecto 1",
-    path: "/proyecto-uno"
+    path: "proyecto-uno"
   },
   {
     title: "Projecto 2",
-    path: "/proyecto-dos"
+    path: "proyecto-dos"
   },
   {
     title: "Projecto 3",
-    path: "/proyecto-tres"
+    path: "proyecto-tres"
   },
   {
     title: "Projecto 4",
-    path: "/proyecto-cuatro"
+    path: "proyecto-cuatro"
   }
 ];
 
@@ -106,7 +106,6 @@ Projects.deleteMany()
     let projectsForUser;
 
     usersCreated.forEach(user => {
-
         // This assing two projects form original array to every user
         projectsArr = projectsArr.sort(() => 0.5 - Math.random())
         projectsForUser = projectsArr.slice(0, 2)

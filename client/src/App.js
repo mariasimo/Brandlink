@@ -11,6 +11,7 @@ import { LandingPage } from './components/landingPage/LandingPage';
 import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login/Login';
 import Profile from './components/auth/profile/Profile';
+import CreateNewProject from './components/project/CreateNewProject';
 
 
 export default class App extends React.Component {
@@ -75,9 +76,10 @@ export default class App extends React.Component {
             <Route exact path="/" component={LandingPage} />
 
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
-            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/login" component={ProjectList} />
-            {/* <PrivateRoute exact path="/project/" user={user} redirectPath="/" component={Profile} /> */}
             <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
+
+            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/login" component={ProjectList} />
+            <PrivateRoute exact path="/project/new" user={user} redirectPath="/login" component={CreateNewProject}/>
 
           </Switch>
         </div>

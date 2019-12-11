@@ -1,26 +1,62 @@
-import React from 'react'
+import React from "react";
+import ProjectService from "../../services/ProjectService";
+import { Switch, Route, Link } from "react-router-dom";
+import Project from "./Project";
 
 export default class ProjectList extends React.Component {
-    constructor(props){
-        super(props)
+  constructor(props) {
+    super(props);
+    this.projectService = new ProjectService();
+    this.state = {
+      projects: null
+    };
+  }
 
-        //todo update this state later on with the new data
-        this.state = {
-            title: "",
-            path: " "
-        }
-    }
+  componentDidMount() {
+    this.updateProjects();
+  }
 
+  updateProjects = () => {
+    this.projectService.fetchProjects().then(
+      projects => {
+        this.setState({ ...this.state, projects });
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  };
 
+  render() {
+    const username = this.props.loggedInUser.username;
+    const { projects } = this.state;
 
-    render() {
-        const username = this.props.loggedInUser.username
-
-        return (
-            <div>
-                Hola, {username}
-                
+    return (
+      <div>
+        <section className="section">
+          <div className="container columns">
+            <div className="column is-third">
+              <div className="hero">
+                  <h2 className="title is-1">All Projects</h2>
+              </div>
             </div>
-        )
-    }
+            <div className="column is-two-thirds projects-wrapper">
+
+              {projects &&
+                projects.map(project => (
+                  <Project key={project.id} project={project}></Project>
+                ))}
+
+              {(projects === null || projects === [] || !projects) && (
+                <div>You dont have any projects yet</div>
+              )}
+
+              <Link to="/project/new" className="project-card">Create new project</Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 }

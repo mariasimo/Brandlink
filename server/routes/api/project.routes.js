@@ -2,20 +2,22 @@ const express = require('express');
 const router = express.Router();
 
 const Project = require('../../models/Project')
+const User = require('../../models/User')
 
 router.get('/', (req, res, next) => {
-    Project.find()
-    .then(projects => {
-      res.status(200).json(projects)
-    })
-    .catch(error => {
-      res.status(500).json({message: 'Something went wrong'})
-    })
+
+  User.findById(req.user._id).select("projects").populate('projects')
+  .then(userProjects => {
+    res.status(200).json(userProjects.projects)
+  })
+  .catch(error => {
+    res.status(500).json({message: 'Something went wrong'})
+  })
+
 })
 
 router.post('/new', (req, res, next) => {
     const { title, path } = req.body;
-  
     Project.findOne({path})
     .then(haveFoundPath => {
 
