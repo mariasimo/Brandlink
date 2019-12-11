@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class CreateNewProject extends React.Component {
+export default class NewProject extends React.Component {
   render() {
     return (
       <div>
@@ -12,24 +12,44 @@ export default class CreateNewProject extends React.Component {
                 <h2 className="title is-1">New Project</h2>
 
                 <form>
-                    {/* <label>Title:</label>
-                    <input
-                      type="text"
-                      name="name"
-                      onChange={this.handleChange}
-                      value={name}
-                      placeholder
-                    />
-                    <label htmlFor="description">Description:</label>{" "}
-                    <input
-                      type="text"
-                      name="description"
-                      onChange={this.handleChange}
-                      value={description}
-                    />
+                  <div className="field">
+                    <label htmlFor="title" className="label">
+                      Title:
+                    </label>
                     <div className="control">
-                        <input type="submit" className="button is-link" value="Start Project"></input>
-                    </div> */}
+                      <input
+                        type="text"
+                        name="title"
+                        className="input"
+                        // value={name}
+                        placeholder="Introduce the title for your project"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <label htmlFor="path" className="label">
+                      Path:
+                    </label>
+                    <div className="control">
+                      <input
+                        type="text"
+                        name="title"
+                        className="input"
+                        // value={name}
+                        placeholder="Introduce the title for your project"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="control">
+                      <input
+                        type="submit"
+                        className="button is-link"
+                        value="Start project"
+                      ></input>
+                    </div>
+
                 </form>
 
                 {/* <ul className="project-presets-list">

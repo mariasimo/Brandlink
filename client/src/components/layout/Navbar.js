@@ -58,7 +58,7 @@ export default class Navbar extends Component {
                     Hi, {user.username}
                   </Link>
 
-                  <Link to="/" onClick={(e) => this.props.logout(e)} className="button is-rounded">
+                  <Link to="/" onClick={(e) => this.props.logout()} className="button is-rounded">
                     Logout
                   </Link>
                   

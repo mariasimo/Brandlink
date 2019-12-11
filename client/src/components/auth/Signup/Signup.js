@@ -23,7 +23,6 @@ export default class Signup extends React.Component {
     const { history, setUser } = this.props;
     this.authService.signup(this.state)
     .then(user => {
-        console.log("User"+user);
         setUser(user);
         // todo This should redirect me to the admin panel
         history.push(`/panel/${user.username}`);

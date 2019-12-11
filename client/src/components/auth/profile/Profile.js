@@ -29,7 +29,6 @@ export default class Profile extends React.Component {
         console.error(error)
       }
     ).then(() => {
-        console.log(user.id, this.state)
         return this.authService.edit(user.id, this.state)
     })
     .then(userUdated => console.log(userUdated))

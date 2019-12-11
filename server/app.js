@@ -14,7 +14,7 @@ const passport = require('passport');
 const cors = require('cors');
 
 require('./configs/db.config')
-require('./configs/passport.config')
+// require('./configs/passport.config')
 require('./configs/cloudinary.config')
 
 
@@ -30,21 +30,28 @@ app.use(cookieParser());
 
 // Enable authentication using session + passport
 app.use(session({
-  secret: 'irongenerator',
-  resave: true,
+  secret: 'Todo-app',
+  resave: false,
   saveUninitialized: true,
-  store: new MongoStore( { mongooseConnection: mongoose.connection })
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 1000
+  },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60
+  })
 }))
 
-// Add cors
+require('./passport')(app);
+
+
 app.use(cors({
   credentials: true,
   origin: ['http://localhost:3000']
 }));
-    
-// USE passport.initialize() and passport.session() HERE:
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));

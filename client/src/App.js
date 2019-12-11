@@ -11,7 +11,7 @@ import { LandingPage } from './components/landingPage/LandingPage';
 import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login/Login';
 import Profile from './components/auth/profile/Profile';
-import CreateNewProject from './components/project/CreateNewProject';
+import NewProject from './components/project/NewProject';
 
 
 export default class App extends React.Component {
@@ -28,12 +28,10 @@ export default class App extends React.Component {
   }
 
   fetchUser = () => {
-    console.log("Fetch user")
     if (this.state.user === null) {
       this.authService.loggedInUser()
         .then(
-          (user) => {
-            console.log("LoggedInUser: " + user)
+          (user) => {            
             this.setUser(user)
           },
           (error) => {
@@ -55,14 +53,13 @@ export default class App extends React.Component {
       .catch(err => console.log(err));
   };
 
-
-
   componentDidMount() {
+
     this.fetchUser()
   }
 
   render () {
-    // this.fetchUser()
+    this.fetchUser()
     const { user } = this.state;
 
     return (
@@ -79,8 +76,8 @@ export default class App extends React.Component {
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
             <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
 
-            <PrivateRoute exact path="/panel/:username" user={user} redirectPath="/login" component={ProjectList} />
-            <PrivateRoute exact path="/project/new" user={user} redirectPath="/login" component={CreateNewProject}/>
+            <PrivateRoute exact path="/panel/:username" user={user} component={ProjectList} />
+            <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
 
           </Switch>
         </div>

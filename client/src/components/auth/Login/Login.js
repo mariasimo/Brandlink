@@ -19,14 +19,15 @@ export default class Login extends React.Component {
     this.setState({ ...this.state, [name]: value });
   };
 
-  handleFormSubmit = e => {
+  handleLogin = e => {
     e.preventDefault();
     const {username, password} = this.state
+
     const { history, setUser } = this.props;
-    this.authService.login({username, password}).then(
+    this.authService.login(this.state).then(
       user => {
-        console.log(user)
         setUser(user);
+        
         // todo This should redirect me to the admin panel
         history.push(`/panel/${user.username}`);
       },
@@ -47,7 +48,7 @@ export default class Login extends React.Component {
 
         <div className="column is-half form-container">
           <h3 className="title">Login</h3>
-          <form onSubmit={this.handleFormSubmit}>
+          <form onSubmit={this.handleLogin}>
             <div className="field">
               <label className="label" htmlFor="username">
                 Username:

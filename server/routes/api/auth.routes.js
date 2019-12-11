@@ -13,8 +13,6 @@ const salt = bcrypt.genSaltSync(bcryptSalt);
 router.post("/signup", (req, res, next) => {
   const { username, password } = req.body;
 
-  console.log(req.body)
-
   if (!username || !password ) {
     return res.status(400).json({ message: "Provide username and password" });
   }
@@ -106,9 +104,7 @@ router.post("/logout", (req, res, next) => {
 
 router.get("/loggedin", (req, res, next) => {
   // req.isAuthenticated() is defined by passport
-  console.log("Back route logged in: "+req.user)
   if (req.isAuthenticated()) {
-    console.log(req.user)
     res.status(200).json(req.user);
     return;
   }
