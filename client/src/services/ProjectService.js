@@ -27,7 +27,11 @@ class ProjectService {
     .catch(error => console.error(error))
   }
 
-
+  deleteProject = (projectId) => {
+    return this.instance.delete(`/${projectId}`)
+    .then(res => Promise.resolve(res.data))
+    .catch(error => console.error(error))
+  }
 }
 
 export default ProjectService

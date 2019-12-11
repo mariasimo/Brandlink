@@ -22,12 +22,15 @@ export default class NewProject extends React.Component {
 
   handleSubmit = (e) => {
     const { title, path } = this.state;
-    const userId = this.props.loggedInUser.id
+    const user = this.props.loggedInUser
+    const { history } = this.props;
     e.preventDefault();
-    this.projectService.createProject({title, path}, userId)
+    this.projectService.createProject({title, path}, user._id)
       .then(
         () => {
           this.setState({...this.state, title: '', path: ''})
+          history.push(`/panel/${user.username}`);
+
         },
         (error) => console.error(error))
   }

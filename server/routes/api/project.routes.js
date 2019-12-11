@@ -33,20 +33,41 @@ router.post("/new", (req, res, next) => {
       colorPalette: null
     });
 
-    console.log(newProject)
-
     newProject
       .save()
       .then(projectSaved => {
         return User.findByIdAndUpdate(id, {
           $push: { projects: projectSaved._id }
-        })
+        });
       })
       .then(projectSaved => {
         res.status(200).json(projectSaved);
       })
       .catch(error => {
         res.status(500).json({ message: "Error saving new Project" });
+      });
+  });
+});
+
+router.delete("/:id", (req, res, next) => {
+  const { id } = req.params;
+  const UserId = req.user._id;
+
+  Project.findByIdAndDelete(id).then(deletedProject => {
+    User.findByIdAndUpdate(UserId, {
+      $pull: { projects: deletedProject._id }
+    })
+      .then(() => {
+        User.findById(UserId)
+          .select("projects")
+          .populate("projects")
+          .then(userProjects => {
+            res.status(200).json(userProjects.projects);
+          });
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
       });
   });
 });
