@@ -14,19 +14,23 @@ require("../configs/db.config");
 const projects = [
   {
     title: "Projecto 1",
-    path: "proyecto-uno"
+    path: "proyecto-uno",
+    colorPalette: []
   },
   {
     title: "Projecto 2",
-    path: "proyecto-dos"
+    path: "proyecto-dos",
+    colorPalette: []
   },
   {
     title: "Projecto 3",
-    path: "proyecto-tres"
+    path: "proyecto-tres",
+    colorPalette: []
   },
   {
     title: "Projecto 4",
-    path: "proyecto-cuatro"
+    path: "proyecto-cuatro",
+    colorPalette: []
   }
 ];
 

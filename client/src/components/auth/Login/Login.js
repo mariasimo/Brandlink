@@ -25,6 +25,7 @@ export default class Login extends React.Component {
     const { history, setUser } = this.props;
     this.authService.login({username, password}).then(
       user => {
+        console.log(user)
         setUser(user);
         // todo This should redirect me to the admin panel
         history.push(`/panel/${user.username}`);

@@ -21,6 +21,7 @@ class AuthService {
   }
 
   loggedInUser = () => {
+    console.log("loggedInUser in authservice")
     return this.instance.get('/loggedin')
     .then(res => {
       Promise.resolve(res.data)
@@ -49,6 +50,7 @@ class AuthService {
   }
 
   logout = () => {
+    console.log("logout in authservice")
     return this.instance.post('/logout')
     .then(res => Promise.resolve(res.data))
     .catch(error => console.error(error))

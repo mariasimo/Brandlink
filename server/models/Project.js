@@ -4,7 +4,7 @@ const Schema   = mongoose.Schema;
 const projectSchema = new Schema({
   title: { type: String, required: true },
   path: { type: String, required: true, unique: true },
-  colorPalette : [ {name: String, hexadimal: String} ],
+  colorPalette : [ {name: String, hexadecimal: String} ],
   // typography : [
   //   {
   //     name: {type: String, required: true}, 

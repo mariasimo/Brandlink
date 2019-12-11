@@ -28,10 +28,12 @@ export default class App extends React.Component {
   }
 
   fetchUser = () => {
+    console.log("Fetch user")
     if (this.state.user === null) {
       this.authService.loggedInUser()
         .then(
           (user) => {
+            console.log("LoggedInUser: " + user)
             this.setUser(user)
           },
           (error) => {
@@ -49,7 +51,6 @@ export default class App extends React.Component {
       .logout()
       .then(payload => {
         this.setState({...this.state, user : null})
-
       })
       .catch(err => console.log(err));
   };
@@ -61,7 +62,7 @@ export default class App extends React.Component {
   }
 
   render () {
-    this.fetchUser()
+    // this.fetchUser()
     const { user } = this.state;
 
     return (
