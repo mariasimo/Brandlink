@@ -1,9 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ProjectService from '../../services/ProjectService'
 
 export default class NewProject extends React.Component {
+  constructor (props) {
+    super(props);
+    this.projectService = new ProjectService();
+
+    this.state = {
+      //todo: add remaining fields
+      title: '',
+      path: '',
+      colorPalette: null
+    }
+  }
+  
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ ...this.state, [name]: value })
+  }
+
+  handleSubmit = (e) => {
+    const { title, path } = this.state;
+    const userId = this.props.loggedInUser.id
+    e.preventDefault();
+    this.projectService.createProject({title, path}, userId)
+      .then(
+        () => {
+          this.setState({...this.state, title: '', path: ''})
+        },
+        (error) => console.error(error))
+  }
+
+
   render() {
-    return (
+    const { title, path } = this.state
+     return (
       <div>
         <section className="section">
           <div className="container columns">
@@ -11,7 +43,7 @@ export default class NewProject extends React.Component {
               <div className="side-menu">
                 <h2 className="title is-1">New Project</h2>
 
-                <form>
+                <form onSubmit={this.handleSubmit}>
                   <div className="field">
                     <label htmlFor="title" className="label">
                       Title:
@@ -21,9 +53,9 @@ export default class NewProject extends React.Component {
                         type="text"
                         name="title"
                         className="input"
-                        // value={name}
+                        value={title}
                         placeholder="Introduce the title for your project"
-                      />
+                        onChange={this.handleChange}                      />
                     </div>
                   </div>
 
@@ -34,10 +66,11 @@ export default class NewProject extends React.Component {
                     <div className="control">
                       <input
                         type="text"
-                        name="title"
+                        name="path"
                         className="input"
-                        // value={name}
-                        placeholder="Introduce the title for your project"
+                        value={path}
+                        placeholder="Introduce the url for your project"
+                        onChange={this.handleChange}
                       />
                     </div>
                   </div>
