@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 
-
 import { Switch, Route } from 'react-router-dom';
 import AuthService from './services/AuthService'
 import Signup from './components/auth/Signup/Signup';
@@ -12,7 +11,7 @@ import Navbar from './components/layout/Navbar';
 import Login from './components/auth/Login/Login';
 import Profile from './components/auth/profile/Profile';
 import NewProject from './components/project/NewProject';
-
+import EditProject from './components/project/EditProject';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -77,6 +76,7 @@ export default class App extends React.Component {
             <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
             <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList} />
             <PrivateRoute exact path="/project/new" user={user}  component={NewProject}/>
+            <PrivateRoute exact path="/project/:path/edit" user={user}  component={EditProject}/>
 
           </Switch> }
 

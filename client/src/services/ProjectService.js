@@ -8,13 +8,16 @@ class ProjectService {
     })
   }
 
-  fetchProjects = (user) => {
-    return this.instance.get('/', user)
+  fetchProjects = () => {
+    return this.instance.get('/')
     .then(res => {
 
       let arrData = Object.keys(res.data).map(key => {
         return res.data[key];
       })
+
+      console.log(arrData)
+      console.log(res.data)
 
       return Promise.resolve(arrData)
     })

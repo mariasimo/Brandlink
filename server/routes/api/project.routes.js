@@ -5,6 +5,7 @@ const Project = require("../../models/Project");
 const User = require("../../models/User");
 
 router.get("/", (req, res, next) => {
+
   User.findById(req.user._id)
     .select("projects")
     .populate("projects")
@@ -54,8 +55,9 @@ router.delete("/:id", (req, res, next) => {
   const UserId = req.user._id;
 
   Project.findByIdAndDelete(id).then(deletedProject => {
+
     User.findByIdAndUpdate(UserId, {
-      $pull: { projects: deletedProject._id }
+      $pull: { projects: {_id: deletedProject._id} }
     })
       .then(() => {
         User.findById(UserId)

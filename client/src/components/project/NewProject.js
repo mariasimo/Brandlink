@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import ProjectService from '../../services/ProjectService'
 
 export default class NewProject extends React.Component {
@@ -30,6 +29,7 @@ export default class NewProject extends React.Component {
         () => {
           this.setState({...this.state, title: '', path: ''})
           history.push(`/panel/${user.username}`);
+          // history.push(`/project/${path}/edit`);
 
         },
         (error) => console.error(error))
@@ -39,7 +39,6 @@ export default class NewProject extends React.Component {
   render() {
     const { title, path } = this.state
      return (
-      <div>
         <section className="section">
           <div className="container columns">
             <div className="column is-third">
@@ -87,27 +86,11 @@ export default class NewProject extends React.Component {
                     </div>
 
                 </form>
-
-                {/* <ul className="project-presets-list">
-                          <li>
-                              <Link to="/"><h3 className="title is-4 has-text-primary">Tipography</h3></Link>
-                          </li>
-                          <li>
-                              <Link to="/"><h3 className="title is-4 has-text-primary">Text Styles</h3></Link>
-                          </li> 
-                          <li>
-                              <Link to="/"><h3 className="title is-4 has-text-primary">Color Palette</h3></Link>
-                          </li>
-                          <li>
-                              <Link to="/"><h3 className="title is-4 has-text-primary">Assets</h3></Link>
-                          </li>
-                      </ul> */}
               </div>
             </div>
             <div className="column is-two-thirds projects-wrapper"></div>
           </div>
         </section>
-      </div>
     );
   }
 }
