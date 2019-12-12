@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ProjectService from "../../services/ProjectService";
+
 
 export default class EditProject extends Component {
+
   render() {
+    // Get path of project on edit from query string
+    const {path} = this.props.match.params
+
     return (
       <div>
         <section className="section">
@@ -16,7 +22,7 @@ export default class EditProject extends Component {
                   <li>
                     <Link to="/">
                       <h3 className="title is-4 has-text-primary">
-                        Tipography
+                        Typography
                       </h3>
                     </Link>
                   </li>
@@ -28,7 +34,7 @@ export default class EditProject extends Component {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/">
+                    <Link to={`/project/${path}/edit/colorPalette`}>
                       <h3 className="title is-4 has-text-primary">
                         Color Palette
                       </h3>

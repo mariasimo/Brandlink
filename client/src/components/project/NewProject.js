@@ -28,8 +28,7 @@ export default class NewProject extends React.Component {
       .then(
         () => {
           this.setState({...this.state, title: '', path: ''})
-          history.push(`/panel/${user.username}`);
-          // history.push(`/project/${path}/edit`);
+          history.push(`/project/${path}/edit`);
 
         },
         (error) => console.error(error))

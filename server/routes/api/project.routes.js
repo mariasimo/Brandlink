@@ -4,7 +4,9 @@ const router = express.Router();
 const Project = require("../../models/Project");
 const User = require("../../models/User");
 
+
 router.get("/", (req, res, next) => {
+
   User.findById(req.user._id)
     .select("projects")
     .populate("projects")
@@ -13,6 +15,18 @@ router.get("/", (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({ message: "Something went wrong" });
+    });
+});
+
+router.get("/:projectPath", (req, res, next) => {
+  const  path  = req.params.projectPath;
+
+  Project.findOne({path : path})
+    .then(projectFound => {
+      res.status(200).json(projectFound);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error retrieving project" });
     });
 });
 
@@ -54,21 +68,29 @@ router.delete("/:id", (req, res, next) => {
   const UserId = req.user._id;
 
   Project.findByIdAndDelete(id).then(deletedProject => {
-    console.log("User id:" + UserId);
-    console.log("Deleted Project id:" + deletedProject);
-
     return User.findByIdAndUpdate(UserId, {
       $pull: { projects: deletedProject._id },
       new: true
     })
-    .then(userUpdated => {
-      console.log({ message: "delete payload", userUpdated });
-      res.status(200).json({ message: "Project deleted" });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({ message: "Something went wrong" });
-    });
+      .then(() => {
+        res.status(200).json({ message: "Project deleted" });
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong" });
+      });
+  });
+});
+
+router.put("/:path", (req, res, next) => {
+  const { path } = req.params;
+
+  Project.findOneAndUpdate(
+    { path },
+    {$push: { colorPalette: req.body }},
+    { new: true }
+  ).then(projectUpdated => {
+    res.status(200).json(projectUpdated);
   });
 });
 

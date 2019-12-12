@@ -29,7 +29,6 @@ export default class ProjectList extends React.Component {
   };
 
   deleteProject = (project) => {
-    console.log("entra en delete desde projectlist.js")
     this.projectService.deleteProject(project.id).then(
       () => {
         this.updateProjects()
