@@ -103,7 +103,7 @@ html {
 }
 
 
-.color-palette {
+.color-palette, .type-set {
   margin: 3rem 0 4rem; 
 
   .column{
@@ -113,7 +113,7 @@ html {
     align-items: center;
   }
 
-  .color{
+  .element{
     display: flex;
     align-items: center;
     
@@ -132,4 +132,8 @@ html {
   .is-grouped a:first-child{
     margin-right: 0.5rem;
   }
+}
+
+.preview-text{
+  margin: 1.5rem 0;
 }

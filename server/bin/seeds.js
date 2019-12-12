@@ -15,22 +15,26 @@ const projects = [
   {
     title: "Projecto 1",
     path: "proyecto-uno",
-    colorPalette: []
+    colorPalette: [],
+    typeset: []
   },
   {
     title: "Projecto 2",
     path: "proyecto-dos",
-    colorPalette: []
+    colorPalette: [],
+    typeset: []
   },
   {
     title: "Projecto 3",
     path: "proyecto-tres",
-    colorPalette: []
+    colorPalette: [],
+    typeset: []
   },
   {
     title: "Projecto 4",
     path: "proyecto-cuatro",
-    colorPalette: []
+    colorPalette: [],
+    typeset: []
   }
 ];
 

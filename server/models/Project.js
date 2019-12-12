@@ -5,12 +5,13 @@ const projectSchema = new Schema({
   title: { type: String, required: true },
   path: { type: String, required: true, unique: true },
   colorPalette : [ {name: String, hexadecimal: String} ],
-  // typography : [
-  //   {
-  //     name: {type: String, required: true}, 
-  //     url: {type: String, required: true}
-  //   }
-  // ],
+  typeset : [
+    {
+      fontFamily: {type: String}, 
+      searchStr: {type: String},
+      type: {type: String}
+    }
+  ],
   // textStyles : [
   //   {
   //     name: {type: String},

@@ -81,7 +81,7 @@ router.delete("/:id", (req, res, next) => {
 });
 
 // Updated project (add brand preset)
-router.put("/:path/:id?", (req, res, next) => {
+router.put("/color/:path/:id?", (req, res, next) => {
   const { path, id } = req.params;
 
   console.log(req.body);
@@ -134,6 +134,26 @@ router.delete("/color/:colorId", (req, res, next) => {
   });
 });
 
+
+
+// Updated project (add brand preset)
+router.put("/type/:path", (req, res, next) => {
+  const { path, id } = req.params;
+
+  console.log(req.body);
+  console.log("Enters here: " + path);
+
+  Project.findOneAndUpdate(
+      { path },
+      { $push: { typeset: req.body } },
+      { new: true }
+    ).then(projectUpdated => {
+      res.status(200).json(projectUpdated);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error adding new type in db" });
+    });
+});
 
 
 module.exports = router;

@@ -1,25 +1,39 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectService from "../../services/ProjectService";
-import MyFontPicker from "../utils/FontPicker";
 
-
-export default class TypeSet extends Component {  
-
+export default class TypeSet extends Component {
   constructor(props) {
     super(props);
     this.projectService = new ProjectService();
     this.state = {
-    //   path: "",
-    //   title: "",
-    //   colorPalette : null
-    }
+      path: "",
+      title: "",
+      colorPalette: null,
+      typeset: null,
+    };
   }
 
+  fetchOneProject = () => {
+    const path = this.props.match.params.path;
+    this.projectService.fetchOneProject(path).then(project => {
+      this.setState({
+        ...this.state,
+        ...project
+      });
+
+      console.log(this.state)
+    });
+  };
+
+  componentDidMount() {
+    this.fetchOneProject();
+    console.log(this.state);
+  }
 
   render() {
-    const {path} = this.props.match.params
-    // const {colorPalette}  = this.state
+    const { path } = this.props.match.params;
+    const { typeset } = this.state;
 
     return (
       <section className="section">
@@ -30,35 +44,41 @@ export default class TypeSet extends Component {
               <h2 className="title is-1">Typography set</h2>
 
               <div className="content">
-                    <div className="color-palette columns is-multiline">
+                <div className="type-set columns is-multiline">
+                  {typeset &&
+                    typeset.map(font => (
+                      <div className="column is-full box" key={font._id}>
+                        <div className="element">
+                            <span>{font.fontFamily}</span>
+                        </div>
+                        <div className="is-grouped">
+                          <Link
+                          to="/"
+                            className="button is-rounded is-small is-success is-outlined"
+                          >
+                            Edit
+                          </Link>
+                          <button
+                            className="button is-rounded is-small is-danger is-outlined"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
 
-                      {/* {colorPalette && colorPalette.map((color) => 
-                          <div className="column is-full box" key={color._id}>
-                            <div className="color">
-                            <div className="circle-color" style={{backgroundColor: color.hexadecimal}}></div>
-                            <span>{color.name}</span>
-                            </div>
-                            <div className="is-grouped">
-                            <Link to={`/project/${path}/edit/colorPalette/new/${color._id}`} className="button is-rounded is-small is-success is-outlined">Edit</Link>
-                            <button onClick={() => this.deleteColor(color._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>
-                            </div>
-                          </div>
-                      )}
-                      
-                      {!colorPalette && (
-                        <div>You dont have any colorPalette yet</div>
-                      )} */}
-               
-                    </div>
+                  {!typeset && <div>You dont have any fonts yet</div>}
+                </div>
 
-                    <div className="control">
-                        <MyFontPicker></MyFontPicker>
-                        <Link to={`/project/${path}/edit/typeSet/new`} className="button is-link">
-                            Add Google Font
-                        </Link>
-                    </div>
+                <div className="control">
+                  <Link
+                    to={`/project/${path}/edit/typeSet/new`}
+                    className="button is-link"
+                  >
+                    Add Google Font
+                  </Link>
+                </div>
               </div>
-
             </div>
           </div>
           <div className="column is-two-thirds projects-wrapper"></div>

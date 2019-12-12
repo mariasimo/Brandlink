@@ -19,11 +19,11 @@ export default class ColorPalette extends Component {
     const path = this.props.match.params.path
 
     this.projectService.fetchOneProject(path)
-    .then(color => {
+    .then(project => {
 
       this.setState({
         ...this.state,
-        ...color
+        ...project
       })
 
     })

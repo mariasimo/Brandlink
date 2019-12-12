@@ -22,6 +22,8 @@ export default class NewColor extends Component {
     if (colorId !== undefined) {
       this.projectService.getColorData(colorId).then(
         colorData => {
+
+          console.log(colorData)
           let color = colorData.colorPalette.filter(
             color => color._id === colorId
           );
@@ -72,8 +74,9 @@ export default class NewColor extends Component {
           <div className="column is-third">
             <div className="side-menu">
 
-              {colorId && <h2 className="title is-1">Edit this color</h2>}
-              {!colorId && <h2 className="title is-1">Color Palette</h2>}
+              <h3 className="subtitle is-4 has-text-weight-bold">Color Palette</h3>
+              {colorId && <h2 className="title is-1">Edit color</h2>}
+              {!colorId && <h2 className="title is-1">New color</h2>}
 
               <form onSubmit={this.handleSubmit}>
                 <div className="field">

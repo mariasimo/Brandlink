@@ -48,7 +48,7 @@ class ProjectService {
   addColorToPalette = updateProjectParams => {
     const { name, hexadecimal, path, colorId } = updateProjectParams;
     return this.instance
-      .put(`/${path}/${colorId}?`, { name, hexadecimal })
+      .put(`/color/${path}/${colorId}?`, { name, hexadecimal })
       .then(res => {
         return Promise.resolve(res.data);
       })
@@ -72,6 +72,21 @@ class ProjectService {
     })
     .catch(error => console.error(error));
   }
+
+
+  addTypeToTypeSet = updateProjectParams => {
+
+    const { fontFamily, type, path } = updateProjectParams;
+    console.log(fontFamily, type, path)
+    return this.instance
+      .put(`/type/${path}`, { fontFamily, type })
+      .then(res => {
+        return Promise.resolve(res.data);
+      })
+      .catch(error => console.error(error));
+  };
+
+  
 
 }
 
