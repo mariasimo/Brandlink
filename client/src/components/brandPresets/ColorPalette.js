@@ -49,15 +49,15 @@ export default class ColorPalette extends Component {
               <h2 className="title is-1">Color Palette</h2>
 
               <div className="content">
-                    <div className="color-palette">
+                    <div className="color-palette columns">
 
-                    {colorPalette && colorPalette.map((color, idx) => {
-                    return <div key={idx} style={{backgroundColor: color.hexadecimal, height: "100px", width: "100px"}}></div>
-                    })}
-                    
-                    {!colorPalette && (
-                      <div>You dont have any colorPalette yet</div>
-                    )}
+                      {colorPalette && colorPalette.map((color, idx) => {
+                      return <div className="column  is-2 circle-color box" key={idx} style={{backgroundColor: color.hexadecimal}}></div>
+                      })}
+                      
+                      {!colorPalette && (
+                        <div>You dont have any colorPalette yet</div>
+                      )}
                
                     </div>
 
