@@ -4,9 +4,7 @@ const router = express.Router();
 const Project = require("../../models/Project");
 const User = require("../../models/User");
 
-
 router.get("/", (req, res, next) => {
-
   User.findById(req.user._id)
     .select("projects")
     .populate("projects")
@@ -19,9 +17,9 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:projectPath", (req, res, next) => {
-  const  path  = req.params.projectPath;
+  const path = req.params.projectPath;
 
-  Project.findOne({path : path})
+  Project.findOne({ path: path })
     .then(projectFound => {
       res.status(200).json(projectFound);
     })
@@ -82,16 +80,50 @@ router.delete("/:id", (req, res, next) => {
   });
 });
 
-router.put("/:path", (req, res, next) => {
-  const { path } = req.params;
+// Updated project (add brand preset)
+router.put("/:path/:id?", (req, res, next) => {
+  const { path, id } = req.params;
 
-  Project.findOneAndUpdate(
-    { path },
-    {$push: { colorPalette: req.body }},
-    { new: true }
-  ).then(projectUpdated => {
-    res.status(200).json(projectUpdated);
-  });
+  console.log(req.body);
+  console.log("Enters here: " + path, id);
+
+  if (id === "undefined") {
+    Project.findOneAndUpdate(
+      { path },
+      { $push: { colorPalette: req.body } },
+      { new: true }
+    ).then(projectUpdated => {
+      res.status(200).json(projectUpdated);
+    });
+  } else {
+    Project.findOneAndUpdate(
+      { colorPalette: { $elemMatch: { _id: id } } },
+      { "colorPalette.$": req.body },
+      { new: true }
+    ).then(projectUpdated => {
+      console.log(projectUpdated)
+      res.status(200).json(projectUpdated);
+    });
+  }
 });
+
+
+router.get("/color/:colorId", (req, res, next) => {
+  const colorId = req.params.colorId;
+
+  Project.findOne({ colorPalette: { $elemMatch: { _id: colorId } } })
+    .select({colorPalette : 1})
+    .then(colorData => {
+      res.status(200).json(colorData);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error retrieving project" });
+    });
+});
+
+// Edit brand present on project
+// router.put("/:path/:presetId", (req, res, next) => {
+//   console.log(req.params)
+// });
 
 module.exports = router;
