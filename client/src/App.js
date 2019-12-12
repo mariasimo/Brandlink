@@ -14,6 +14,7 @@ import NewProject from './components/project/NewProject';
 import EditProject from './components/project/EditProject';
 import ColorPalette from './components/brandPresets/ColorPalette';
 import NewColor from './components/brandPresets/NewColor';
+import TypeSet from './components/brandPresets/TypeSet';
 
 
 export default class App extends React.Component {
@@ -81,9 +82,11 @@ export default class App extends React.Component {
 
             <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
             <PrivateRoute exact path="/project/:path/edit" user={user} component={EditProject}/>
+
             <PrivateRoute exact path="/project/:path/edit/colorPalette" user={user} component={ColorPalette}/>
             <PrivateRoute exact path="/project/:path/edit/colorPalette/new/:colorId?" user={user} component={NewColor}/>
 
+            <PrivateRoute exact path="/project/:path/edit/typeset" user={user} component={TypeSet}/>
           </Switch> }
 
           {!user && <Switch>

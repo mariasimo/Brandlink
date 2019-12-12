@@ -72,8 +72,8 @@ export default class NewColor extends Component {
           <div className="column is-third">
             <div className="side-menu">
 
-    {colorId && <h2 className="title is-1">Edit this color</h2>}
-            {!colorId && <h2 className="title is-1">Color Palette</h2>}
+              {colorId && <h2 className="title is-1">Edit this color</h2>}
+              {!colorId && <h2 className="title is-1">Color Palette</h2>}
 
               <form onSubmit={this.handleSubmit}>
                 <div className="field">

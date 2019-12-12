@@ -20,7 +20,7 @@ export default class EditProject extends Component {
 
                 <ul className="project-presets-list">
                   <li>
-                    <Link to="/">
+                    <Link to={`/project/${path}/edit/typeset`}>
                       <h3 className="title is-4 has-text-primary">
                         Typography
                       </h3>
