@@ -5,7 +5,6 @@ const Project = require("../../models/Project");
 const User = require("../../models/User");
 
 router.get("/", (req, res, next) => {
-
   User.findById(req.user._id)
     .select("projects")
     .populate("projects")
@@ -55,22 +54,21 @@ router.delete("/:id", (req, res, next) => {
   const UserId = req.user._id;
 
   Project.findByIdAndDelete(id).then(deletedProject => {
+    console.log("User id:" + UserId);
+    console.log("Deleted Project id:" + deletedProject);
 
-    User.findByIdAndUpdate(UserId, {
-      $pull: { projects: {_id: deletedProject._id} }
+    return User.findByIdAndUpdate(UserId, {
+      $pull: { projects: deletedProject._id },
+      new: true
     })
-      .then(() => {
-        User.findById(UserId)
-          .select("projects")
-          .populate("projects")
-          .then(userProjects => {
-            res.status(200).json(userProjects.projects);
-          });
-      })
-      .catch(error => {
-        console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
-      });
+    .then(userUpdated => {
+      console.log({ message: "delete payload", userUpdated });
+      res.status(200).json({ message: "Project deleted" });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ message: "Something went wrong" });
+    });
   });
 });
 

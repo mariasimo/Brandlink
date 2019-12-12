@@ -15,10 +15,6 @@ class ProjectService {
       let arrData = Object.keys(res.data).map(key => {
         return res.data[key];
       })
-
-      console.log(arrData)
-      console.log(res.data)
-
       return Promise.resolve(arrData)
     })
     .catch(error => console.error(error))
@@ -31,8 +27,13 @@ class ProjectService {
   }
 
   deleteProject = (projectId) => {
+    console.log("entra en delete desde projectservice.js")
+
     return this.instance.delete(`/${projectId}`)
-    .then(res => Promise.resolve(res.data))
+    .then(res => {
+      console.log("vuelve a delete desde projectservice.js")
+      return Promise.resolve(res.data)
+    })
     .catch(error => console.error(error))
   }
 }

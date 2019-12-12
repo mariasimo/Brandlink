@@ -19,7 +19,6 @@ export default class ProjectList extends React.Component {
   updateProjects = () => {
     this.projectService.fetchProjects().then(
       projects => {
-        console.log(projects)
         this.setState({ ...this.state, projects });
       },
       error => {
@@ -30,10 +29,10 @@ export default class ProjectList extends React.Component {
   };
 
   deleteProject = (project) => {
+    console.log("entra en delete desde projectlist.js")
     this.projectService.deleteProject(project.id).then(
-      projects => {
-        this.setState({ ...this.state, projects });
-        console.log(`project with id ${projects.id} was deleted from db in user and projects collections`)
+      () => {
+        this.updateProjects()
       },
       error => {
         const { message } = error;
