@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectService from "../../services/ProjectService";
+import MyFontPicker from "../utils/FontPicker";
 
 
 export default class TypeSet extends Component {  
@@ -51,8 +52,9 @@ export default class TypeSet extends Component {
                     </div>
 
                     <div className="control">
+                        <MyFontPicker></MyFontPicker>
                         <Link to={`/project/${path}/edit/typeSet/new`} className="button is-link">
-                        Add Google Font
+                            Add Google Font
                         </Link>
                     </div>
               </div>
