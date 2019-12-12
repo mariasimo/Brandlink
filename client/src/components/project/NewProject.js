@@ -13,6 +13,11 @@ export default class NewProject extends React.Component {
       colorPalette: null
     }
   }
+
+  handleBlur = (e) => {
+    let pathSuggestion = e.target.value.toLowerCase().replace(/ /g, "-");
+    this.setState({...this.setState, path: pathSuggestion})
+  }
   
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +61,9 @@ export default class NewProject extends React.Component {
                         className="input"
                         value={title}
                         placeholder="Introduce the title for your project"
-                        onChange={this.handleChange}                      />
+                        onChange={this.handleChange}     
+                        onBlur={this.handleBlur}     
+                      />
                     </div>
                   </div>
 
