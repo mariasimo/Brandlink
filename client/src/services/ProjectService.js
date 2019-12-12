@@ -46,14 +46,33 @@ class ProjectService {
   };
 
   addColorToPalette = updateProjectParams => {
-    const { name, hexadecimal, path } = updateProjectParams;
+    const { name, hexadecimal, path, colorId } = updateProjectParams;
     return this.instance
-      .put(`/${path}`, { name, hexadecimal })
+      .put(`/${path}/${colorId}?`, { name, hexadecimal })
       .then(res => {
         return Promise.resolve(res.data);
       })
       .catch(error => console.error(error));
   };
+
+  getColorData  = (colorId) => {
+    return this.instance.get(`/color/${colorId}?`)
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));
+  }
+
+
+  deleteColor = (colorId) => {
+    console.log("Service" + colorId)
+    return this.instance.delete(`/color/${colorId}`)
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));
+  }
+
 }
 
 export default ProjectService;

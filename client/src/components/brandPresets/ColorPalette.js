@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Switch, Route } from 'react-router-dom';
 import ProjectService from "../../services/ProjectService";
 
 
@@ -20,16 +19,32 @@ export default class ColorPalette extends Component {
     const path = this.props.match.params.path
 
     this.projectService.fetchOneProject(path)
-    .then(project => {
+    .then(color => {
 
       this.setState({
         ...this.state,
-        ...project
+        ...color
       })
 
-      console.log(this.state.colorPalette)
     })
   }
+
+
+  deleteColor = (colorId) => {
+    console.log("Delete method in component color palette" + colorId)
+    this.projectService.deleteColor(colorId)
+    .then(
+      project => {
+        console.log(project)
+        this.fetchOneProject(project.path)
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  }
+
 
   componentDidMount() {
     this.fetchOneProject()
@@ -49,11 +64,20 @@ export default class ColorPalette extends Component {
               <h2 className="title is-1">Color Palette</h2>
 
               <div className="content">
-                    <div className="color-palette columns">
+                    <div className="color-palette columns is-multiline">
 
-                      {colorPalette && colorPalette.map((color, idx) => {
-                      return <div className="column  is-2 circle-color box" key={idx} style={{backgroundColor: color.hexadecimal}}></div>
-                      })}
+                      {colorPalette && colorPalette.map((color) => 
+                          <div className="column is-full box" key={color._id}>
+                            <div className="color">
+                            <div className="circle-color" style={{backgroundColor: color.hexadecimal}}></div>
+                            <span>{color.name}</span>
+                            </div>
+                            <div className="is-grouped">
+                            <Link to={`/project/${path}/edit/colorPalette/new/${color._id}`} className="button is-rounded is-small is-success is-outlined">Edit</Link>
+                            <button onClick={() => this.deleteColor(color._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>
+                            </div>
+                          </div>
+                      )}
                       
                       {!colorPalette && (
                         <div>You dont have any colorPalette yet</div>

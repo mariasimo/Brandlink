@@ -1,6 +1,6 @@
 import React from "react";
 import ProjectService from "../../services/ProjectService";
-import { Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Project from "./Project";
 
 export default class ProjectList extends React.Component {
@@ -41,7 +41,7 @@ export default class ProjectList extends React.Component {
   }
 
   render() {
-    const username = this.props.loggedInUser.username;
+    // const username = this.props.loggedInUser.username;
     const { projects } = this.state;
 
     return (

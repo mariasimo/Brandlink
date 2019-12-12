@@ -37,7 +37,7 @@ export default class Profile extends React.Component {
 
 
   render() {
-    const { username, password, picture } = this.state;
+    const { username, picture } = this.state;
     return (
       <div className="column">
         <h3 className="title">User details</h3>

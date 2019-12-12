@@ -21,7 +21,6 @@ export default class Login extends React.Component {
 
   handleLogin = e => {
     e.preventDefault();
-    const {username, password} = this.state
 
     const { history, setUser } = this.props;
     this.authService.login(this.state).then(

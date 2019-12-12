@@ -108,7 +108,7 @@ router.put("/:path/:id?", (req, res, next) => {
 });
 
 
-router.get("/color/:colorId", (req, res, next) => {
+router.get("/color/:colorId?", (req, res, next) => {
   const colorId = req.params.colorId;
 
   Project.findOne({ colorPalette: { $elemMatch: { _id: colorId } } })
@@ -121,9 +121,19 @@ router.get("/color/:colorId", (req, res, next) => {
     });
 });
 
-// Edit brand present on project
-// router.put("/:path/:presetId", (req, res, next) => {
-//   console.log(req.params)
-// });
+router.delete("/color/:colorId", (req, res, next) => {
+  const { colorId } = req.params;
+
+  Project.findOneAndUpdate(
+    { colorPalette: { $elemMatch: { _id: colorId } } },
+    { $pull: { colorPalette: {_id: colorId}},
+    new : true }
+  ).then(colorRemoveFromProject => {
+
+    res.status(200).json(colorRemoveFromProject);
+  });
+});
+
+
 
 module.exports = router;

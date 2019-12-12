@@ -17,7 +17,7 @@ export default class Navbar extends Component {
           {!user && (
             <Link to="/" className="navbar-item">
             <img
-              src="../../../logo.svg"
+              src={`http://localhost:3000//logo.png`}      
               height="24"
               alt="BrandLink"
             ></img>
@@ -27,7 +27,7 @@ export default class Navbar extends Component {
           {user && (
             <Link to={`/panel/${user.username}`} className="navbar-item">
             <img
-              src="../../../logo.svg"
+              src={`http://localhost:3000//logo.png`}      
               height="24"
               alt="BrandLink"
             ></img>

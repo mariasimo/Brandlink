@@ -77,12 +77,12 @@ export default class App extends React.Component {
             
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
             <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
-            <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList} />
+            <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList}/>
 
             <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
             <PrivateRoute exact path="/project/:path/edit" user={user} component={EditProject}/>
             <PrivateRoute exact path="/project/:path/edit/colorPalette" user={user} component={ColorPalette}/>
-            <PrivateRoute exact path="/project/:path/edit/colorPalette/new" user={user} component={NewColor}/>
+            <PrivateRoute exact path="/project/:path/edit/colorPalette/new/:colorId?" user={user} component={NewColor}/>
 
           </Switch> }
 
