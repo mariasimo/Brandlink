@@ -42,7 +42,7 @@ router.post("/new", (req, res, next) => {
     const newProject = new Project({
       title,
       path,
-      colorPalette: null
+      colorPalette: []
     });
 
     newProject
