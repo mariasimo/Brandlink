@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProjectService from "../../services/ProjectService";
 import MyFontPicker from "../utils/MyFontPicker";
 import BrandHeader from "../layout/BrandHeader";
+import AdobeFontsImporter from "../utils/AdobeFontsImporter";
 
 export default class NewType extends Component {
   constructor(props) {
@@ -32,15 +33,28 @@ export default class NewType extends Component {
   }
 
   render() {
+    const source = this.props.match.params.source
+
     return (
       <section className="section">
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
 
-            <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
 
-                <MyFontPicker saveType={(typeObj) => this.saveType(typeObj)}/>
+            {source === "google-font" &&
+              < >
+              <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
+              <MyFontPicker saveType={(typeObj) => this.saveType(typeObj)}/>
+              </ >
+            }
+
+            {source === "adobe-font" &&
+              < >
+              <BrandHeader title="Adobe Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
+              <AdobeFontsImporter></AdobeFontsImporter>
+              </ >
+            }
               
             </div>
           </div>

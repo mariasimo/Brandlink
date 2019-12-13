@@ -88,7 +88,8 @@ export default class App extends React.Component {
             <PrivateRoute exact path="/project/:path/edit/colorPalette/new/:colorId?" user={user} component={NewColor}/>
 
             <PrivateRoute exact path="/project/:path/edit/typeset" user={user} component={TypeSet}/>
-            <PrivateRoute exact path="/project/:path/edit/typeset/new" user={user} component={NewType}/>
+            <PrivateRoute exact path="/project/:path/edit/typeset/new/:source?" user={user} component={NewType}/>
+
           </Switch> }
 
           {!user && <Switch>

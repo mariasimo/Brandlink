@@ -76,14 +76,27 @@ export default class TypeSet extends Component {
                   {!typeset && <div>You dont have any fonts yet</div>}
                 </div>
 
-                <div className="control">
-                  <Link
-                    to={`/project/${path}/edit/typeSet/new`}
-                    className="button is-link"
-                  >
-                    Add Google Font
-                  </Link>
+                <div className="field fonts-buttons is-group">
+                  <div className="google-fonts-button control">
+                    <Link
+                      to={`/project/${path}/edit/typeSet/new/google-font?`}
+                      className="button is-link"
+                    >
+                      Add Google Font
+                    </Link>
+                  </div>
+
+                  <div className="adobe-fonts-button control">
+                    <Link
+                      to={`/project/${path}/edit/typeSet/new/adobe-font?`}
+                      className="button is-link"
+                    >
+                      Add Adobe Font
+                    </Link>
+                  </div>
                 </div>
+
+
               </div>
             </div>
           </div>
