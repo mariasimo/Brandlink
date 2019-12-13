@@ -21,14 +21,29 @@ export default class TypeSet extends Component {
         ...this.state,
         ...project
       });
-
-      console.log(this.state)
     });
   };
 
+
+  deleteType = (typeId) => {
+    console.log("Delete method in component typeset" + typeId)
+    this.projectService.deleteType(typeId)
+    .then(
+      project => {
+        console.log(project)
+        this.fetchOneProject(project.path)
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  }
+
+
+
   componentDidMount() {
     this.fetchOneProject();
-    console.log(this.state);
   }
 
   render() {
@@ -52,17 +67,8 @@ export default class TypeSet extends Component {
                             <span>{font.fontFamily}</span>
                         </div>
                         <div className="is-grouped">
-                          <Link
-                          to="/"
-                            className="button is-rounded is-small is-success is-outlined"
-                          >
-                            Edit
-                          </Link>
-                          <button
-                            className="button is-rounded is-small is-danger is-outlined"
-                          >
-                            Delete
-                          </button>
+                        <button onClick={() => this.deleteType(font._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>
+
                         </div>
                       </div>
                     ))}

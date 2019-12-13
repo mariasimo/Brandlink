@@ -156,4 +156,18 @@ router.put("/type/:path", (req, res, next) => {
 });
 
 
+router.delete("/type/:typeId", (req, res, next) => {
+  const { typeId } = req.params;
+
+  Project.findOneAndUpdate(
+    { typeset: { $elemMatch: { _id: typeId } } },
+    { $pull: { typeset: {_id: typeId}},
+    new : true }
+  ).then(typeRemovedFromProject => {
+
+    res.status(200).json(typeRemovedFromProject);
+  });
+});
+
+
 module.exports = router;

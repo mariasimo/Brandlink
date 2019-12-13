@@ -86,6 +86,16 @@ class ProjectService {
       .catch(error => console.error(error));
   };
 
+  deleteType = (typeId) => {
+    console.log("Service" + typeId)
+    return this.instance.delete(`/type/${typeId}`)
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));
+  }
+
+
   
 
 }

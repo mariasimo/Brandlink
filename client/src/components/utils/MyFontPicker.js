@@ -26,7 +26,7 @@ export default class MyFontPicker extends Component {
 
         <FontPicker
           limit="100"
-          apiKey="AIzaSyDVV8UzZpl7rfmgO7J7Xze17Vc_cmtS42s"
+          apiKey={process.env.REACT_APP_GFONTS_KEY}
           activeFontFamily={this.state.fontFamily}
           onChange={nextFont => this.recordType(nextFont)}
         />
