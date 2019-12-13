@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ProjectService from "../../services/ProjectService";
+import BrandHeader from "../layout/BrandHeader";
+
 
 export default class NewColor extends Component {
   constructor(props) {
@@ -74,9 +76,12 @@ export default class NewColor extends Component {
           <div className="column is-third">
             <div className="side-menu">
 
-              <h3 className="subtitle is-4 has-text-weight-bold">Color Palette</h3>
-              {colorId && <h2 className="title is-1">Edit color</h2>}
-              {!colorId && <h2 className="title is-1">New color</h2>}
+              {colorId &&             
+                <BrandHeader title="Edit color" subtitle="Color Palette" {...this.props}></BrandHeader>
+              }
+              {!colorId &&             
+                <BrandHeader title="New color" subtitle="Color Palette" {...this.props}></BrandHeader>
+              }
 
               <form onSubmit={this.handleSubmit}>
                 <div className="field">

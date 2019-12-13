@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectService from "../../services/ProjectService";
+import BrandHeader from "../layout/BrandHeader";
 
 export default class TypeSet extends Component {
   constructor(props) {
@@ -49,15 +50,14 @@ export default class TypeSet extends Component {
   render() {
     const { path } = this.props.match.params;
     const { typeset } = this.state;
+    
 
     return (
       <section className="section">
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
-              {/* Transform this element in component and pass title through props */}
-              <h2 className="title is-1">Typography set</h2>
-
+              <BrandHeader title="Typography set" {...this.props}></BrandHeader>
               <div className="content">
                 <div className="type-set columns is-multiline">
                   {typeset &&

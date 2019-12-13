@@ -86,6 +86,7 @@ class ProjectService {
       .catch(error => console.error(error));
   };
 
+
   deleteType = (typeId) => {
     console.log("Service" + typeId)
     return this.instance.delete(`/type/${typeId}`)
@@ -94,10 +95,6 @@ class ProjectService {
     })
     .catch(error => console.error(error));
   }
-
-
-  
-
 }
 
 export default ProjectService;

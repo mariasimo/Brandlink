@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProjectService from "../../services/ProjectService";
 import MyFontPicker from "../utils/MyFontPicker";
-
+import BrandHeader from "../layout/BrandHeader";
 
 export default class NewType extends Component {
   constructor(props) {
@@ -38,8 +38,7 @@ export default class NewType extends Component {
           <div className="column is-third">
             <div className="side-menu">
 
-            <h3 className="subtitle is-4 has-text-weight-bold">Typeset</h3>
-            <h2 className="title is-1">Google Fonts</h2>
+            <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
 
                 <MyFontPicker saveType={(typeObj) => this.saveType(typeObj)}/>
               

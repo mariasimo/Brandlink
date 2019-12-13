@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import BrandHeader from "../layout/BrandHeader";
+
 // import ProjectService from "../../services/ProjectService";
 
 
@@ -15,8 +17,9 @@ export default class EditProject extends Component {
           <div className="container columns">
             <div className="column is-third">
               <div className="side-menu">
-                <h2 className="title is-1">Name of Project</h2>
-                <h3 className="subtitle is-3">Brand presets</h3>
+
+              <BrandHeader title="Name of Project"  subtitle="Brand presets" {...this.props}></BrandHeader>
+
 
                 <ul className="project-presets-list">
                   <li>

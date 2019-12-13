@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProjectService from "../../services/ProjectService";
-
+import BrandHeader from "../layout/BrandHeader";
 
 export default class ColorPalette extends Component {  
 
@@ -60,8 +60,9 @@ export default class ColorPalette extends Component {
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
-              {/* Transform this element in component and pass title through props */}
-              <h2 className="title is-1">Color Palette</h2>
+
+            <BrandHeader title="Color Palette" {...this.props}></BrandHeader>
+
 
               <div className="content">
                     <div className="color-palette columns is-multiline">
