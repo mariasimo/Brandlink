@@ -18,7 +18,7 @@ export default class EditProject extends Component {
             <div className="column is-third">
               <div className="side-menu">
 
-              <BrandHeader title="Name of Project"  subtitle="Brand presets" {...this.props}></BrandHeader>
+              <BrandHeader title="Name of Project"  subtitle="Brand presets" {...this.props} url={`/panel/${this.props.loggedInUser}`}></BrandHeader>
 
                 <ul className="project-presets-list">
                   <li>

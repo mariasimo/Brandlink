@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 export default class BrandHeader extends Component {
     
     previousPage = () => {
-        return <Link to={this.props.history.goBack()}>Link</Link>
+        let url = this.props.url
+        return <Link to={this.props.history.push(url)}>Link</Link>
     }
 
     render() {

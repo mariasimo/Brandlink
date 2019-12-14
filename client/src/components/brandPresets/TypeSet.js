@@ -57,7 +57,7 @@ export default class TypeSet extends Component {
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
-              <BrandHeader title="Typography set" {...this.props}></BrandHeader>
+              <BrandHeader title="Typography set" {...this.props} url={`/project/${path}/edit`} ></BrandHeader>
               <div className="content">
                 <div className="type-set columns is-multiline">
                   {typeset &&

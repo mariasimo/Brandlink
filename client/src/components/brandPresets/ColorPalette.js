@@ -61,7 +61,7 @@ export default class ColorPalette extends Component {
           <div className="column is-third">
             <div className="side-menu">
 
-            <BrandHeader title="Color Palette" {...this.props}></BrandHeader>
+            <BrandHeader title="Color Palette" {...this.props} url={`/project/${path}/edit`}></BrandHeader>
 
 
               <div className="content">

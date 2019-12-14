@@ -33,7 +33,7 @@ export default class NewType extends Component {
   }
 
   render() {
-    const source = this.props.match.params.source
+    const {source, path} = this.props.match.params.source
 
     return (
       <section className="section">
@@ -44,14 +44,14 @@ export default class NewType extends Component {
 
             {source === "google-font" &&
               < >
-              <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
+              <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}  url={`/project/${path}/edit/typeset`}></BrandHeader>
               <MyFontPicker saveType={(typeObj) => this.saveType(typeObj)}/>
               </ >
             }
 
             {source === "adobe-font" &&
               < >
-              <BrandHeader title="Adobe Fonts"  subtitle="Typeset" {...this.props}></BrandHeader>
+              <BrandHeader title="Adobe Fonts"  subtitle="Typeset" {...this.props} url={`/project/${path}/edit/typeset`}></BrandHeader>
               <AdobeFontsImporter></AdobeFontsImporter>
               </ >
             }

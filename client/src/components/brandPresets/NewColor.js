@@ -68,7 +68,7 @@ export default class NewColor extends Component {
 
   render() {
     const { name, hexadecimal } = this.state;
-    const { colorId } = this.props.match.params;
+    const { colorId, path } = this.props.match.params;
 
     return (
       <section className="section">
@@ -77,10 +77,10 @@ export default class NewColor extends Component {
             <div className="side-menu">
 
               {colorId &&             
-                <BrandHeader title="Edit color" subtitle="Color Palette" {...this.props}></BrandHeader>
+                <BrandHeader title="Edit color" subtitle="Color Palette" {...this.props} url={`/project/${path}/edit/colorPalette`}></BrandHeader>
               }
               {!colorId &&             
-                <BrandHeader title="New color" subtitle="Color Palette" {...this.props}></BrandHeader>
+                <BrandHeader title="New color" subtitle="Color Palette" {...this.props}  url={`/project/${path}/edit/colorPalette`}></BrandHeader>
               }
 
               <form onSubmit={this.handleSubmit}>
