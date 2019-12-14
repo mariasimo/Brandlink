@@ -16,14 +16,17 @@ import ColorPalette from './components/brandPresets/ColorPalette';
 import NewColor from './components/brandPresets/NewColor';
 import TypeSet from './components/brandPresets/TypeSet';
 import NewType from './components/brandPresets/NewType';
+import ProjectService from './services/ProjectService'
 
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.authService = new AuthService();
+    this.projectService = new ProjectService();
     this.state = {
-      user: null
+      user: null,
+      activeProject: ""
     }
   }
 
@@ -57,6 +60,20 @@ export default class App extends React.Component {
       .catch(err => console.log(err));
   };
 
+  setPath = (path) => {
+    this.projectService.fetchOneProject(path)
+    .then(project => {
+
+      this.setState({
+        ...this.state,
+        activeProject: project
+      })
+
+      console.log("Active project now is")
+      console.log(this.state.activeProject)
+    })
+  }
+
   componentDidMount() {
     this.fetchUser()
   }
@@ -79,10 +96,12 @@ export default class App extends React.Component {
             
             {/* This is a private route, as you have to be loggedin to access your admin panel */}
             <PrivateRoute exact path="/profile/:id" user={user} redirectPath="/login" component={Profile}/>
-            <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList}/>
+            
+            {/* <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList}/> */}
+            <Route exact path="/panel/:username" render={(match) => <ProjectList {...match} setPath={this.setPath} setUser={this.setUser} />} />
 
             <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
-            <PrivateRoute exact path="/project/:path/edit" user={user} component={EditProject}/>
+            <PrivateRoute exact path="/project/:path/edit" user={user} project={this.state.activeProject} component={EditProject}/>
 
             <PrivateRoute exact path="/project/:path/edit/colorPalette" user={user} component={ColorPalette}/>
             <PrivateRoute exact path="/project/:path/edit/colorPalette/new/:colorId?" user={user} component={NewColor}/>

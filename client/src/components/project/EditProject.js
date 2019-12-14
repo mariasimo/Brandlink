@@ -10,7 +10,7 @@ export default class EditProject extends Component {
   render() {
     // Get path of project on edit from query string
     const {path} = this.props.match.params
-
+    
     return (
       <div>
         <section className="section">
@@ -19,7 +19,6 @@ export default class EditProject extends Component {
               <div className="side-menu">
 
               <BrandHeader title="Name of Project"  subtitle="Brand presets" {...this.props}></BrandHeader>
-
 
                 <ul className="project-presets-list">
                   <li>

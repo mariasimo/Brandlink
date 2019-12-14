@@ -9,10 +9,8 @@ export default class Project extends Component {
         return (
             <div className="project-card card">
                 <Link to={`/project/${project.path}`}><h2 className="title is-4 has-text-primary">{project.title}</h2></Link>
-                <Link to={`/project/${project.path}/edit`} className="button is-small is-rounded" onClick={() => this.props.setPath(project.path)}>Edit</Link>
+                <Link to={`/project/${project.path}/edit`} className="button is-small is-rounded">Edit</Link>
                 <button className="button is-small is-rounded" onClick={() => this.props.deleteProject(project)}>Delete</button>
-                {/* <button className="button is-small is-rounded" onClick={() => this.props.setPath(project.path)}>SetPath to {project.path}</button> */}
-
             </div>
         )
     }

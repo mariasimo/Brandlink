@@ -40,10 +40,10 @@ export default class ProjectList extends React.Component {
     );
   }
 
+
   render() {
     // const username = this.props.loggedInUser.username;
-    const { projects } = this.state;
-    
+    const { projects } = this.state;        
     return (
       <div>
         <section className="section">
@@ -57,7 +57,7 @@ export default class ProjectList extends React.Component {
 
               {projects &&
                 projects.map(project => (
-                  <Project key={project.id} project={project} deleteProject={(project) => this.deleteProject(project)}></Project>
+                  <Project key={project.id} project={project} deleteProject={(project) => this.deleteProject(project)} setPath={(path) => this.props.setPath(path)}></Project>
                 ))}
 
               {(projects === null || projects === [] || !projects) && (
