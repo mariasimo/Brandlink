@@ -5,11 +5,14 @@ import BrandHeader from "../layout/BrandHeader";
 // import ProjectService from "../../services/ProjectService";
 
 
-export default class EditProject extends Component {
 
+
+export default class EditProject extends Component {
   render() {
+    // this.props.addFontsLinks
     // Get path of project on edit from query string
     const {path} = this.props.match.params
+    console.log(this.props)
     
     return (
       <div>

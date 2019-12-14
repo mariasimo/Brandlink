@@ -33,7 +33,7 @@ export default class NewType extends Component {
   }
 
   render() {
-    const {source, path} = this.props.match.params.source
+    const {source, path} = this.props.match.params
 
     return (
       <section className="section">

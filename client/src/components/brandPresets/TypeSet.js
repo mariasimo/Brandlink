@@ -41,8 +41,6 @@ export default class TypeSet extends Component {
     );
   }
 
-
-
   componentDidMount() {
     this.fetchOneProject();
   }
@@ -53,6 +51,7 @@ export default class TypeSet extends Component {
     
 
     return (
+      
       <section className="section">
         <div className="container columns">
           <div className="column is-third">
@@ -64,7 +63,7 @@ export default class TypeSet extends Component {
                     typeset.map(font => (
                       <div className="column is-full box" key={font._id}>
                         <div className="element">
-                            <span>{font.fontFamily}</span>
+                            <span style={{fontFamily: font.fontFamily}}>{font.fontFamily}</span>
                         </div>
                         <div className="is-grouped">
                         <button onClick={() => this.deleteType(font._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>

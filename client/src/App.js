@@ -69,18 +69,29 @@ export default class App extends React.Component {
         activeProject: project
       })
 
-      console.log("Active project now is")
-      console.log(this.state.activeProject)
+      // this.addFontsLinks()
+      this.state.activeProject.typeset.map(type => {
+          this.addFontsLinks(type.fontFamily)
+      })
+
     })
+  }
+
+  addFontsLinks= (type) => {
+      const link = document.createElement("link")
+      link.setAttribute("href", `https://fonts.googleapis.com/css?family=${type.replace(" ", "+")}&display=swap`)
+      link.setAttribute("rel", `stylesheet`)
+      document.head.appendChild(link)
   }
 
   componentDidMount() {
     this.fetchUser()
+    // this.addFontsLinks()
   }
 
   render () {
     this.fetchUser()
-    const { user } = this.state;
+    const { user, activeProject } = this.state;
 
     return (
       <div className="App">
@@ -101,7 +112,7 @@ export default class App extends React.Component {
             <Route exact path="/panel/:username" render={(match) => <ProjectList {...match} setPath={this.setPath} setUser={this.setUser} />} />
 
             <PrivateRoute exact path="/project/new" user={user} component={NewProject}/>
-            <PrivateRoute exact path="/project/:path/edit" user={user} project={this.state.activeProject} component={EditProject}/>
+            <PrivateRoute exact path="/project/:path/edit" user={user} activeProject={activeProject} component={EditProject}/>
 
             <PrivateRoute exact path="/project/:path/edit/colorPalette" user={user} component={ColorPalette}/>
             <PrivateRoute exact path="/project/:path/edit/colorPalette/new/:colorId?" user={user} component={NewColor}/>
