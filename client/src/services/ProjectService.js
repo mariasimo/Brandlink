@@ -75,7 +75,6 @@ class ProjectService {
 
 
   addTypeToTypeSet = updateProjectParams => {
-
     const { fontFamily, type, path } = updateProjectParams;
     console.log(fontFamily, type, path)
     return this.instance
@@ -88,13 +87,25 @@ class ProjectService {
 
 
   deleteType = (typeId) => {
-    console.log("Service" + typeId)
     return this.instance.delete(`/type/${typeId}`)
     .then(res => {
       return Promise.resolve(res.data);
     })
     .catch(error => console.error(error));
   }
+
+  getGoogleFonts = () => {
+    console.log("service")
+    return this.instance
+      .get("/getGoogleFonts")
+      .then(res => {
+        console.log("back to service")
+        console.log("res data")
+        return Promise.resolve(res.data);
+      })
+      .catch(error => console.error(error));
+  }
+
 }
 
 export default ProjectService;

@@ -7,17 +7,11 @@ import AdobeFontsImporter from "../utils/AdobeFontsImporter";
 export default class NewType extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      fontFamily: " ",
-      type: " "
-    };
     this.projectService = new ProjectService ()
   }
 
   saveType = (typeObj) => {
-
     const { fontFamily, type } = typeObj;
-    console.log(fontFamily, type )
     const { path } = this.props.match.params;
     const { history } = this.props;
 

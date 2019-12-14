@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 
 const Project = require("../../models/Project");
 const User = require("../../models/User");
@@ -14,6 +15,17 @@ router.get("/", (req, res, next) => {
     .catch(error => {
       res.status(500).json({ message: "Something went wrong" });
     });
+});
+
+router.get("/getGoogleFonts", (req, res, next) => {
+  axios.get('https://typekit.com/api/v1/json/kits/gnh6ghd/?token=0bb2988cbd31ce44bda853c78df227e26a0d86c8')
+  .then(fonts => {
+    console.log(fonts.data)
+    res.status(200).json(fonts);
+  })
+  .catch(error => {
+    res.status(500).json({ message: "Error retrieving Google Fonts" });
+  });
 });
 
 router.get("/:projectPath", (req, res, next) => {
@@ -164,7 +176,6 @@ router.delete("/type/:typeId", (req, res, next) => {
     { $pull: { typeset: {_id: typeId}},
     new : true }
   ).then(typeRemovedFromProject => {
-
     res.status(200).json(typeRemovedFromProject);
   });
 });

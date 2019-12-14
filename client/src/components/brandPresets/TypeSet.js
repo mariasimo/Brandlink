@@ -41,6 +41,8 @@ export default class TypeSet extends Component {
     );
   }
 
+  
+
   componentDidMount() {
     this.fetchOneProject();
   }
