@@ -155,9 +155,10 @@ export default class App extends React.Component {
                 path="/project/:path/edit"
                 user={user}
                 activeProject={activeProject}
-                component={EditProject}
+                title={activeProject.title}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                component={EditProject}
                 />
 
               <PrivateRoute

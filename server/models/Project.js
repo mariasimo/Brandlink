@@ -44,7 +44,7 @@ projectSchema.pre("save", function(next) {
   this.textstyles.push(
     {
       name: 'Heading 1',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 4,
       fontWeight: 600,
       lineHeight: 1.25,
@@ -53,7 +53,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Heading 2',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 3.2,
       fontWeight: 600,
       lineHeight: 1.25,
@@ -62,7 +62,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Heading 3',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 2.4,
       fontWeight: 600,
       lineHeight: 1.4,
@@ -71,7 +71,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Heading 4',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 1.6,
       fontWeight: 500,
       lineHeight: 1.4,
@@ -80,7 +80,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Body large',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 1.3,
       fontWeight: 400,
       lineHeight: 1.4,
@@ -89,7 +89,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Body',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 1,
       fontWeight: 400,
       lineHeight: 1.4,
@@ -98,7 +98,7 @@ projectSchema.pre("save", function(next) {
     },
     {
       name: 'Body small',
-      fontFamily: "'Rubik', Helvetica, Arial, sans-serif",
+      fontFamily: "'Open Sans', Helvetica, Arial, sans-serif",
       fontSize: 0.85,
       fontWeight: 500,
       lineHeight: 1.3,

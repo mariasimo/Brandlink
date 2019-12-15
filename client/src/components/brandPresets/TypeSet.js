@@ -47,41 +47,42 @@ export default class TypeSet extends Component {
     const { path } = this.props.match.params;
     const { typeset } = this.state;
 
+    console.log(typeset)
+
     return (
       <SideMenu
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
       >
-        <BrandHeader
-          title='Typography set'
-          {...this.props}
-          url={`/project/${path}/edit`}
-        ></BrandHeader>
-        <div className='content'>
-          <div className='type-set columns is-multiline'>
+      <BrandHeader
+        title='Typography set'
+        {...this.props}
+        url={`/project/${path}/edit`}
+      ></BrandHeader>
+
+          <div className='type-set'>
+            <div className="content">
             {typeset &&
               typeset.map(font => (
-                <div className='column is-full box' key={font._id}>
-                  <div className='element'>
+                <div className='box' key={font._id}>
                     <span style={{ fontFamily: font.fontFamily }}>
                       {font.fontFamily}
                     </span>
-                  </div>
-                  <div className='is-grouped'>
                     <button
                       onClick={() => this.deleteType(font._id)}
                       className='button is-rounded is-small is-danger is-outlined'
                     >
                       Delete
-                    </button>
-                  </div>
+                    </button>                    
                 </div>
               ))}
+            {!typeset || !typeset.length && 
+              <div>You dont have any fonts yet. Add your first font now.</div>
+            }
 
-            {!typeset && <div>You dont have any fonts yet</div>}
-          </div>
+            </div>
 
-          <div className='field fonts-buttons is-group'>
+            <div className='field fonts-buttons is-group'>
             <div className='google-fonts-button control'>
               <Link
                 to={`/project/${path}/edit/typeSet/new/google-font?`}
@@ -100,7 +101,9 @@ export default class TypeSet extends Component {
               </Link>
             </div>
           </div>
-        </div>
+          </div>
+
+          
       </SideMenu>
     );
   }

@@ -46,6 +46,8 @@ export default class TextStyles extends Component {
         ></BrandHeader>
         <div className='content'>
           <div className='type-set columns is-multiline'>
+            {textstyles && 
+            <p>This are some default styles you cant edit</p>}
             {textstyles &&
               textstyles.map(style => (
                 <div className='column is-full box' key={style._id}>

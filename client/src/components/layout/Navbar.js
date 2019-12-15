@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import AuthService from "../../services/AuthService";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -12,59 +12,79 @@ export default class Navbar extends Component {
     const user = this.props.user;
 
     return (
-      <nav className="navbar">
-        <div className="navbar-brand">
+      <nav className='navbar' role='navigation' aria-label='main navigation'>
+        <div className='navbar-brand'>
           {!user && (
-            <Link to="/" className="navbar-item">
-            <img
-              src={`http://localhost:3000//logo.png`}      
-              height="24"
-              alt="BrandLink"
-            ></img>
-          </Link>
+            <Link to='/' className='navbar-item'>
+              <img
+                src={`http://localhost:3000//logo.png`}
+                height='24'
+                alt='BrandLink'
+              ></img>
+            </Link>
           )}
 
           {user && (
-            <Link to={`/panel/${user.username}`} className="navbar-item">
-            <img
-              src={`http://localhost:3000//logo.png`}      
-              height="24"
-              alt="BrandLink"
-            ></img>
-          </Link>
+            <Link to={`/panel/${user.username}`} className='navbar-item'>
+              <img
+                src={`http://localhost:3000//logo.png`}
+                height='24'
+                alt='BrandLink'
+              ></img>
+            </Link>
           )}
         </div>
-        
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              {!user && (
-                <React.Fragment>
-                  <Link to="/signup" className="button is-rounded">
-                    Signup
-                  </Link>
-                  <Link to="/login" className="button is-rounded">
-                    Login
-                  </Link>
-                </React.Fragment>
-              )}
-              {user && (
-                <React.Fragment>
-                   <Link to={`/panel/${user.username}`} className="navbar-item">
-                    Admin Panel
-                  </Link>
 
-                  <Link to={`/profile/${user.id}`} className="navbar-item">
-                    <div className="is-rounded profile-picture" style={{backgroundImage: `url(${user.picture})`}}></div>
-                    Hi, {user.username}
-                  </Link>
+        <div id='navbarBasicExample' className='navbar-menu is-active'>
+          <div className='navbar-start'>
+            {user && 
+              <Link to={`/panel/${user.username}`} className='back-projects-link navbar-item'>
+                <img src={`${process.env.REACT_APP_URL}/back.svg`}></img>
+                <span>Back to projects</span>
+              </Link>
+            }
+          </div>
 
-                  <Link to="/" onClick={(e) => this.props.logout()} className="button is-rounded">
-                    Logout
-                  </Link>
-                  
-                </React.Fragment>
-              )}
+          <div className='navbar-end'>
+            <div className='navbar-item'>
+              <div className='buttons'>
+                {!user && (
+                  <React.Fragment>
+                    <Link to='/signup' className='button is-rounded'>
+                      Signup
+                    </Link>
+                    <Link to='/login' className='button is-rounded'>
+                      Login
+                    </Link>
+                  </React.Fragment>
+                )}
+                {user && (
+                  <React.Fragment>
+                    <Link
+                      to={`/panel/${user.username}`}
+                      className='navbar-item'
+                    >
+                      Admin Panel
+                    </Link>
+
+                    <Link to={`/profile/${user.id}`} className='navbar-item'>
+                      <div
+                        className='is-rounded profile-picture'
+                        style={{ backgroundImage: `url(${user.picture})` }}
+                      ></div>
+                      Hi, {user.username}
+                    </Link>
+
+                    <Link
+                      to='/'
+                      onClick={e => this.props.logout()}
+                      className='button is-rounded'
+                    >
+                      Logout
+                    </Link>
+                  </React.Fragment>
+                )}
+              </div>
             </div>
           </div>
         </div>

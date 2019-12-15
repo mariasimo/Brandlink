@@ -1,8 +1,7 @@
 @charset "utf-8";
 
 // Import a Google Font
-@import url("https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,900&display=swap");
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800&display=swap');
 // // Set your brand colors
 // $purple: #8a4d76;
 // $brown: #757763;
@@ -37,7 +36,7 @@ $grey-lightest: #ddd;
 body,
 html {
   height: 100%;
-  font-family: 'Rubik', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -94,8 +93,9 @@ body {
 }
 
 .project-presets-list{
+  margin: 2rem 0;
   li{
-    margin-bottom: 1.5em
+    margin-bottom: 1em 
   }
 }
 
@@ -112,17 +112,13 @@ body {
 .color-palette, .type-set {
   margin: 3rem 0 4rem; 
 
-  .column{
+  .box{
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;  
     align-items: center;
-  }
+    margin-bottom: 0.5rem;    
 
-  .element{
-    display: flex;
-    align-items: center;
-    
     span{
       text-transform: capitalize;
     }
@@ -142,14 +138,17 @@ body {
 
 .preview-text{
   margin: 1.5rem 0;
+ p{ hyphens: auto;}
 }
 
 
 .fonts-buttons{
   display: flex;
+  flex-wrap: wrap;
 
   .control {
-    margin-right: 1rem
+    margin-right: 1rem;
+    margin-bottom: 0.5rem
   }
 }
 
@@ -171,15 +170,19 @@ body {
   z-index: 9999;
   overflow: auto;
   padding-right: 4rem;
+  padding-top: 6rem;
   box-shadow: 0 0 4px $grey-lightest;
   transition: left ease-in-out 0.3s;
+
+  .side-menu-header{
+    margin-bottom: 2rem;
+  }
 
   .btn-side-menu {
     color: black;
     position: absolute;
     right: 5%;
     top: 50%;
-    cursor: pointer
   }
 
   &.show{
@@ -193,7 +196,45 @@ body {
 
 .main-content{
   height: 100%;
-  margin-left: 28%
+  transition: margin-left ease-in-out 0.3s;
+
+  &.show{
+    margin-left: 28%
+  }
+  &.hide{
+    margin-left: 5%;
+  }
 }
 
+.remove-btn{
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor:pointer;
+}
 
+.navbar-brand{
+  width: 28%;
+}
+
+.back-projects-link{
+  img{
+    margin-right: 0.5rem;
+  }
+}
+
+.back-link{
+  margin-bottom: 2rem;
+}
+
+.title{
+  letter-spacing: -1px;
+}
+
+.type-set {
+  .element{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

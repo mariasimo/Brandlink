@@ -4,6 +4,7 @@ import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
 
+
 export default class Assets extends Component {
   constructor(props) {
     super(props);
@@ -101,18 +102,18 @@ export default class Assets extends Component {
                   onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}
                 >
                   {({ getRootProps, getInputProps }) => (
-                    <section className="file column">
-                      <div className="file-label" {...getRootProps()}>
-                        <input className="file-input" {...getInputProps()} />
-                        <p className="file-cta">
+                    <section class="file-label">
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <p >
                           Drag 'n' drop some files here, or click to select
                           files
                         </p>
                       </div>
-                      <p>File formats allowed: .png, .jpg, .pdf, .zip, .svg, .gif</p>
                     </section>
                   )}
                 </Dropzone>
+                  <p>File formats allowed: .png, .jpg, .pdf, .zip, .svg, .gif</p>
 
                 <div className="assets-list columns is-multiline">
                   {assets &&

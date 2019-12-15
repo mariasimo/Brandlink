@@ -98,7 +98,7 @@ export default class NewTextStyle extends Component {
 
     return (
       <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
-        <BrandHeader
+            <BrandHeader
                 title={name}
                 subtitle="Text Styles"
                 {...this.props}
@@ -120,7 +120,6 @@ export default class NewTextStyle extends Component {
                       >
                         <option
                           value="Select font family"
-                          selected disabled
                         >
                           Select a font family
                         </option>
@@ -229,7 +228,7 @@ export default class NewTextStyle extends Component {
                   </div>
                 </div>
 
-                <div className="preview style box">
+                <div className="preview-text box">
                   <p
                     style={{
                       fontFamily,

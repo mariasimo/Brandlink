@@ -37,7 +37,8 @@ export default class NewType extends Component {
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
       >
-        {source === "google-font" && (
+      <div className="content">
+      {source === "google-font" && (
           <>
             <BrandHeader
               title="Google Fonts"
@@ -45,7 +46,7 @@ export default class NewType extends Component {
               {...this.props}
               url={`/project/${path}/edit/typeset`}
             ></BrandHeader>
-            <MyFontPicker saveType={typeObj => this.saveType(typeObj)} />
+            <MyFontPicker class="select" saveType={typeObj => this.saveType(typeObj)} />
           </>
         )}
 
@@ -60,6 +61,7 @@ export default class NewType extends Component {
             <AdobeFontsImporter></AdobeFontsImporter>
           </>
         )}
+      </div>
       </SideMenu>
     );
   }
