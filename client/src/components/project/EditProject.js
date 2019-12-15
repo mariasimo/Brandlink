@@ -25,7 +25,7 @@ export default class EditProject extends Component {
 
                 <ul className="project-presets-list">
                   <li>
-                    <Link to={`/project/${path}/edit/typeset`}>
+                    <Link to={`${this.props.location.pathname}/typeset`}>
                       <h3 className="title is-4 has-text-primary">
                         Typography
                       </h3>
@@ -39,14 +39,14 @@ export default class EditProject extends Component {
                     </Link>
                   </li>
                   <li>
-                    <Link to={`/project/${path}/edit/colorPalette`}>
+                    <Link to={`${this.props.location.pathname}/colorPalette`}>
                       <h3 className="title is-4 has-text-primary">
                         Color Palette
                       </h3>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/">
+                    <Link to={`${this.props.location.pathname}/assets`}>
                       <h3 className="title is-4 has-text-primary">Assets</h3>
                     </Link>
                   </li>

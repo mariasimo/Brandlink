@@ -5,6 +5,9 @@ const axios = require('axios');
 const Project = require("../../models/Project");
 const User = require("../../models/User");
 
+const uploader = require('../../configs/cloudinary.config')
+
+
 router.get("/", (req, res, next) => {
   User.findById(req.user._id)
     .select("projects")
@@ -179,6 +182,26 @@ router.delete("/type/:typeId", (req, res, next) => {
     res.status(200).json(typeRemovedFromProject);
   });
 });
+
+
+router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
+  const {path} = req.params
+  console.log(req.file)
+
+  if(req.file){
+    console.log(req.file.secure_url)
+    Project.findOneAndUpdate(
+      { path }, 
+      { $push: { assets: {secure_url : req.file.secure_url, resource_type: req.file.resource_type} } },
+      { new : true}
+    )
+    .then(projectUpdated => {
+      console.log(projectUpdated)
+    })
+  } else {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+})
 
 
 module.exports = router;

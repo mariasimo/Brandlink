@@ -41,8 +41,6 @@ export default class TypeSet extends Component {
     );
   }
 
-  
-
   componentDidMount() {
     this.fetchOneProject();
   }
@@ -51,9 +49,7 @@ export default class TypeSet extends Component {
     const { path } = this.props.match.params;
     const { typeset } = this.state;
     
-
-    return (
-      
+    return (  
       <section className="section">
         <div className="container columns">
           <div className="column is-third">

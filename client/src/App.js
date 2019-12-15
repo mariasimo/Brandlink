@@ -17,6 +17,7 @@ import NewColor from './components/brandPresets/NewColor';
 import TypeSet from './components/brandPresets/TypeSet';
 import NewType from './components/brandPresets/NewType';
 import ProjectService from './services/ProjectService'
+import Assets from './components/brandPresets/Assets';
 
 
 export default class App extends React.Component {
@@ -120,6 +121,7 @@ export default class App extends React.Component {
             <PrivateRoute exact path="/project/:path/edit/typeset" user={user} component={TypeSet}/>
             <PrivateRoute exact path="/project/:path/edit/typeset/new/:source?" user={user} component={NewType}/>
 
+            <PrivateRoute exact path="/project/:path/edit/assets" user={user} component={Assets}/>
           </Switch> }
 
           {!user && <Switch>

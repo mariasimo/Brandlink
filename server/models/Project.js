@@ -9,9 +9,12 @@ const projectSchema = new Schema({
     {
       fontFamily: {type: String}, 
       searchStr: {type: String},
-      type: {type: String}
+      type: { type: String }
     }
   ],
+  assets : [
+    {secure_url: String, resource_type: String}
+  ]
   // textStyles : [
   //   {
   //     name: {type: String},
