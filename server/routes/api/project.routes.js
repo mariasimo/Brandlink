@@ -192,7 +192,7 @@ router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
     console.log(req.file.secure_url)
     Project.findOneAndUpdate(
       { path }, 
-      { $push: { assets: {secure_url : req.file.secure_url, resource_type: req.file.resource_type} } },
+      { $push: { assets: {secure_url : req.file.secure_url, format: req.file.format} } },
       { new : true}
     )
     .then(projectUpdated => {

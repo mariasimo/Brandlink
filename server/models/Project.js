@@ -13,7 +13,7 @@ const projectSchema = new Schema({
     }
   ],
   assets : [
-    {secure_url: String, resource_type: String}
+    {secure_url: String, format: String}
   ]
   // textStyles : [
   //   {
