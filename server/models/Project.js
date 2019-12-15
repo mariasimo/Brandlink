@@ -8,7 +8,6 @@ const projectSchema = new Schema({
   typeset : [
     {
       fontFamily: {type: String}, 
-      searchStr: {type: String},
       type: { type: String }
     }
   ],

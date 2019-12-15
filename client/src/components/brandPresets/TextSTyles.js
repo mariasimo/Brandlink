@@ -10,38 +10,47 @@ export default class TextStyles extends Component {
     this.state = {
       path: "",
       title: "",
-      typeset: null,
-      textStyles: null
+      typeset: [
+        {fontFamily: "Courier"},
+        {fontFamily: "Helvetica"},
+        {fontFamily: "Times"},
+        {fontFamily: "Arial"},
+        {fontFamily: "Verdana"}
+      ],
+      textStyles: [
+        {
+          name: "Heading 1", 
+          fontFamily: "",
+          fontWeight: "regular",
+          fontSize: 1,
+          lineHeight: 1.25,
+          letterSpacing: 2,
+          uppercase: false
+        }
+      ]
     };
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      });
-    });
-  };
+  addPredefinedStyles = () => {
+    // Grab first font on type set
+    // Insert in de db predefined styles for this project
+    // Retrieve it and pass it to this.state
+  }
 
-  // deleteType = (typeId) => {
-  //   console.log("Delete method in component typeset" + typeId)
-  //   this.projectService.deleteType(typeId)
-  //   .then(
-  //     project => {
-  //       console.log(project)
-  //       this.fetchOneProject(project.path)
-  //     },
-  //     error => {
-  //       const { message } = error;
-  //       console.error(message);
-  //     }
-  //   );
-  // }
+  // todo: retrieve this and remove test state
+  // fetchOneProject = () => {
+  //   const path = this.props.match.params.path;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     });
+  //   });
+  // };
 
   componentDidMount() {
-    this.fetchOneProject();
+    // this.fetchOneProject();
+    console.log(this.state)
   }
 
   render() {
@@ -57,25 +66,27 @@ export default class TextStyles extends Component {
               <div className="content">
                 <div className="type-set columns is-multiline">
                   {textStyles &&
-                    textStyles.map(font => (
-                      <div className="column is-full box" key={font._id}>
+                    textStyles.map(style => (
+                      <div className="column is-full box" key={style._id}>
                         <div className="element">
-                            <span style={{fontFamily: font.fontFamily}}>{font.fontFamily}</span>
+                            <span style={{fontFamily: style.fontFamily}}>{style.name}</span>
                         </div>
                         <div className="is-grouped">
-                        <button onClick={() => this.deleteType(font._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>
-
+                          <Link to={{
+                            pathname:`${this.props.location.pathname}/new/${style.name}`,
+                            typeset: this.state.typeset
+                          }} className="button is-rounded is-small is-success is-outlined">Edit</Link>
                         </div>
                       </div>
                     ))}
 
-                  {!textStyles && <div>You dont have any fonts yet</div>}
+                  {!textStyles && <div>You dont have any text styles yet</div>}
                 </div>
 
                 <div className="field fonts-buttons is-group">
                   <div className="adobe-fonts-button control">
                     <Link
-                      to={`/project/${path}/edit/textStyle/new/`}
+                      tto={`${this.props.location.pathname}/new}`}
                       className="button is-link"
                     >
                       Add New Text Style

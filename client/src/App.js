@@ -19,7 +19,7 @@ import NewType from './components/brandPresets/NewType';
 import ProjectService from './services/ProjectService'
 import Assets from './components/brandPresets/Assets';
 import TextStyles from './components/brandPresets/TextSTyles';
-
+import NewTextStyle from './components/brandPresets/NewTextStyle';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -123,7 +123,9 @@ export default class App extends React.Component {
             <PrivateRoute exact path="/project/:path/edit/typeset/new/:source?" user={user} component={NewType}/>
 
             <PrivateRoute exact path="/project/:path/edit/assets" user={user} component={Assets}/>
+            
             <PrivateRoute exact path="/project/:path/edit/textStyles" user={user} component={TextStyles}/>
+            <PrivateRoute exact path="/project/:path/edit/textStyles/new/:path?" user={user} component={NewTextStyle}/>
           </Switch> }
 
           {!user && <Switch>
