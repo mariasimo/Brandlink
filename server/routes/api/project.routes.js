@@ -214,11 +214,11 @@ router.delete("/assets/:assetId", (req, res, next) => {
 });
 
 // Updated project (add brand preset)
-router.put("/textStyle/:path/:styleName?", (req, res, next) => {
-  const { path, styleName } = req.params;
+router.put("/textStyle/:path/:styleId?", (req, res, next) => {
+  const { path, styleId } = req.params;
 
   console.log(req.body);
-  console.log("Enters here: " + path, styleName);
+  console.log("Enters here: " + path, styleId);
 
   // todo: definir qué ocurre cuando ya existe en la base de datos
   // if (id === "undefined") {
@@ -231,8 +231,8 @@ router.put("/textStyle/:path/:styleName?", (req, res, next) => {
   //   });
   // } else {
     Project.findOneAndUpdate(
-      { path },
-      { $push: { textstyles: {name: styleName, ...req.body } } },
+      { textstyles: { $elemMatch: { _id: styleId } } },
+      { "textstyles.$": req.body },
       { new: true }
     ).then(projectUpdated => {
       console.log(projectUpdated)
@@ -240,5 +240,19 @@ router.put("/textStyle/:path/:styleName?", (req, res, next) => {
     });
   // }
 });
+
+router.get("/textstyle/:styleId?", (req, res, next) => {
+  const styleId = req.params.styleId;
+
+  Project.findOne({ textstyles: { $elemMatch: { _id: styleId } } })
+    .select({textstyles : 1, typeset: 1})
+    .then(textstylesData => {
+      res.status(200).json(textstylesData);
+    })
+    .catch(error => {
+      res.status(500).json({ message: "Error retrieving project" });
+    });
+});
+
 
 module.exports = router;
