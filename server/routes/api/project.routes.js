@@ -186,22 +186,32 @@ router.delete("/type/:typeId", (req, res, next) => {
 
 router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
   const {path} = req.params
-  console.log(req.file)
 
+  console.log(req.file)
   if(req.file){
-    console.log(req.file.secure_url)
     Project.findOneAndUpdate(
       { path }, 
-      { $push: { assets: {secure_url : req.file.secure_url, format: req.file.format} } },
-      { new : true}
+      { $push: { assets: {secure_url : req.file.secure_url, format: req.file.format, name: req.file.originalname} } },
     )
     .then(projectUpdated => {
-      console.log(projectUpdated)
+      res.status(200).json(projectUpdated);
     })
   } else {
     res.status(500).json({ message: 'Something went wrong' });
   }
 })
+
+router.delete("/assets/:assetId", (req, res, next) => {
+  const { assetId } = req.params;
+
+  Project.findOneAndUpdate(
+    { assets: { $elemMatch: { _id: assetId } } },
+    { $pull: { assets: {_id: assetId}},
+    new : true }
+  ).then(assetRemovedFromProject => {
+    res.status(200).json(assetRemovedFromProject);
+  });
+});
 
 
 module.exports = router;
