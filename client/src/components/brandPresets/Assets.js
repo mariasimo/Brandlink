@@ -1,78 +1,158 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import ProjectService from "../../services/ProjectService";
+import BrandHeader from "../layout/BrandHeader";
 
 export default class Assets extends Component {
   constructor(props) {
     super(props);
-    this.ProjectService = new ProjectService();
+    this.projectService = new ProjectService();
+    this.state = {
+      path: "",
+      title: "",
+      assets: null
+    };
+    this.loadingImg = "";
+    this.loadingParent = ""
   }
 
-  handleUpload = (file) => {
-    const uploadData = new FormData();
-    uploadData.append("file", file[0]);
-
-    console.log(uploadData)
-
-    const { path } = this.props.match.params
-    this.ProjectService.uploadAsset({uploadData, path})
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-
-    // this.ProjectService
-    //   .upload(uploadData)
-    //   .then(
-    //     data => {
-    //       console.log(data);
-    //       // return this.setState({...this.state, picture: data.secure_url})
-    //     },
-    //     error => {
-    //       console.error(error);
-    //     }
-    //   )
-      // Post to collection
-      // .then(() => {
-      //     return this.authService.edit(user.id, this.state)
-      // })
-      // .then(userUdated => console.log(userUdated))
+  fetchOneProject = () => {
+    const path = this.props.match.params.path;
+    this.projectService.fetchOneProject(path).then(project => {
+      this.setState({
+        ...this.state,
+        ...project
+      });
+    });
   };
 
+  handleUpload = file => {
+    const uploadData = new FormData();
+    uploadData.append("file", file[0]);
+    const { path } = this.props.match.params;
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
+    this.loadingImg = document.createElement('img')
+    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg')
+    this.loadingParent = document.querySelector('.file-label')
+    this.loadingParent.appendChild(this.loadingImg)
+ 
+    this.projectService.uploadAsset({ uploadData, path })
+      .then(() => {
+        this.fetchOneProject();
+        this.loadingParent.removeChild(this.loadingImg)
+      })
+      .catch(error => console.log(error));
+  };
 
-  //   const { name, hexadecimal } = this.state;
-  //   const { path, colorId } = this.props.match.params;
-  //   const { history } = this.props;
+  deleteAsset = (assetId) => {
+    this.projectService.deleteAsset(assetId)
+    .then(
+      project => {
+        this.fetchOneProject();
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  }
 
-  //   this.projectService
-  //     .addColorToPalette({ name, hexadecimal, path, colorId })
-  //     .then(
-  //       () => {
-  //         this.setState({ ...this.state, name: "", hexadecimal: "" });
-  //         history.push(`/project/${path}/edit/colorPalette`);
-  //       },
-  //       error => console.error(error)
-  //     );
-  // };
+//   editName = () => {
+//     // Append one child and remove another
+    
+//     const nameDOMEL = document.querySelector('.asset-name')
+//     nameDOMEL.childNodes[0].style.display = "none"
+//     nameDOMEL.childNodes[1].style.display = "block"
+//   }
+
+//   editInputName = (assetId) => {
+//     let stateCopy = Object.assign({}, this.state);
+    
+//     console.log(stateCopy.assets, assetId)
+
+//     stateCopy.assets.map(asset => {
+//       if(assetId === asset._id) {
+//         return asset
+//       }
+//     })
+// //     stateCopy.assets[key].upVotes += 1;
+// // this.setState(stateCopy);
+// //     this.setState({...this.state, assets})
+//   }
+
+  componentDidMount() {
+    this.fetchOneProject();
+  }
 
   render() {
+    const { assets, editName } = this.state;
+    const { path } = this.props.match.params;
     return (
-      <div>
-        <h2>Assets importer</h2>
-        <Dropzone onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </div>
-            </section>
-          )}
-        </Dropzone>
+      <section className="">
+        <div className="container columns">
+          <div className="column is-third">
+            <div className="side-menu">
+              <BrandHeader
+                title="Assets Library"
+                {...this.props}
+                url={`/project/${path}/edit`}
+              ></BrandHeader>
 
-        <div>Map all photos in here</div>
-      </div>
+              <div>
+                <Dropzone
+                  onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section className="file column">
+                      <div className="file-label" {...getRootProps()}>
+                        <input className="file-input" {...getInputProps()} />
+                        <p className="file-cta">
+                          Drag 'n' drop some files here, or click to select
+                          files
+                        </p>
+                      </div>
+                      <p>File formats allowed: .png, .jpg, .pdf, .zip, .svg, .gif</p>
+                    </section>
+                  )}
+                </Dropzone>
+
+                <div className="assets-list columns is-multiline">
+                  {assets &&
+                    assets.map(asset => (
+                      
+                      <div key={asset._id} >
+                        <figure className="column is-half">
+                            <button onClick={() => this.deleteAsset(asset._id)} className="button is-rounded is-small is-danger is-outlined">Delete</button>
+                          {(asset.format === "png" ||
+                            asset.format === "jpg" ||
+                            asset.format === "svg" ||
+                            asset.format === "gif") && (
+                            <span >
+                              <img src={asset.secure_url} alt="" />
+                            </span>
+                          )}
+                          {asset.format === "pdf" && (
+                            <p>esto es un pdf</p>
+                          )}
+                          {asset.format === "zip" && (
+                            <p className="box">esto es un zip</p>
+                          )}
+                      </figure>
+                      {/* <div className="asset-name" onClick={this.editName}>
+                        <a>{asset.name}</a>
+                        <input style={{display: 'none'}} type="text" value={asset.name} onChange={this.editInputName(asset._id)}/>
+                      </div> */}
+                      </div>
+                    ))}
+
+                  {!assets && <div>You dont have any assets yet</div>}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="column is-two-thirds projects-wrapper"></div>
+        </div>
+      </section>
     );
   }
 }

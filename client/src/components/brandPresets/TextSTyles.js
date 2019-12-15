@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 
-export default class TypeSet extends Component {
+export default class TextStyles extends Component {
   constructor(props) {
     super(props);
     this.projectService = new ProjectService();
@@ -11,6 +11,7 @@ export default class TypeSet extends Component {
       path: "",
       title: "",
       typeset: null,
+      textStyles: null
     };
   }
 
@@ -24,20 +25,20 @@ export default class TypeSet extends Component {
     });
   };
 
-  deleteType = (typeId) => {
-    console.log("Delete method in component typeset" + typeId)
-    this.projectService.deleteType(typeId)
-    .then(
-      project => {
-        console.log(project)
-        this.fetchOneProject(project.path)
-      },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
-  }
+  // deleteType = (typeId) => {
+  //   console.log("Delete method in component typeset" + typeId)
+  //   this.projectService.deleteType(typeId)
+  //   .then(
+  //     project => {
+  //       console.log(project)
+  //       this.fetchOneProject(project.path)
+  //     },
+  //     error => {
+  //       const { message } = error;
+  //       console.error(message);
+  //     }
+  //   );
+  // }
 
   componentDidMount() {
     this.fetchOneProject();
@@ -45,18 +46,18 @@ export default class TypeSet extends Component {
 
   render() {
     const { path } = this.props.match.params;
-    const { typeset } = this.state;
+    const { typeset, textStyles } = this.state;
     
     return (  
       <section className="section">
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
-              <BrandHeader title="Typography set" {...this.props} url={`/project/${path}/edit`} ></BrandHeader>
+              <BrandHeader title="Text Styles" {...this.props} url={`/project/${path}/edit`} ></BrandHeader>
               <div className="content">
                 <div className="type-set columns is-multiline">
-                  {typeset &&
-                    typeset.map(font => (
+                  {textStyles &&
+                    textStyles.map(font => (
                       <div className="column is-full box" key={font._id}>
                         <div className="element">
                             <span style={{fontFamily: font.fontFamily}}>{font.fontFamily}</span>
@@ -68,25 +69,16 @@ export default class TypeSet extends Component {
                       </div>
                     ))}
 
-                  {!typeset && <div>You dont have any fonts yet</div>}
+                  {!textStyles && <div>You dont have any fonts yet</div>}
                 </div>
 
                 <div className="field fonts-buttons is-group">
-                  <div className="google-fonts-button control">
-                    <Link
-                      to={`/project/${path}/edit/typeSet/new/google-font?`}
-                      className="button is-link"
-                    >
-                      Add Google Font
-                    </Link>
-                  </div>
-
                   <div className="adobe-fonts-button control">
                     <Link
-                      to={`/project/${path}/edit/typeSet/new/adobe-font?`}
+                      to={`/project/${path}/edit/textStyle/new/`}
                       className="button is-link"
                     >
-                      Add Adobe Font
+                      Add New Text Style
                     </Link>
                   </div>
                 </div>

@@ -32,7 +32,7 @@ export default class EditProject extends Component {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/">
+                    <Link to={`${this.props.location.pathname}/textStyles`}>
                       <h3 className="title is-4 has-text-primary">
                         Text Styles
                       </h3>

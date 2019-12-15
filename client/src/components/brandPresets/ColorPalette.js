@@ -4,7 +4,6 @@ import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 
 export default class ColorPalette extends Component {  
-
   constructor(props) {
     super(props);
     this.projectService = new ProjectService();
@@ -29,7 +28,6 @@ export default class ColorPalette extends Component {
     })
   }
 
-
   deleteColor = (colorId) => {
     console.log("Delete method in component color palette" + colorId)
     this.projectService.deleteColor(colorId)
@@ -45,11 +43,9 @@ export default class ColorPalette extends Component {
     );
   }
 
-
   componentDidMount() {
     this.fetchOneProject()
   }
-
 
   render() {
     const {path} = this.props.match.params

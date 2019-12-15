@@ -108,21 +108,19 @@ class ProjectService {
 
   uploadAsset = (fileParams) => {
     return this.instance.post(`/uploadAsset/${fileParams.path}`, fileParams.uploadData)
-    .then(res => Promise.resolve(res.data))
+    .then(res => {
+      return Promise.resolve(res.data)
+    })
     .catch(error => console.error(error))
   }
 
-
-  // addAssetToAssets = fileParams => {
-  //   // const { fontFamily, type, path } = fileDa;
-  //   // console.log(fontFamily, type, path)
-  //   return this.instance
-  //     .put(`/type/${path}`, { fileData })
-  //     .then(res => {
-  //       return Promise.resolve(res.data);
-  //     })
-  //     .catch(error => console.error(error));
-  // };
+  deleteAsset = (assetId) => {
+    return this.instance.delete(`/assets/${assetId}`)
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));
+  }
 
 }
 
