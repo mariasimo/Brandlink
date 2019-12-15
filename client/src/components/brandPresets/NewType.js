@@ -3,58 +3,64 @@ import ProjectService from "../../services/ProjectService";
 import MyFontPicker from "../utils/MyFontPicker";
 import BrandHeader from "../layout/BrandHeader";
 import AdobeFontsImporter from "../utils/AdobeFontsImporter";
+import SideMenu from "../layout/SideMenu";
 
 export default class NewType extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService ()
+    this.projectService = new ProjectService();
   }
 
-  saveType = (typeObj) => {
+  saveType = typeObj => {
     const { fontFamily, type } = typeObj;
     const { path } = this.props.match.params;
     const { history } = this.props;
 
-    this.projectService
-      .addTypeToTypeSet({ fontFamily, type, path })
-      .then(
-        () => {
-          this.setState({ ...this.state, fontFamily: ""});
-          history.push(`/project/${path}/edit/typeSet`);
-        },
-        error => console.error(error)
-      );
+    this.projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
+      () => {
+        this.setState({ ...this.state, fontFamily: "" });
+        history.push(`/project/${path}/edit/typeSet`);
+      },
+      error => console.error(error)
+    );
+  };
+
+  componentDidMount() {
+    console.log(this.props);
   }
 
   render() {
-    const {source, path} = this.props.match.params
+    const { source, path } = this.props.match.params;
 
     return (
-      <section className="section">
-        <div className="container columns">
-          <div className="column is-third">
-            <div className="side-menu">
+      <SideMenu
+        toggleMenu={this.props.toggleMenu}
+        menuIsOpen={this.props.menuIsOpen}
+      >
+        {source === "google-font" && (
+          <>
+            <BrandHeader
+              title="Google Fonts"
+              subtitle="Typeset"
+              {...this.props}
+              url={`/project/${path}/edit/typeset`}
+            ></BrandHeader>
+            <MyFontPicker saveType={typeObj => this.saveType(typeObj)} />
+          </>
+        )}
 
-
-            {source === "google-font" &&
-              < >
-              <BrandHeader title="Google Fonts"  subtitle="Typeset" {...this.props}  url={`/project/${path}/edit/typeset`}></BrandHeader>
-              <MyFontPicker saveType={(typeObj) => this.saveType(typeObj)}/>
-              </ >
-            }
-
-            {source === "adobe-font" &&
-              < >
-              <BrandHeader title="Adobe Fonts"  subtitle="Typeset" {...this.props} url={`/project/${path}/edit/typeset`}></BrandHeader>
-              <AdobeFontsImporter></AdobeFontsImporter>
-              </ >
-            }
-              
-            </div>
-          </div>
-          <div className="column is-two-thirds projects-wrapper"></div>
-        </div>
-      </section>
+        {source === "adobe-font" && (
+          <>
+            <BrandHeader
+              title="Adobe Fonts"
+              subtitle="Typeset"
+              {...this.props}
+              url={`/project/${path}/edit/typeset`}
+            ></BrandHeader>
+            <AdobeFontsImporter></AdobeFontsImporter>
+          </>
+        )}
+      </SideMenu>
     );
   }
 }

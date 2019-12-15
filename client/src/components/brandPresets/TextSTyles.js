@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import ProjectService from "../../services/ProjectService";
-import BrandHeader from "../layout/BrandHeader";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import ProjectService from '../../services/ProjectService';
+import BrandHeader from '../layout/BrandHeader';
+import SideMenu from '../layout/SideMenu';
 
 export default class TextStyles extends Component {
   constructor(props) {
     super(props);
     this.projectService = new ProjectService();
     this.state = {
+      path: '',
+      title: '',
+      typeset: [],
+      textstyles: []
     };
-  }
-
-  addPredefinedStyles = () => {
-    // Grab first font on type set
-    // Insert in de db predefined styles for this project
-    // Get typeset and applies sizes
-    // Retrieve it and pass it to this.state
   }
 
   fetchOneProject = () => {
@@ -23,7 +21,7 @@ export default class TextStyles extends Component {
     this.projectService.fetchOneProject(path).then(project => {
       this.setState({
         ...this.state,
-        ...project,
+        ...project
       });
     });
   };
@@ -34,38 +32,55 @@ export default class TextStyles extends Component {
 
   render() {
     const { path } = this.props.match.params;
-    const { typeset, textstyles } = this.state;
-    console.log(textstyles)
-    
-    return (  
-      <section className="section">
-        <div className="container columns">
-          <div className="column is-third">
-            <div className="side-menu">
-              <BrandHeader title="Text Styles" {...this.props} url={`/project/${path}/edit`} ></BrandHeader>
-              <div className="content">
-                <div className="type-set columns is-multiline">
-                  
-                  {textstyles &&
-                    textstyles.map((style, idx) => (
-                      <div className="column is-full box" key={idx}>
-                        <div className="element">
-                            <span style={{fontFamily: style.fontFamily, fontWeight: style.fontWeight, fontSize: `${style.fontSize}rem`, letterSpacing: `${style.letterSpacing}rem`, lineHeight: style.lineHeight}}>{style.name}</span>
-                        </div>
-                        <div className="is-grouped">
-                          <Link to={{
-                            pathname:`${this.props.location.pathname}/new/${style.name}`,
-                            typeset: this.state.typeset
-                          }} className="button is-rounded is-small is-success is-outlined">Edit</Link>
-                        </div>
-                      </div>
-                    ))}
+    const { textstyles } = this.state;
 
-                  {!textstyles && <div>You dont have any text styles yet</div>}
+    return (
+      <SideMenu
+        toggleMenu={this.props.toggleMenu}
+        menuIsOpen={this.props.menuIsOpen}
+      >
+        <BrandHeader
+          title='Text Styles'
+          {...this.props}
+          url={`/project/${path}/edit`}
+        ></BrandHeader>
+        <div className='content'>
+          <div className='type-set columns is-multiline'>
+            {textstyles &&
+              textstyles.map(style => (
+                <div className='column is-full box' key={style._id}>
+                  <div className='element'>
+                    <span
+                      style={{
+                        fontFamily: style.fontFamily,
+                        fontWeight: style.fontWeight,
+                        fontSize: `${style.fontSize}rem`,
+                        letterSpacing: `${style.letterSpacing}rem`,
+                        lineHeight: style.lineHeight
+                      }}
+                    >
+                      {style.name}
+                    </span>
+                  </div>
+                  <div className='is-grouped'>
+                    <Link
+                      to={{
+                        pathname: `${this.props.location.pathname}/new/${style._id}`,
+                        state: this.state
+                      }}
+                      className='button is-rounded is-small is-success is-outlined'
+                    >
+                      Edit
+                    </Link>
+                  </div>
                 </div>
+              ))}
 
-                <div className="field fonts-buttons is-group">
-                  <div className="adobe-fonts-button control">
+            {!textstyles && <div>You dont have any text styles yet</div>}
+          </div>
+
+          {/* <div className="field fonts-buttons is-group">
+                  <div className="control">
                     <Link
                       to={`${this.props.location.pathname}/new/}`}
                       className="button is-link"
@@ -73,15 +88,9 @@ export default class TextStyles extends Component {
                       Add New Text Style
                     </Link>
                   </div>
-                </div>
-
-
-              </div>
-            </div>
-          </div>
-          <div className="column is-two-thirds projects-wrapper"></div>
+                </div> */}
         </div>
-      </section>
+      </SideMenu>
     );
   }
 }

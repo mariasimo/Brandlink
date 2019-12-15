@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
+import SideMenu from "../layout/SideMenu";
 
 export default class Assets extends Component {
   constructor(props) {
@@ -85,14 +86,11 @@ export default class Assets extends Component {
   }
 
   render() {
-    const { assets, editName } = this.state;
+    const { assets } = this.state;
     const { path } = this.props.match.params;
     return (
-      <section className="">
-        <div className="container columns">
-          <div className="column is-third">
-            <div className="side-menu">
-              <BrandHeader
+      <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
+        <BrandHeader
                 title="Assets Library"
                 {...this.props}
                 url={`/project/${path}/edit`}
@@ -148,11 +146,7 @@ export default class Assets extends Component {
                   {!assets && <div>You dont have any assets yet</div>}
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="column is-two-thirds projects-wrapper"></div>
-        </div>
-      </section>
+      </SideMenu>
     );
   }
 }

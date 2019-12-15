@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
+import SideMenu from "../layout/SideMenu";
 
 export default class NewTextStyle extends Component {
   constructor(props) {
@@ -8,21 +9,47 @@ export default class NewTextStyle extends Component {
     this.projectService = new ProjectService();
 
     this.state = {
-      name: "",
-      fontFamily: "",
-      fontSize: 1,
-      fontWeight: null,
-      lineHeight: 1,
-      letterSpacing: 0,
-      uppercase: false
+      textstyle: {},
+      typeset: []
     };
 
     this.uppercaseValue = "none";
   }
 
+  componentDidMount() {
+    this.getTextStyleData();
+  }
+
+  getTextStyleData = () => {
+    const { styleId } = this.props.match.params;
+
+    if (styleId !== undefined) {
+      this.projectService.getTextStyleData(styleId).then(
+        textstyleData => {
+
+          let textStyle = textstyleData.textstyles.filter(
+            style => style._id === styleId
+          );
+          
+          this.setState({
+            ...this.state,
+            textstyle: textStyle[0],
+            typeset : textstyleData.typeset
+          });
+        },
+        error => {
+          const { message } = error;
+          console.error(message);
+        }
+      );
+    }
+  };
+
+
   handleChange = e => {
     const { name, value } = e.target;
-    this.setState({ ...this.state, [name]: value });
+    this.setState({ 
+      ...this.state,  textstyle : { ...this.state.textstyle, [name]: value }});
   };
 
   handleCheckbox = e => {
@@ -33,11 +60,12 @@ export default class NewTextStyle extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { path, styleName } = this.props.match.params;
+    const { path, styleId } = this.props.match.params;
     const { history } = this.props;
 
+    console.log(this.state)
     this.projectService
-      .addTextStyle({ ...this.state, path, styleName })
+      .addTextStyle({ ...this.state.textstyle, path, styleId })
       .then(
         () => {
           this.setState({
@@ -57,23 +85,21 @@ export default class NewTextStyle extends Component {
   };
 
   render() {
-    const { path, styleName } = this.props.match.params;
-    const { typeset } = this.props.location;
+    const { path } = this.props.match.params;
+    const { typeset }  = this.state
     const {
+      name,
       fontFamily,
       fontSize,
       fontWeight,
       lineHeight,
       letterSpacing
-    } = this.state;
+    } = this.state.textstyle;
 
     return (
-      <section className="section">
-        <div className="container columns">
-          <div className="column is-third">
-            <div className="side-menu">
-              <BrandHeader
-                title={styleName}
+      <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
+        <BrandHeader
+                title={name}
                 subtitle="Text Styles"
                 {...this.props}
                 url={`/project/${path}/edit/textStyles`}
@@ -89,12 +115,12 @@ export default class NewTextStyle extends Component {
                       <select
                         className="select large"
                         name="fontFamily"
+                        value={fontFamily}
                         onChange={this.handleChange}
                       >
                         <option
                           value="Select font family"
-                          selected
-                          disabled={this.props.defaultDisabled ? true : null}
+                          selected disabled
                         >
                           Select a font family
                         </option>
@@ -122,6 +148,7 @@ export default class NewTextStyle extends Component {
                     <select
                       className="select large"
                       name="fontWeight"
+                      value={fontWeight}
                       onChange={this.handleChange}
                     >
                       <option value="100">Light</option>
@@ -225,11 +252,7 @@ export default class NewTextStyle extends Component {
                   ></input>
                 </div>
               </form>
-            </div>
-          </div>
-          <div className="column is-two-thirds projects-wrapper"></div>
-        </div>
-      </section>
+      </SideMenu>
     );
   }
 }

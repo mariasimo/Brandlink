@@ -127,14 +127,25 @@ class ProjectService {
     console.log("service")
     console.log(updateProjectParams)
     
-    const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, path, styleName } = updateProjectParams;
+    const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, name, path, styleId } = updateProjectParams;
     return this.instance
-      .put(`/textStyle/${path}/${styleName}?`, { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase })
+      .put(`/textStyle/${path}/${styleId}?`, { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, name })
       .then(res => {
         return Promise.resolve(res.data);
       })
       .catch(error => console.error(error));
   };
+
+  getTextStyleData  = (styleId) => {
+    console.log("service")
+    console.log(styleId)
+    return this.instance.get(`/textstyle/${styleId}?`)
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));
+  }
+
 }
 
 export default ProjectService;
