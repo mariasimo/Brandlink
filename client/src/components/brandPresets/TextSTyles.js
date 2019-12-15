@@ -8,54 +8,34 @@ export default class TextStyles extends Component {
     super(props);
     this.projectService = new ProjectService();
     this.state = {
-      path: "",
-      title: "",
-      typeset: [
-        {fontFamily: "Courier"},
-        {fontFamily: "Helvetica"},
-        {fontFamily: "Times"},
-        {fontFamily: "Arial"},
-        {fontFamily: "Verdana"}
-      ],
-      textStyles: [
-        {
-          name: "Heading 1", 
-          fontFamily: "",
-          fontWeight: "regular",
-          fontSize: 1,
-          lineHeight: 1.25,
-          letterSpacing: 2,
-          uppercase: false
-        }
-      ]
     };
   }
 
   addPredefinedStyles = () => {
     // Grab first font on type set
     // Insert in de db predefined styles for this project
+    // Get typeset and applies sizes
     // Retrieve it and pass it to this.state
   }
 
-  // todo: retrieve this and remove test state
-  // fetchOneProject = () => {
-  //   const path = this.props.match.params.path;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     });
-  //   });
-  // };
+  fetchOneProject = () => {
+    const path = this.props.match.params.path;
+    this.projectService.fetchOneProject(path).then(project => {
+      this.setState({
+        ...this.state,
+        ...project,
+      });
+    });
+  };
 
   componentDidMount() {
-    // this.fetchOneProject();
-    console.log(this.state)
+    this.fetchOneProject();
   }
 
   render() {
     const { path } = this.props.match.params;
-    const { typeset, textStyles } = this.state;
+    const { typeset, textstyles } = this.state;
+    console.log(textstyles)
     
     return (  
       <section className="section">
@@ -65,11 +45,12 @@ export default class TextStyles extends Component {
               <BrandHeader title="Text Styles" {...this.props} url={`/project/${path}/edit`} ></BrandHeader>
               <div className="content">
                 <div className="type-set columns is-multiline">
-                  {textStyles &&
-                    textStyles.map(style => (
-                      <div className="column is-full box" key={style._id}>
+                  
+                  {textstyles &&
+                    textstyles.map((style, idx) => (
+                      <div className="column is-full box" key={idx}>
                         <div className="element">
-                            <span style={{fontFamily: style.fontFamily}}>{style.name}</span>
+                            <span style={{fontFamily: style.fontFamily, fontWeight: style.fontWeight, fontSize: `${style.fontSize}rem`, letterSpacing: `${style.letterSpacing}rem`, lineHeight: style.lineHeight}}>{style.name}</span>
                         </div>
                         <div className="is-grouped">
                           <Link to={{
@@ -80,7 +61,7 @@ export default class TextStyles extends Component {
                       </div>
                     ))}
 
-                  {!textStyles && <div>You dont have any text styles yet</div>}
+                  {!textstyles && <div>You dont have any text styles yet</div>}
                 </div>
 
                 <div className="field fonts-buttons is-group">

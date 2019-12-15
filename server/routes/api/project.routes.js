@@ -213,5 +213,32 @@ router.delete("/assets/:assetId", (req, res, next) => {
   });
 });
 
+// Updated project (add brand preset)
+router.put("/textStyle/:path/:styleName?", (req, res, next) => {
+  const { path, styleName } = req.params;
+
+  console.log(req.body);
+  console.log("Enters here: " + path, styleName);
+
+  // todo: definir qué ocurre cuando ya existe en la base de datos
+  // if (id === "undefined") {
+  //   Project.findOneAndUpdate(
+  //     { path },
+  //     { $push: { textStyle: req.body } },
+  //     { new: true }
+  //   ).then(projectUpdated => {
+  //     res.status(200).json(projectUpdated);
+  //   });
+  // } else {
+    Project.findOneAndUpdate(
+      { path },
+      { $push: { textstyles: {name: styleName, ...req.body } } },
+      { new: true }
+    ).then(projectUpdated => {
+      console.log(projectUpdated)
+      res.status(200).json(projectUpdated);
+    });
+  // }
+});
 
 module.exports = router;

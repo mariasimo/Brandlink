@@ -122,6 +122,19 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
+  addTextStyle = updateProjectParams => {
+
+    console.log("service")
+    console.log(updateProjectParams)
+    
+    const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, path, styleName } = updateProjectParams;
+    return this.instance
+      .put(`/textStyle/${path}/${styleName}?`, { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase })
+      .then(res => {
+        return Promise.resolve(res.data);
+      })
+      .catch(error => console.error(error));
+  };
 }
 
 export default ProjectService;

@@ -17,27 +17,56 @@ export default class NewTextStyle extends Component {
       uppercase: false
     };
 
-    this.uppercaseValue = "none"
+    this.uppercaseValue = "none";
   }
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
-    console.log(this.state);
   };
-  
-  handleCheckbox = e  => {
+
+  handleCheckbox = e => {
     let uppercase = !this.state.uppercase;
-    this.setState({ ...this.state, uppercase: uppercase }); 
-    this.uppercaseValue = !this.state.uppercase ?  'uppercase' : 'none'
-  }
+    this.setState({ ...this.state, uppercase: uppercase });
+    this.uppercaseValue = !this.state.uppercase ? "uppercase" : "none";
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { path, styleName } = this.props.match.params;
+    const { history } = this.props;
+
+    this.projectService
+      .addTextStyle({ ...this.state, path, styleName })
+      .then(
+        () => {
+          this.setState({
+            ...this.state,
+            name: "",
+            fontFamily: "",
+            fontSize: 1,
+            fontWeight: null,
+            lineHeight: 1,
+            letterSpacing: 0,
+            uppercase: false
+          });
+          history.push(`/project/${path}/edit/textStyles`);
+        },
+        error => console.error(error)
+      );
+  };
 
   render() {
     const { path, styleName } = this.props.match.params;
     const { typeset } = this.props.location;
-    const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing} = this.state;
+    const {
+      fontFamily,
+      fontSize,
+      fontWeight,
+      lineHeight,
+      letterSpacing
+    } = this.state;
 
-    console.log(this.uppercaseValue)
     return (
       <section className="section">
         <div className="container columns">
@@ -57,11 +86,21 @@ export default class NewTextStyle extends Component {
                   </label>
                   <div className="control">
                     {typeset && (
-                      <select className="select large" name="fontFamily" onChange={this.handleChange}>
-                        <option value="Select font family" selected disabled={this.props.defaultDisabled ? true : null}>Select a font family</option>
-                        {typeset.map(font => {
+                      <select
+                        className="select large"
+                        name="fontFamily"
+                        onChange={this.handleChange}
+                      >
+                        <option
+                          value="Select font family"
+                          selected
+                          disabled={this.props.defaultDisabled ? true : null}
+                        >
+                          Select a font family
+                        </option>
+                        {typeset.map((font, idx) => {
                           return (
-                            <option value={font.fontFamily}>
+                            <option key={idx} value={font.fontFamily}>
                               {font.fontFamily}
                             </option>
                           );
@@ -80,7 +119,11 @@ export default class NewTextStyle extends Component {
                     Font Weight:
                   </label>
                   <div className="control">
-                    <select className="select large" name="fontWeight" onChange={this.handleChange}>
+                    <select
+                      className="select large"
+                      name="fontWeight"
+                      onChange={this.handleChange}
+                    >
                       <option value="100">Light</option>
                       <option value="400">Regular</option>
                       <option value="500">Semibold</option>
@@ -150,16 +193,27 @@ export default class NewTextStyle extends Component {
 
                 <div className="field">
                   <div className="control">
-                    <input type="checkbox" name="uppercase" onChange={this.handleCheckbox}/>
+                    <input
+                      type="checkbox"
+                      name="uppercase"
+                      onChange={this.handleCheckbox}
+                    />
                     <span>Text to uppercase</span>
                   </div>
                 </div>
 
                 <div className="preview style box">
-                  
-                  <p style={{ fontFamily, fontSize: `${fontSize}rem`, fontWeight, lineHeight, letterSpacing: `${letterSpacing}rem`, textTransform: this.uppercaseValue }}>
-                    Lorem ipsum dolor sit amet 
-                    consecteteur adipiscing elit
+                  <p
+                    style={{
+                      fontFamily,
+                      fontSize: `${fontSize}rem`,
+                      fontWeight,
+                      lineHeight,
+                      letterSpacing: `${letterSpacing}rem`,
+                      textTransform: this.uppercaseValue
+                    }}
+                  >
+                    Lorem ipsum dolor sit amet consecteteur adipiscing elit
                   </p>
                 </div>
 
