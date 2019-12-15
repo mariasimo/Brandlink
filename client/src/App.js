@@ -125,7 +125,7 @@ export default class App extends React.Component {
             <PrivateRoute exact path="/project/:path/edit/assets" user={user} component={Assets}/>
             
             <PrivateRoute exact path="/project/:path/edit/textStyles" user={user} component={TextStyles}/>
-            <PrivateRoute exact path="/project/:path/edit/textStyles/new/:path?" user={user} component={NewTextStyle}/>
+            <PrivateRoute exact path="/project/:path/edit/textStyles/new/:styleName?" user={user} component={NewTextStyle}/>
           </Switch> }
 
           {!user && <Switch>

@@ -86,7 +86,7 @@ export default class TextStyles extends Component {
                 <div className="field fonts-buttons is-group">
                   <div className="adobe-fonts-button control">
                     <Link
-                      tto={`${this.props.location.pathname}/new}`}
+                      to={`${this.props.location.pathname}/new/}`}
                       className="button is-link"
                     >
                       Add New Text Style

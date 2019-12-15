@@ -3,19 +3,49 @@ import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 
 export default class NewTextStyle extends Component {
-  render() {
-    const { path } = this.props.match.params;
-    const { typeset } = this.props.location;
+  constructor(props) {
+    super(props);
+    this.projectService = new ProjectService();
 
-    console.log(typeset);
+    this.state = {
+      name: "",
+      fontFamily: "",
+      fontSize: 1,
+      fontWeight: null,
+      lineHeight: 1,
+      letterSpacing: 0,
+      uppercase: false
+    };
+
+    this.uppercaseValue = "none"
+  }
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ ...this.state, [name]: value });
+    console.log(this.state);
+  };
+  
+  handleCheckbox = e  => {
+    let uppercase = !this.state.uppercase;
+    this.setState({ ...this.state, uppercase: uppercase }); 
+    this.uppercaseValue = !this.state.uppercase ?  'uppercase' : 'none'
+  }
+
+  render() {
+    const { path, styleName } = this.props.match.params;
+    const { typeset } = this.props.location;
+    const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing} = this.state;
+
+    console.log(this.uppercaseValue)
     return (
       <section className="section">
         <div className="container columns">
           <div className="column is-third">
             <div className="side-menu">
               <BrandHeader
-                title="Text Styles"
-                subtitle="Heading 1"
+                title={styleName}
+                subtitle="Text Styles"
                 {...this.props}
                 url={`/project/${path}/edit/textStyles`}
               ></BrandHeader>
@@ -27,10 +57,11 @@ export default class NewTextStyle extends Component {
                   </label>
                   <div className="control">
                     {typeset && (
-                      <select className="select large" name="fontFamily">
+                      <select className="select large" name="fontFamily" onChange={this.handleChange}>
+                        <option value="Select font family" selected disabled={this.props.defaultDisabled ? true : null}>Select a font family</option>
                         {typeset.map(font => {
                           return (
-                            <option value="font.fontFamily">
+                            <option value={font.fontFamily}>
                               {font.fontFamily}
                             </option>
                           );
@@ -49,12 +80,13 @@ export default class NewTextStyle extends Component {
                     Font Weight:
                   </label>
                   <div className="control">
-                      <select className="select large" name="fontWeight">
-                       <option value="100">Light</option>
-                       <option value="400">Regular</option>
-                       <option value="500">Semibold</option>
-                       <option value="600">Bold</option>
-                      </select>
+                    <select className="select large" name="fontWeight" onChange={this.handleChange}>
+                      <option value="100">Light</option>
+                      <option value="400">Regular</option>
+                      <option value="500">Semibold</option>
+                      <option value="600">Bold</option>
+                      <option value="800">Black</option>
+                    </select>
 
                     {/* for this to work right i will new to now what font family is 
                     going to be in user, and retrieve the weights avaibable for it from Google
@@ -63,42 +95,73 @@ export default class NewTextStyle extends Component {
                 </div>
 
                 <div className="field">
-                    <label htmlFor="fontSize" className="label">
-                        Font Size:
-                    </label>
-                    <div className="control">
-                        <input type="range" name="fontSize" minLength="1" maxLength="10"/>
-                        <span>Result in rem</span>
-                    </div>
+                  <label htmlFor="fontSize" className="label">
+                    Font Size:
+                  </label>
+                  <div className="control">
+                    <input
+                      type="range"
+                      name="fontSize"
+                      min="1"
+                      max="12"
+                      step="0.25"
+                      value={fontSize}
+                      onChange={this.handleChange}
+                    />
+                    <span>{fontSize} rem</span>
+                  </div>
                 </div>
 
                 <div className="field">
-                    <label htmlFor="lineHeight" className="label">
-                        Line Height: 
-                    </label>
-                    <div className="control">
-                        <input type="range" name="lineHeight" minLength="0" maxLength="2" steps="20"/>
-                        <span>Result</span>
-                    </div>
+                  <label htmlFor="lineHeight" className="label">
+                    Line Height:
+                  </label>
+                  <div className="control">
+                    <input
+                      type="range"
+                      name="lineHeight"
+                      value={lineHeight}
+                      onChange={this.handleChange}
+                      min="0"
+                      max="2"
+                      step="0.1"
+                    />
+                    <span>{lineHeight}</span>
+                  </div>
                 </div>
 
                 <div className="field">
-                    <label htmlFor="letterSpacing" className="label">
-                        Letter Spacing
-                    </label>
-                    <div className="control">
-                        <input type="range" name="letterSpacing" minLength="0" maxLength="5" steps="5"/>
-                        <span>Result</span>
-                    </div>
+                  <label htmlFor="letterSpacing" className="label">
+                    Letter Spacing
+                  </label>
+                  <div className="control">
+                    <input
+                      type="range"
+                      name="letterSpacing"
+                      min="-0.25"
+                      max="0.25"
+                      step="0.1"
+                      value={letterSpacing}
+                      onChange={this.handleChange}
+                    />
+                    <span>{letterSpacing} rem</span>
+                  </div>
                 </div>
 
                 <div className="field">
-                    <div className="control">
-                        <input type="checkbox"/>
-                        <span>Text to uppercase</span>
-                    </div>
+                  <div className="control">
+                    <input type="checkbox" name="uppercase" onChange={this.handleCheckbox}/>
+                    <span>Text to uppercase</span>
+                  </div>
                 </div>
 
+                <div className="preview style box">
+                  
+                  <p style={{ fontFamily, fontSize: `${fontSize}rem`, fontWeight, lineHeight, letterSpacing: `${letterSpacing}rem`, textTransform: this.uppercaseValue }}>
+                    Lorem ipsum dolor sit amet 
+                    consecteteur adipiscing elit
+                  </p>
+                </div>
 
                 <div className="control">
                   <input
