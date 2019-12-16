@@ -254,5 +254,12 @@ router.get("/textstyle/:styleId?", (req, res, next) => {
     });
 });
 
+router.post(`/newProject/:projectPath`, (req, res,next) => {
+  const projectPath = req.params.projectPath
+
+  console.log(projectPath)
+  Project.findOne({path: projectPath})
+  .then(project => console.log(project))
+});
 
 module.exports = router;

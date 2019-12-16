@@ -16,7 +16,7 @@ export default class MainContent extends Component {
     const {path} = this.props;
     console.log(path)
 
-    // this.projectService.createNewRow(path)
+    this.projectService.createNewRow(path)
     // .then(()  => {
 
     // }, error => console.log(error))

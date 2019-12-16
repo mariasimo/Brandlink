@@ -73,7 +73,7 @@ export default class EditProject extends Component {
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
         >
-          Holi
+          
         </MainContent>
         </ >
     );

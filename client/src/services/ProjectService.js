@@ -73,7 +73,6 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
-
   addTypeToTypeSet = updateProjectParams => {
     const { fontFamily, type, path } = updateProjectParams;
     console.log(fontFamily, type, path)
@@ -84,7 +83,6 @@ class ProjectService {
       })
       .catch(error => console.error(error));
   };
-
 
   deleteType = (typeId) => {
     return this.instance.delete(`/type/${typeId}`)
@@ -145,6 +143,14 @@ class ProjectService {
     })
     .catch(error => console.error(error));
   }
+
+  createNewRow = projectPath => {
+    console.log(projectPath)
+    return this.instance
+      .post(`/newProject/${projectPath}`)
+      .then(res => Promise.resolve(res.data))
+      .catch(error => console.error(error));
+  };
 
 }
 
