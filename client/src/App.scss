@@ -39,6 +39,10 @@ html {
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
+.App{
+  position: relative;
+}
+
 body {
   font-size: 18px
 }
@@ -169,8 +173,9 @@ body {
 
 .side-menu{
   width: 28%;
+  background-color: $white;
   border-right: 1px solid $grey-lightest;
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -178,9 +183,14 @@ body {
   z-index: 9999;
   overflow: auto;
   padding-right: 4rem;
-  padding-top: 6rem;
+  padding-top: 1rem;
   box-shadow: 0 0 4px $grey-lightest;
   transition: left ease-in-out 0.3s;
+
+  .navbar-item{
+    padding: 0;
+    margin-bottom: 4rem
+  }
 
   .side-menu-header{
     margin-bottom: 2rem;
@@ -203,6 +213,7 @@ body {
 }
 
 .main-content{
+  margin-top: 3.5rem;
   height: 100%;
   transition: margin-left ease-in-out 0.3s;
 
@@ -219,6 +230,14 @@ body {
   border: 0;
   outline: 0;
   cursor:pointer;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 4rem;
+  top: 0
 }
 
 .navbar-brand{
@@ -246,5 +265,41 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+.rows-container{
+  .column{
+    border-top: 1px solid $grey-light;
+    border-bottom: 1px solid $grey-light;
+    border-radius: 0px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.row{
+      padding: 4rem;
+      position: relative;
+
+      .close{
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity ease-in-out 0.3s;
+      }
+
+      &:hover{
+        .close{
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
   }
 }

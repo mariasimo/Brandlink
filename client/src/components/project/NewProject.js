@@ -99,12 +99,7 @@ export default class NewProject extends React.Component {
           </div>
         </form>
       </SideMenu>
-      <MainContent
-          toggleMenu={this.props.toggleMenu}
-          menuIsOpen={this.props.menuIsOpen}
-        >
-          Holi
-        </MainContent>
+      {/* Aqui tiene que haber un main content adaptado, porque aún no existe el proyecto*/}
         </ >
     );
   }

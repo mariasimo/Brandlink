@@ -13,26 +13,15 @@ export default class Navbar extends Component {
 
     return (
       <nav className='navbar' role='navigation' aria-label='main navigation'>
+        
         <div className='navbar-brand'>
-          {!user && (
             <Link to='/' className='navbar-item'>
               <img
-                src={`http://localhost:3000//logo.png`}
+                src={`http://localhost:3000/logo.png`}
                 height='24'
                 alt='BrandLink'
               ></img>
             </Link>
-          )}
-
-          {user && (
-            <Link to={`/panel/${user.username}`} className='navbar-item'>
-              <img
-                src={`http://localhost:3000//logo.png`}
-                height='24'
-                alt='BrandLink'
-              ></img>
-            </Link>
-          )}
         </div>
 
         <div id='navbarBasicExample' className='navbar-menu is-active'>

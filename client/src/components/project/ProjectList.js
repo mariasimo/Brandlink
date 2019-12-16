@@ -45,8 +45,8 @@ export default class ProjectList extends React.Component {
     const { projects } = this.state;        
     return (
       <div>
-        <section className="section">
-          <div className="container columns">
+        <section className="section main-content">
+          <div className="columns">
             <div className="column is-third">
               <div className="hero">
                   <h2 className="title is-1">All Projects</h2>

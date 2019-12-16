@@ -98,8 +98,9 @@ export default class TextStyles extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
+          path={this.props.match.params.path}
         >
-          Holi
+          
         </MainContent>
         </ >
     );

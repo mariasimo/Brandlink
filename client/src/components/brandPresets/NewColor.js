@@ -147,12 +147,13 @@ export default class NewColor extends Component {
           </div>
         </form>
       </SideMenu>
-              <MainContent
-              toggleMenu={this.props.toggleMenu}
-              menuIsOpen={this.props.menuIsOpen}
-            >
-              Holi
-            </MainContent>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+          path={this.props.match.params.path}
+        >
+          
+        </MainContent>
             </ >
     );
   }
