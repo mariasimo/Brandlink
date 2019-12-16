@@ -49,10 +49,18 @@ body {
   }
 }
 
-.hero {
-  padding: 2rem 3rem;
+.auth-section{
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  
+  .container{
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    margin: 0 auto
+  }
 }
-
 .form-container {
   border: 1px solid $grey-light;
   padding: 2rem 3rem;
@@ -215,6 +223,8 @@ body {
 
 .navbar-brand{
   width: 28%;
+  text-align: center;
+  padding: 0 4rem;
 }
 
 .back-projects-link{

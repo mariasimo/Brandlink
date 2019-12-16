@@ -3,6 +3,7 @@ import Dropzone from "react-dropzone";
 import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
 
 
 export default class Assets extends Component {
@@ -90,7 +91,8 @@ export default class Assets extends Component {
     const { assets } = this.state;
     const { path } = this.props.match.params;
     return (
-      <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
+      <React.Fragment>
+        <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
         <BrandHeader
                 title="Assets Library"
                 {...this.props}
@@ -148,6 +150,12 @@ export default class Assets extends Component {
                 </div>
               </div>
       </SideMenu>
+      <div className={`section main-content ${this.props.menuIsOpen}`}
+        style={{ backgroundColor: 'grey' }}
+      >
+          {this.props.children}
+      </div>
+      </React.Fragment>
     );
   }
 }

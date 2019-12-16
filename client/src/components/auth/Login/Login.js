@@ -39,7 +39,8 @@ export default class Login extends React.Component {
   render() {
     const { username, password } = this.state;
     return (
-      <div className="container columns">
+      <section className="section auth-section">
+        <div className="container columns">
         <div className="column is-half">
           {/* todo Here goes another component for the left para of the screen */}
           <Hero></Hero>
@@ -85,6 +86,7 @@ export default class Login extends React.Component {
           </form>
         </div>
       </div>
+      </section>
     );
   }
 }
