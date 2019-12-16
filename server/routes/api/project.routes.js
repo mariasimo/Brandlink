@@ -260,7 +260,9 @@ router.post(`/newProject/:projectPath`, (req, res,next) => {
   if(req.body.layout === "is-full"){
     Project.findOneAndUpdate(
       { path: projectPath },
-      { $push: { rows: { name : "Content Row", layout: 'is-full', content: [{slot: "is-full"}]} } },
+      { $push: { rows: { 
+        layout: 'is-full', 
+        content: [{slot: "is-full"}]} } },
       { new: true }
     ).then(projectUpdated => {
       res.status(200).json(projectUpdated);
@@ -271,7 +273,6 @@ router.post(`/newProject/:projectPath`, (req, res,next) => {
     Project.findOneAndUpdate(
       { path: projectPath },
       { $push: { rows: { 
-        name : "Content Row", 
         layout: 'is-half', 
         content:[ {slot: "is-half"}, {slot: "is-half"}]} } },
       { new: true }
@@ -280,13 +281,12 @@ router.post(`/newProject/:projectPath`, (req, res,next) => {
     });
   }
 
-  if(req.body.layout === "is-third"){
+  if(req.body.layout === "is-one-third"){
     Project.findOneAndUpdate(
       { path: projectPath },
       { $push: { rows: { 
-        name : "Content Row", 
-        layout: 'is-third', 
-        content:[ {slot: "is-third"}, {slot: "is-third"}, {slot: "is-third"}]} } },
+        layout: 'is-one-third', 
+        content:[ {slot: "is-one-third"}, {slot: "is-one-third"}, {slot: "is-one-third"}]} } },
       { new: true }
     ).then(projectUpdated => {
       res.status(200).json(projectUpdated);
