@@ -24,7 +24,8 @@ const projectSchema = new Schema({
       letterSpacing : {type: Number},
       uppercase: {type: Boolean}
     }
-  ]
+  ],
+  rows : [{}]
 }, {
   timestamps: true,
   toJSON: {

@@ -18,7 +18,8 @@ const projects = [
     colorPalette: [],
     typeset: [],
     assets: [],
-    textstyles: []
+    textstyles: [],
+    rows : []
   },
   {
     title: "Projecto 2",
@@ -26,7 +27,8 @@ const projects = [
     colorPalette: [],
     typeset: [],
     assets: [],
-    textstyles: []
+    textstyles: [],
+    rows : []
   },
   {
     title: "Projecto 3",
@@ -34,7 +36,8 @@ const projects = [
     colorPalette: [],
     typeset: [],
     assets: [],
-    textstyles: []
+    textstyles: [],
+    rows : []
   },
   {
     title: "Projecto 4",
@@ -42,7 +45,8 @@ const projects = [
     colorPalette: [],
     typeset: [],
     assets: [],
-    textstyles: []
+    textstyles: [],
+    rows : []
   }
 ];
 
@@ -58,36 +62,6 @@ const users = [
     projects: []
 
   }
-//   {
-//     username: "Carmen",
-//     password: "123",
-//     projects: []
-
-//   },
-//   {
-//     username: "Julio",
-//     password: "123",
-//     projects: []
-
-//   },
-//   {
-//     username: "Ana",
-//     password: "123",
-//     projects: []
-
-//   },
-//   {
-//     username: "Juan",
-//     password: "123",
-//     projects: []
-
-//   },
-//   {
-//     username: "Carla",
-//     password: "123",
-//     projects: []
-
-//   }
 ];
 
 //   Hash password before insert in db

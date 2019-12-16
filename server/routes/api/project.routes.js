@@ -258,8 +258,14 @@ router.post(`/newProject/:projectPath`, (req, res,next) => {
   const projectPath = req.params.projectPath
 
   console.log(projectPath)
-  Project.findOne({path: projectPath})
-  .then(project => console.log(project))
+  Project.findOneAndUpdate(
+    { path: projectPath },
+    { $push: { rows: {name : "Content Row"} } },
+    { new: true }
+  ).then(projectUpdated => {
+    console.log(projectUpdated)
+    res.status(200).json(projectUpdated);
+  });
 });
 
 module.exports = router;
