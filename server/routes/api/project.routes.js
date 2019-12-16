@@ -257,21 +257,46 @@ router.get("/textstyle/:styleId?", (req, res, next) => {
 router.post(`/newProject/:projectPath`, (req, res,next) => {
   const projectPath = req.params.projectPath
 
-  console.log(projectPath)
-  Project.findOneAndUpdate(
-    { path: projectPath },
-    { $push: { rows: { name : "Content Row"} } },
-    { new: true }
-  ).then(projectUpdated => {
-    console.log(projectUpdated)
-    res.status(200).json(projectUpdated);
-  });
+  if(req.body.layout === "is-full"){
+    Project.findOneAndUpdate(
+      { path: projectPath },
+      { $push: { rows: { name : "Content Row", layout: 'is-full', content: [{slot: "is-full"}]} } },
+      { new: true }
+    ).then(projectUpdated => {
+      res.status(200).json(projectUpdated);
+    });
+  }
+
+  if(req.body.layout === "is-half"){
+    Project.findOneAndUpdate(
+      { path: projectPath },
+      { $push: { rows: { 
+        name : "Content Row", 
+        layout: 'is-half', 
+        content:[ {slot: "is-half"}, {slot: "is-half"}]} } },
+      { new: true }
+    ).then(projectUpdated => {
+      res.status(200).json(projectUpdated);
+    });
+  }
+
+  if(req.body.layout === "is-third"){
+    Project.findOneAndUpdate(
+      { path: projectPath },
+      { $push: { rows: { 
+        name : "Content Row", 
+        layout: 'is-third', 
+        content:[ {slot: "is-third"}, {slot: "is-third"}, {slot: "is-third"}]} } },
+      { new: true }
+    ).then(projectUpdated => {
+      res.status(200).json(projectUpdated);
+    });
+  }
+  
 });
 
 router.delete("/rows/:rowId", (req, res, next) => {
   const { rowId } = req.params;
-
-  console.log(rowId)
 
   Project.findOneAndUpdate(
     { rows: { $elemMatch: { _id: rowId } } },

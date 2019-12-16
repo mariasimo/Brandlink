@@ -20,16 +20,17 @@ export default class MainContent extends Component {
     });
   };
 
-  addNewRow = () => {
+  addNewRow = (layout) => {
     const { path } = this.props;
-
-    this.projectService.createNewRow(path).then(
+  
+    this.projectService.createNewRow({path, layout: layout})
+    .then(
       projectWithRowAdded => {
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
         });
-
+        
         console.log(this.state);
       },
       error => console.log(error)
@@ -63,7 +64,9 @@ export default class MainContent extends Component {
             this.state.rows.map(row => (
               <div key={row._id} className='column is-full row'>
                 <a>{row.name}</a>
-               
+
+
+               {row.content.map(object => {return object.slot})}
                 <div class='dropdown is-hoverable'>
                   <div class='dropdown-trigger'>
                     <button
@@ -100,10 +103,9 @@ export default class MainContent extends Component {
 
           <div className='column is-full'>
             <a>Add new row</a>
-            <button className='button' onClick={this.addNewRow}>
-              {' '}
-              Add new row
-            </button>
+            <button className='button' onClick={() => this.addNewRow('is-full')}>Add new is-full row</button>
+            <button className='button' onClick={() => this.addNewRow('is-half')}>Add new is-half row</button>
+            <button className='button' onClick={() => this.addNewRow('is-third')}>Add new is-third row</button>
           </div>
         </section>
       </div>

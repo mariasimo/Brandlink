@@ -144,15 +144,15 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
-  createNewRow = projectPath => {
+  createNewRow = rowParams => {
+    const {path, layout} = rowParams
     return this.instance
-      .post(`/newProject/${projectPath}`)
+      .post(`/newProject/${path}`, {layout})
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   };
 
   deleteRow = (rowId) => {
-
     console.log(rowId)
     return this.instance.delete(`/rows/${rowId}`)
     .then(res => {
