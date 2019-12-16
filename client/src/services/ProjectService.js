@@ -21,7 +21,7 @@ class ProjectService {
   };
 
   fetchOneProject = (projectPath) => {
-    
+    console.log(projectPath)
     return this.instance.get(`${projectPath}`)
       .then(res => {
         return Promise.resolve(res.data)

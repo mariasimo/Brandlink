@@ -36,6 +36,7 @@ router.get("/:projectPath", (req, res, next) => {
 
   Project.findOne({ path: path })
     .then(projectFound => {
+      console.log(projectFound)
       res.status(200).json(projectFound);
     })
     .catch(error => {

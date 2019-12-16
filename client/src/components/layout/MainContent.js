@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ProjectService from '../../services/ProjectService';
+import { Content, ColorPalette } from '../project/Content';
 
 export default class MainContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: []
     };
     this.projectService = new ProjectService();
   }
@@ -15,8 +15,8 @@ export default class MainContent extends Component {
     this.projectService.fetchOneProject(path).then(project => {
       this.setState({
         ...this.state,
-        rows: project.rows
-      });
+        ...project
+      })
     });
   };
 
@@ -29,8 +29,6 @@ export default class MainContent extends Component {
           ...this.state,
           rows: projectWithRowAdded.rows
         });
-
-        console.log(this.state);
       },
       error => console.log(error)
     );
@@ -49,6 +47,28 @@ export default class MainContent extends Component {
     );
   };
 
+  addContent = (typeOfContent, slotDOMId) => {
+
+    const slot = document.querySelector(`#${slotDOMId}`)
+    console.log(slot)
+    console.log(this.state[typeOfContent])
+
+    
+    const { path } = this.props;
+    this.projectService.fetchOneProject(path).then(project => {
+      this.setState({
+        ...this.state,
+        ...project
+      })
+      if(!this.state[typeOfContent].length){
+        slot.innerHTML="Donde vas con mantón de manila"
+      }   
+
+    });
+
+
+  }
+
   componentDidMount() {
     this.fetchOneProject();
   }
@@ -60,12 +80,13 @@ export default class MainContent extends Component {
       >
         <section class='section rows-container is-paddingless	'>
           {this.state.rows &&
-            this.state.rows.map(row => (
+            this.state.rows.map((row,rowIdx) => (
               <div key={row._id} className='columns is-multiline is-marginless'>
                 {/* <a>{row.name}</a> */}
 
-                {row.content.map(object => (
-                  <div class={`${row.layout} column row slot`}>
+                {row.content.map((slot, slotIdx) => (
+                  <div key={slot._id} id={`slot-${rowIdx}-${slotIdx}`} class={`${row.layout} column row slot`}>
+                    {slot._id}
                     <div class='dropdown is-hoverable'>
                       <div class='dropdown-trigger'>
                         <button
@@ -89,16 +110,16 @@ export default class MainContent extends Component {
                         <div class='dropdown-content'>
                           <div class='dropdown-item'>
                             <div>
-                              <button className='button'>Text editor</button>
+                              <button onClick={this.addContent} className='button'>Text editor</button>
                             </div>
                             <div>
-                              <button className='button'>Color Palette</button>
+                              <button onClick={()=>this.addContent("colorPalette", `slot-${rowIdx}-${slotIdx}`)} className='button'>Color Palette</button>
                             </div>
                             <div>
-                              <button className='button'>Image</button>
+                              <button onClick={this.addContent} className='button'>Image</button>
                             </div>
                             <div>
-                              <button className='button'>
+                              <button onClick={this.addContent} className='button'>
                                 Typography display
                               </button>
                             </div>
