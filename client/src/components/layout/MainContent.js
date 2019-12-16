@@ -20,17 +20,16 @@ export default class MainContent extends Component {
     });
   };
 
-  addNewRow = (layout) => {
+  addNewRow = layout => {
     const { path } = this.props;
-  
-    this.projectService.createNewRow({path, layout: layout})
-    .then(
+
+    this.projectService.createNewRow({ path, layout: layout }).then(
       projectWithRowAdded => {
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
         });
-        
+
         console.log(this.state);
       },
       error => console.log(error)
@@ -62,36 +61,53 @@ export default class MainContent extends Component {
         <section class='section rows-container is-paddingless	'>
           {this.state.rows &&
             this.state.rows.map(row => (
-              <div key={row._id} className='column is-full row'>
-                <a>{row.name}</a>
+              <div key={row._id} className='columns is-multiline is-marginless'>
+                {/* <a>{row.name}</a> */}
 
-
-               {row.content.map(object => {return object.slot})}
-                <div class='dropdown is-hoverable'>
-                  <div class='dropdown-trigger'>
-                    <button
-                      class='button'
-                      aria-haspopup='true'
-                      aria-controls='dropdown-menu4'
-                    >
-                      <span>Now add content to this thing</span>
-                      <span class='icon is-small'>
-                      <img src={`${process.env.REACT_APP_URL}/chevron-down.svg`}></img> 
-                      </span>
-                    </button>
-                  </div>
-                  <div class='dropdown-menu' id='dropdown-menu4' role='menu'>
-                    <div class='dropdown-content'>
-                      <div class='dropdown-item'>
-                        <div><button className="button">Text editor</button></div>
-                        <div><button className="button">Color Palette</button></div>
-                        <div><button className="button">Image</button></div>
-                        <div><button className="button">Typography display</button></div>
+                {row.content.map(object => (
+                  <div class={`${row.layout} column row slot`}>
+                    <div class='dropdown is-hoverable'>
+                      <div class='dropdown-trigger'>
+                        <button
+                          class='button'
+                          aria-haspopup='true'
+                          aria-controls='dropdown-menu4'
+                        >
+                          <span>Add content</span>
+                          <span class='icon is-small'>
+                            <img
+                              src={`${process.env.REACT_APP_URL}/chevron-down.svg`}
+                            ></img>
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class='dropdown-menu'
+                        id='dropdown-menu4'
+                        role='menu'
+                      >
+                        <div class='dropdown-content'>
+                          <div class='dropdown-item'>
+                            <div>
+                              <button className='button'>Text editor</button>
+                            </div>
+                            <div>
+                              <button className='button'>Color Palette</button>
+                            </div>
+                            <div>
+                              <button className='button'>Image</button>
+                            </div>
+                            <div>
+                              <button className='button'>
+                                Typography display
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
+                ))}
                 <button
                   className='close'
                   onClick={() => this.deleteRow(row._id)}
@@ -100,12 +116,29 @@ export default class MainContent extends Component {
                 </button>
               </div>
             ))}
+            
 
-          <div className='column is-full'>
-            <a>Add new row</a>
-            <button className='button' onClick={() => this.addNewRow('is-full')}>Add new is-full row</button>
-            <button className='button' onClick={() => this.addNewRow('is-half')}>Add new is-half row</button>
-            <button className='button' onClick={() => this.addNewRow('is-third')}>Add new is-third row</button>
+          <div className='column is-full layout-btn-container'>
+            <a className="header">Add new row</a>
+            <div className='inner'>
+              <div class='layout-btn' onClick={() => this.addNewRow('is-full')}>
+                <img src={`${process.env.REACT_APP_URL}/full.svg`}></img>
+                Full
+              </div>
+
+              <div class='layout-btn' onClick={() => this.addNewRow('is-half')}>
+                <img src={`${process.env.REACT_APP_URL}/half.svg`}></img>
+                Half
+              </div>
+
+              <div
+                class='layout-btn'
+                onClick={() => this.addNewRow('is-one-third')}
+              >
+                <img src={`${process.env.REACT_APP_URL}/third.svg`}></img>
+                Third
+              </div>
+            </div>
           </div>
         </section>
       </div>

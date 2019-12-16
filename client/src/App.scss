@@ -269,9 +269,28 @@ body {
 }
 
 .rows-container{
+  .columns{
+    position: relative;
+    .close{
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity ease-in-out 0.3s;
+    }
+  
+    &:hover{
+      .close{
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
   .column{
-    border-top: 1px solid $grey-light;
-    border-bottom: 1px solid $grey-light;
+    border: 1px solid $grey-lightest;
+    margin: -1;
     border-radius: 0px;
     box-sizing: border-box;
 
@@ -283,23 +302,28 @@ body {
     &.row{
       padding: 4rem;
       position: relative;
+    }
+  }
 
-      .close{
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity ease-in-out 0.3s;
-      }
+  .layout-btn-container{
+    width: 100%;
 
-      &:hover{
-        .close{
-          visibility: visible;
-          opacity: 1;
-        }
-      }
+    .header {
+      margin-bottom: 2rem;
+    }    
+
+    .inner{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+
+    .layout-btn{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     }
   }
 }

@@ -28,7 +28,7 @@ const projectSchema = new Schema({
   rows : [{
     _id: { type: Schema.ObjectId, auto: true }, 
     layout: String,
-    content: [{}]
+    content: [{_id: { type: Schema.ObjectId, auto: true }}]
   }]
 }, {
   timestamps: true,
