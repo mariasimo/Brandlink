@@ -260,12 +260,27 @@ router.post(`/newProject/:projectPath`, (req, res,next) => {
   console.log(projectPath)
   Project.findOneAndUpdate(
     { path: projectPath },
-    { $push: { rows: {name : "Content Row"} } },
+    { $push: { rows: { name : "Content Row"} } },
     { new: true }
   ).then(projectUpdated => {
     console.log(projectUpdated)
     res.status(200).json(projectUpdated);
   });
 });
+
+router.delete("/rows/:rowId", (req, res, next) => {
+  const { rowId } = req.params;
+
+  console.log(rowId)
+
+  Project.findOneAndUpdate(
+    { rows: { $elemMatch: { _id: rowId } } },
+    { $pull: { rows: {_id: rowId}},
+    new : true }
+  ).then(rowRemoveFromProject => {
+    res.status(200).json(rowRemoveFromProject);
+  });
+});
+
 
 module.exports = router;

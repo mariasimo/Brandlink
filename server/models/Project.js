@@ -25,7 +25,7 @@ const projectSchema = new Schema({
       uppercase: {type: Boolean}
     }
   ],
-  rows : [{}]
+  rows : [{_id: { type: Schema.ObjectId, auto: true }, name: String}]
 }, {
   timestamps: true,
   toJSON: {
