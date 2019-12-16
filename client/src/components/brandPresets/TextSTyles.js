@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ProjectService from '../../services/ProjectService';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
+import MainContent from '../layout/MainContent';
 
 export default class TextStyles extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class TextStyles extends Component {
     const { textstyles } = this.state;
 
     return (
+      < >
       <SideMenu
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
@@ -93,6 +95,13 @@ export default class TextStyles extends Component {
                 </div> */}
         </div>
       </SideMenu>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          Holi
+        </MainContent>
+        </ >
     );
   }
 }

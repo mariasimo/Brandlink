@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
 
 export default class NewTextStyle extends Component {
   constructor(props) {
@@ -97,6 +98,7 @@ export default class NewTextStyle extends Component {
     } = this.state.textstyle;
 
     return (
+      < >
       <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>
             <BrandHeader
                 title={name}
@@ -252,6 +254,13 @@ export default class NewTextStyle extends Component {
                 </div>
               </form>
       </SideMenu>
+              <MainContent
+              toggleMenu={this.props.toggleMenu}
+              menuIsOpen={this.props.menuIsOpen}
+            >
+              Holi
+            </MainContent>
+            </ >
     );
   }
 }

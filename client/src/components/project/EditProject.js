@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
 import ProjectService from "../../services/ProjectService";
+import MainContent from '../layout/MainContent';
 
 export default class EditProject extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class EditProject extends Component {
 
   render() {
     return (
+      < >
       <SideMenu
       toggleMenu={this.props.toggleMenu}
       menuIsOpen={this.props.menuIsOpen}
@@ -66,6 +68,13 @@ export default class EditProject extends Component {
           </li>
         </ul>
       </SideMenu>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          Holi
+        </MainContent>
+        </ >
     );
   }
 }

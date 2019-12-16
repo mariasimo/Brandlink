@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ProjectService from '../../services/ProjectService';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
+import MainContent from '../layout/MainContent';
 
 export default class TypeSet extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ export default class TypeSet extends Component {
     console.log(typeset)
 
     return (
+      < >
       <SideMenu
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
@@ -105,6 +107,13 @@ export default class TypeSet extends Component {
 
           
       </SideMenu>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          Holi
+        </MainContent>
+        </ >
     );
   }
 }

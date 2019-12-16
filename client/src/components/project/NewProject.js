@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectService from '../../services/ProjectService';
 import SideMenu from '../layout/SideMenu';
 import BrandHeader from '../layout/BrandHeader';
+import MainContent from '../layout/MainContent';
 
 export default class NewProject extends React.Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class NewProject extends React.Component {
     const user = this.props.loggedInUser;
 
     return (
+      < >
       <SideMenu
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
@@ -97,6 +99,13 @@ export default class NewProject extends React.Component {
           </div>
         </form>
       </SideMenu>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          Holi
+        </MainContent>
+        </ >
     );
   }
 }

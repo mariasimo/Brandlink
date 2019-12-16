@@ -4,6 +4,7 @@ import MyFontPicker from "../utils/MyFontPicker";
 import BrandHeader from "../layout/BrandHeader";
 import AdobeFontsImporter from "../utils/AdobeFontsImporter";
 import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
 
 export default class NewType extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ export default class NewType extends Component {
     const { source, path } = this.props.match.params;
 
     return (
+      < >
       <SideMenu
         toggleMenu={this.props.toggleMenu}
         menuIsOpen={this.props.menuIsOpen}
@@ -63,6 +65,13 @@ export default class NewType extends Component {
         )}
       </div>
       </SideMenu>
+      <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          Holi
+        </MainContent>
+      </ >
     );
   }
 }

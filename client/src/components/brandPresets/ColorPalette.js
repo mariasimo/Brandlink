@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import ProjectService from '../../services/ProjectService';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
+import TextEditor from '../utils/TextEditor';
+import MainContent from '../layout/MainContent';
 
 export default class ColorPalette extends Component {
   constructor(props) {
@@ -106,12 +108,12 @@ export default class ColorPalette extends Component {
             </div>
           </div>
         </SideMenu>
-        <div
-          className={`section main-content ${this.props.menuIsOpen}`}
-          style={{ backgroundColor: 'grey' }}
+        <MainContent
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
         >
-          The other part
-        </div>
+          Holi
+        </MainContent>
       </>
     );
   }
