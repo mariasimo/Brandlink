@@ -25,23 +25,19 @@ const projectSchema = new Schema({
       uppercase: {type: Boolean}
     }
   ],
-  rows : [{
-    _id: { type: Schema.ObjectId, auto: true }, 
-    layout: String,
-    content: [{_id: { type: Schema.ObjectId, auto: true }}]
-  }]
+  rows : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rows' }]
 }, {
   timestamps: true,
-  toJSON: {
-    transform: (doc, ret) => {
-      ret.id = doc._id;
-      delete ret._id;
-      delete ret.__v;
-      // delete ret.password;
-      delete ret.createdAt;
-      return ret;
-    }
-  }
+  // toJSON: {
+  //   transform: (doc, ret) => {
+  //     ret.id = doc._id;
+  //     delete ret._id;
+  //     delete ret.__v;
+  //     // delete ret.password;
+  //     delete ret.createdAt;
+  //     return ret;
+  //   }
+  // }
 });
 
 projectSchema.pre("save", function(next) {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ProjectService from '../../services/ProjectService';
-import { Content, ColorPalette } from '../project/Content';
 
 export default class MainContent extends Component {
   constructor(props) {
@@ -22,9 +21,9 @@ export default class MainContent extends Component {
 
   addNewRow = layout => {
     const { path } = this.props;
-
     this.projectService.createNewRow({ path, layout: layout }).then(
       projectWithRowAdded => {
+        console.log(projectWithRowAdded)
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
@@ -47,30 +46,26 @@ export default class MainContent extends Component {
     );
   };
 
-  addContent = (typeOfContent, slotDOMId) => {
+  // addContent = (typeOfContent, slotDOMId) => {
+  //   const slot = document.querySelector(`#${slotDOMId}`)
+  //   console.log(slot)
+  //   console.log(this.state[typeOfContent])
 
-    const slot = document.querySelector(`#${slotDOMId}`)
-    console.log(slot)
-    console.log(this.state[typeOfContent])
-
-    
-    const { path } = this.props;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      })
-      if(!this.state[typeOfContent].length){
-        slot.innerHTML="Donde vas con mantón de manila"
-      }   
-
-    });
-
-
-  }
+  //   const { path } = this.props;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     })
+  //     if(!this.state[typeOfContent].length){
+  //       slot.innerHTML="Donde vas con mantón de manila"
+  //     }
+  //   });
+  // }
 
   componentDidMount() {
     this.fetchOneProject();
+    console.log(this.state)
   }
 
   render() {
@@ -78,37 +73,31 @@ export default class MainContent extends Component {
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
       >
-        <section class='section rows-container is-paddingless	'>
+        <section className='section rows-container is-paddingless	'>
           {this.state.rows &&
             this.state.rows.map((row,rowIdx) => (
+             
               <div key={row._id} className='columns is-multiline is-marginless'>
-                {/* <a>{row.name}</a> */}
-
+                
                 {row.content.map((slot, slotIdx) => (
-                  <div key={slot._id} id={`slot-${rowIdx}-${slotIdx}`} class={`${row.layout} column row slot`}>
+                  <div key={slot._id} id={`slot-${rowIdx}-${slotIdx}`} className={`${row.layout} column row slot`}>
                     {slot._id}
-                    <div class='dropdown is-hoverable'>
-                      <div class='dropdown-trigger'>
-                        <button
-                          class='button'
-                          aria-haspopup='true'
-                          aria-controls='dropdown-menu4'
-                        >
-                          <span>Add content</span>
-                          <span class='icon is-small'>
-                            <img
-                              src={`${process.env.REACT_APP_URL}/chevron-down.svg`}
-                            ></img>
-                          </span>
-                        </button>
+                    <div className='dropdown is-hoverable'>
+                      <div className='dropdown-trigger'>
+                          <button className='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
+                            <span>Add content</span>
+                            <span className='icon is-small'>
+                              <img src={`${process.env.REACT_APP_URL}/chevron-down.svg`}></img>
+                            </span>
+                          </button>
                       </div>
                       <div
-                        class='dropdown-menu'
+                        className='dropdown-menu'
                         id='dropdown-menu4'
                         role='menu'
                       >
-                        <div class='dropdown-content'>
-                          <div class='dropdown-item'>
+                        <div className='dropdown-content'>
+                          <div className='dropdown-item'>
                             <div>
                               <button onClick={this.addContent} className='button'>Text editor</button>
                             </div>
@@ -142,18 +131,18 @@ export default class MainContent extends Component {
           <div className='column is-full layout-btn-container'>
             <a className="header">Add new row</a>
             <div className='inner'>
-              <div class='layout-btn' onClick={() => this.addNewRow('is-full')}>
+              <div className='layout-btn' onClick={() => this.addNewRow('is-full')}>
                 <img src={`${process.env.REACT_APP_URL}/full.svg`}></img>
                 Full
               </div>
 
-              <div class='layout-btn' onClick={() => this.addNewRow('is-half')}>
+              <div className='layout-btn' onClick={() => this.addNewRow('is-half')}>
                 <img src={`${process.env.REACT_APP_URL}/half.svg`}></img>
                 Half
               </div>
 
               <div
-                class='layout-btn'
+                className='layout-btn'
                 onClick={() => this.addNewRow('is-one-third')}
               >
                 <img src={`${process.env.REACT_APP_URL}/third.svg`}></img>

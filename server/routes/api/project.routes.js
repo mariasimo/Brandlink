@@ -4,6 +4,7 @@ const axios = require('axios');
 
 const Project = require("../../models/Project");
 const User = require("../../models/User");
+const Rows = require("../../models/Rows");
 
 const uploader = require('../../configs/cloudinary.config')
 
@@ -34,7 +35,7 @@ router.get("/getGoogleFonts", (req, res, next) => {
 router.get("/:projectPath", (req, res, next) => {
   const path = req.params.projectPath;
 
-  Project.findOne({ path: path })
+  Project.findOne({ path: path }).populate('rows')
     .then(projectFound => {
       console.log(projectFound)
       res.status(200).json(projectFound);
@@ -255,57 +256,82 @@ router.get("/textstyle/:styleId?", (req, res, next) => {
     });
 });
 
-router.post(`/newProject/:projectPath`, (req, res,next) => {
+router.post(`/newRow/:projectPath`, (req, res,next) => {
   const projectPath = req.params.projectPath
 
   if(req.body.layout === "is-full"){
-    Project.findOneAndUpdate(
+    Rows.create({
+      layout: 'is-full', 
+      content: [{slot: "is-full"}]
+    })
+    .then(newRow => {
+      return Project.findOneAndUpdate(
       { path: projectPath },
-      { $push: { rows: { 
-        layout: 'is-full', 
-        content: [{slot: "is-full"}]} } },
+      { $push: { rows: newRow._id } },
       { new: true }
-    ).then(projectUpdated => {
+    )
+    .populate('rows')
+    .then(projectUpdated => {
+      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
+      });
     });
   }
 
   if(req.body.layout === "is-half"){
-    Project.findOneAndUpdate(
+    Rows.create({
+      layout: 'is-half', 
+      content:[ {slot: "is-half"}, {slot: "is-half"}]
+    })
+    .then(newRow => {
+      return Project.findOneAndUpdate(
       { path: projectPath },
-      { $push: { rows: { 
-        layout: 'is-half', 
-        content:[ {slot: "is-half"}, {slot: "is-half"}]} } },
+      { $push: { rows: newRow._id } },
       { new: true }
-    ).then(projectUpdated => {
+    )
+    .populate('rows')
+    .then(projectUpdated => {
+      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
+      });
     });
   }
 
   if(req.body.layout === "is-one-third"){
-    Project.findOneAndUpdate(
+    Rows.create({
+      layout: 'is-one-third', 
+      content:[ {slot: "is-one-third"}, {slot: "is-one-third"}, {slot: "is-one-third"}]
+    })
+    .then(newRow => {
+      return Project.findOneAndUpdate(
       { path: projectPath },
-      { $push: { rows: { 
-        layout: 'is-one-third', 
-        content:[ {slot: "is-one-third"}, {slot: "is-one-third"}, {slot: "is-one-third"}]} } },
+      { $push: { rows: newRow._id } },
       { new: true }
-    ).then(projectUpdated => {
+    )
+    .populate('rows')
+    .then(projectUpdated => {
+      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
+      });
     });
   }
-  
+
 });
 
 router.delete("/rows/:rowId", (req, res, next) => {
   const { rowId } = req.params;
 
-  Project.findOneAndUpdate(
-    { rows: { $elemMatch: { _id: rowId } } },
-    { $pull: { rows: {_id: rowId}},
-    new : true }
-  ).then(rowRemoveFromProject => {
-    res.status(200).json(rowRemoveFromProject);
-  });
+  Rows.findByIdAndDelete({_id: rowId})
+  .then(deletedRow => {
+    return Project.findOneAndUpdate(
+      { rows: { $elemMatch: { _id: rowId } } },
+      { $pull: { rows: {_id: deletedRow._id}},
+      new : true }
+    ).then(rowRemovedFromProject => {
+      console.log(rowRemovedFromProject)
+      res.status(200).json(rowRemovedFromProject);
+    })
+  })
 });
 
 

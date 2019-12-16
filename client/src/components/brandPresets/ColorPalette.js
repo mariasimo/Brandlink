@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ProjectService from '../../services/ProjectService';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
-import TextEditor from '../utils/TextEditor';
 import MainContent from '../layout/MainContent';
 
 export default class ColorPalette extends Component {

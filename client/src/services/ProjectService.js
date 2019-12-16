@@ -21,7 +21,6 @@ class ProjectService {
   };
 
   fetchOneProject = (projectPath) => {
-    console.log(projectPath)
     return this.instance.get(`${projectPath}`)
       .then(res => {
         return Promise.resolve(res.data)
@@ -147,7 +146,7 @@ class ProjectService {
   createNewRow = rowParams => {
     const {path, layout} = rowParams
     return this.instance
-      .post(`/newProject/${path}`, {layout})
+      .post(`/newRow/${path}`, {layout})
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   };
