@@ -127,6 +127,20 @@ router.put("/edit/:id", (req, res, next) => {
   .catch(err => res.json(err))
 });
 
+router.put("/edit/addProject/:id", (req, res, next) => {
+  const { id } = req.params;
+  User.findByIdAndUpdate(
+    id,
+    {
+      activeProject:  req.body.path
+    },
+    { new: true }
+  ).then(userUpdated => {
+    console.log(userUpdated)
+    res.status(200).json(userUpdated);
+  })
+  .catch(err => res.json(err))
+});
 
 router.post('/upload', uploader.single('picture'), (req, res) => {
   if(req.file){

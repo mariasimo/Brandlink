@@ -86,6 +86,15 @@ export default class App extends React.Component {
     });
   };
 
+  setActiveProject = path => {
+    const {id} = this.state.user
+    this.authService.setActiveProject({path, id})
+    .then(userHasAnActiveProject => {
+      this.setUser(userHasAnActiveProject)
+      console.log(this.state)
+    })
+  }
+
   addFontsLinks = type => {
     const link = document.createElement("link");
     link.setAttribute(
@@ -137,6 +146,7 @@ export default class App extends React.Component {
                   <ProjectList
                     {...match}
                     setPath={this.setPath}
+                    setActiveProject={this.setActiveProject}
                     setUser={this.setUser}
                   />
                 )}

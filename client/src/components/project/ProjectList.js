@@ -56,7 +56,11 @@ export default class ProjectList extends React.Component {
 
               {projects &&
                 projects.map(project => (
-                  <Project key={project.id} project={project} deleteProject={(project) => this.deleteProject(project)} setPath={(path) => this.props.setPath(path)}></Project>
+                  <Project key={project.id} project={project} 
+                  deleteProject={(project) => this.deleteProject(project)} 
+                  setPath={(path) => this.props.setPath(path)}
+                  setActiveProject={(path) => this.props.setActiveProject(path)}
+                  ></Project>
                 ))}
 
               {(projects === null || projects === [] || !projects) && (

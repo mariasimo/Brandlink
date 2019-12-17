@@ -27,6 +27,7 @@ export default class EditProject extends Component {
 
   componentDidMount(){
     this.fetchOneProject();
+    console.log(this.props.loggedInUser)
   }
 
   render() {

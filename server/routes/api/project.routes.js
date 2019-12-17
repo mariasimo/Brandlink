@@ -24,7 +24,6 @@ router.get("/", (req, res, next) => {
 router.get("/getGoogleFonts", (req, res, next) => {
   axios.get('https://typekit.com/api/v1/json/kits/gnh6ghd/?token=0bb2988cbd31ce44bda853c78df227e26a0d86c8')
   .then(fonts => {
-    console.log(fonts.data)
     res.status(200).json(fonts);
   })
   .catch(error => {
@@ -37,7 +36,6 @@ router.get("/:projectPath", (req, res, next) => {
 
   Project.findOne({ path: path }).populate('rows')
     .then(projectFound => {
-      console.log(projectFound)
       res.status(200).json(projectFound);
     })
     .catch(error => {
@@ -101,9 +99,6 @@ router.delete("/:id", (req, res, next) => {
 router.put("/color/:path/:id?", (req, res, next) => {
   const { path, id } = req.params;
 
-  console.log(req.body);
-  console.log("Enters here: " + path, id);
-
   if (id === "undefined") {
     Project.findOneAndUpdate(
       { path },
@@ -118,7 +113,6 @@ router.put("/color/:path/:id?", (req, res, next) => {
       { "colorPalette.$": req.body },
       { new: true }
     ).then(projectUpdated => {
-      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
     });
   }
@@ -157,9 +151,6 @@ router.delete("/color/:colorId", (req, res, next) => {
 router.put("/type/:path", (req, res, next) => {
   const { path, id } = req.params;
 
-  console.log(req.body);
-  console.log("Enters here: " + path);
-
   Project.findOneAndUpdate(
       { path },
       { $push: { typeset: req.body } },
@@ -189,7 +180,6 @@ router.delete("/type/:typeId", (req, res, next) => {
 router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
   const {path} = req.params
 
-  console.log(req.file)
   if(req.file){
     Project.findOneAndUpdate(
       { path }, 
@@ -219,8 +209,6 @@ router.delete("/assets/:assetId", (req, res, next) => {
 router.put("/textStyle/:path/:styleId?", (req, res, next) => {
   const { path, styleId } = req.params;
 
-  console.log(req.body);
-  console.log("Enters here: " + path, styleId);
 
   // todo: definir qué ocurre cuando ya existe en la base de datos
   // if (id === "undefined") {
@@ -237,7 +225,6 @@ router.put("/textStyle/:path/:styleId?", (req, res, next) => {
       { "textstyles.$": req.body },
       { new: true }
     ).then(projectUpdated => {
-      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
     });
   // }
@@ -272,7 +259,6 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
     )
     .populate('rows')
     .then(projectUpdated => {
-      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
       });
     });
@@ -291,7 +277,6 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
     )
     .populate('rows')
     .then(projectUpdated => {
-      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
       });
     });
@@ -310,7 +295,6 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
     )
     .populate('rows')
     .then(projectUpdated => {
-      console.log(projectUpdated)
       res.status(200).json(projectUpdated);
       });
     });
@@ -328,7 +312,6 @@ router.delete("/rows/:rowId", (req, res, next) => {
       { $pull: { rows: {_id: deletedRow._id}},
       new : true }
     ).then(rowRemovedFromProject => {
-      console.log(rowRemovedFromProject)
       res.status(200).json(rowRemovedFromProject);
     })
   })
@@ -357,7 +340,6 @@ router.put('/rows/:rowId', (req, res,next) => {
         strict : false,}
       )
       .then(slotUpdated => {
-        console.log(slotUpdated)
         res.status(200).json(slotUpdated);
       })
   

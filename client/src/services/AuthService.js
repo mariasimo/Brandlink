@@ -50,6 +50,18 @@ class AuthService {
     .then(res => Promise.resolve(res.data))
     .catch(error => console.error(error))
   }
+
+  setActiveProject = (projectData) => {
+    const {path, id} = projectData;
+
+    console.log(path, id)
+    return this.instance.put(`/edit/addProject/${id}`, {path})
+    .then(res => {
+      return Promise.resolve(res.data)
+    })
+    .catch(error => console.error(error))
+  }
+
 }
 
 export default AuthService
