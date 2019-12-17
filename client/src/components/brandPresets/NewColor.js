@@ -151,6 +151,7 @@ export default class NewColor extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
+          user={this.props.loggedInUser}
         >
           
         </MainContent>

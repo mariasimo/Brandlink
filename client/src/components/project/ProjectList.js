@@ -55,8 +55,8 @@ export default class ProjectList extends React.Component {
             <div className="column is-two-thirds projects-wrapper">
 
               {projects &&
-                projects.map(project => (
-                  <Project key={project.id} project={project} 
+                projects.map((project, idx) => (
+                  <Project key={idx} project={project} 
                   deleteProject={(project) => this.deleteProject(project)} 
                   setPath={(path) => this.props.setPath(path)}
                   setActiveProject={(path) => this.props.setActiveProject(path)}

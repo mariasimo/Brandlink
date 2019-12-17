@@ -4,10 +4,13 @@ import ProjectService from '../../services/ProjectService';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
 import MainContent from '../layout/MainContent';
+import AuthService from "../../services/AuthService";
+
 
 export default class ColorPalette extends Component {
   constructor(props) {
     super(props);
+    this.authService = new AuthService();
     this.projectService = new ProjectService();
     this.state = {
       path: '',
@@ -16,22 +19,22 @@ export default class ColorPalette extends Component {
     };
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-
-    this.projectService.fetchOneProject(path).then(project => {
+  displayColorPalette = () => {
+    const userId = this.props.loggedInUser.id
+    this.projectService.displayColorPalette(userId)
+    .then(colorPalette => {
       this.setState({
         ...this.state,
-        ...project
-      });
-    });
-  };
+        colorPalette
+      })
+    })
+  }
 
   deleteColor = colorId => {
     console.log('Delete method in component color palette' + colorId);
     this.projectService.deleteColor(colorId).then(
       project => {
-        this.fetchOneProject(project.path);
+        this.displayColorPalette()
       },
       error => {
         const { message } = error;
@@ -41,7 +44,7 @@ export default class ColorPalette extends Component {
   };
 
   componentDidMount() {
-    this.fetchOneProject();
+    this.displayColorPalette();
   }
 
   render() {
@@ -111,6 +114,7 @@ export default class ColorPalette extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
+          user={this.props.loggedInUser}
         >
           
         </MainContent>

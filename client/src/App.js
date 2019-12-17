@@ -160,6 +160,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 />
+
               <PrivateRoute
                 exact
                 path="/project/:path/edit"

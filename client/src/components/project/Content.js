@@ -18,8 +18,8 @@ export class Content extends Component {
       <p>You have no colors declared in your palette. <a href={`/project/${path}/edit/ColorPalette/new`}>Add one</a></p>}
     
       {slot.colorPalette.length && 
-     slot.colorPalette.map(color => 
-        <div className='color'>
+     slot.colorPalette.map((color, idx) => 
+        <div className='color' key={idx}>
         <div
           className='circle-color'
           style={{ backgroundColor: color.hexadecimal }}

@@ -15,19 +15,18 @@ export default class EditProject extends Component {
     };
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      });
-    });
-  };
+  // fetchOneProject = () => {
+  //   const path = this.props.match.params.path;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     });
+  //   });
+  // };
 
   componentDidMount(){
-    this.fetchOneProject();
-    console.log(this.props.loggedInUser)
+    // this.fetchOneProject();
   }
 
   render() {
@@ -73,6 +72,7 @@ export default class EditProject extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
+          user={this.props.loggedInUser}
         >
           
         </MainContent>

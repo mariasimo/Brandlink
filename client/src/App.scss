@@ -238,13 +238,18 @@ body {
   width: 100%;
   border-bottom: 1px solid lightgray;
   margin-bottom: 4rem;
-  top: 0
+  top: 0;
+  display: flex;
 }
 
 .navbar-brand{
   width: 28%;
   text-align: center;
   padding: 0 4rem;
+}
+
+.navbar-menu{
+  display: inline-flex;
 }
 
 .back-projects-link{
@@ -324,6 +329,7 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
     }
     }
   }

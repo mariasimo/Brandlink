@@ -20,13 +20,21 @@ class ProjectService {
       .catch(error => console.error(error));
   };
 
-  fetchOneProject = (projectPath) => {
-    return this.instance.get(`${projectPath}`)
-      .then(res => {
-        return Promise.resolve(res.data)
-      })
-      .catch(error => console.error(error));
-  };
+  displayRows = userId => {
+    return this.instance.get(`/rows/${userId}`)
+    .then(res =>  {
+      return Promise.resolve(res.data)
+    })
+    .catch(error => console.error(error));
+  }
+
+  displayColorPalette = userId => {
+    return this.instance.get(`/colorPalette/${userId}`)
+    .then(res =>  {
+      return Promise.resolve(res.data)
+    })
+    .catch(error => console.error(error));
+  }
 
   createProject = project => {
     return this.instance
@@ -64,7 +72,6 @@ class ProjectService {
 
 
   deleteColor = (colorId) => {
-    console.log("Service" + colorId)
     return this.instance.delete(`/color/${colorId}`)
     .then(res => {
       return Promise.resolve(res.data);
@@ -74,7 +81,6 @@ class ProjectService {
 
   addTypeToTypeSet = updateProjectParams => {
     const { fontFamily, type, path } = updateProjectParams;
-    console.log(fontFamily, type, path)
     return this.instance
       .put(`/type/${path}`, { fontFamily, type })
       .then(res => {
@@ -92,7 +98,6 @@ class ProjectService {
   }
 
   getGoogleFonts = () => {
-    console.log("service")
     return this.instance
       .get("/getGoogleFonts")
       .then(res => {
@@ -144,14 +149,14 @@ class ProjectService {
   }
 
   createNewRow = rowParams => {
-    const {path, layout} = rowParams
+    const {layout, userId} = rowParams
     return this.instance
-      .post(`/newRow/${path}`, {layout})
+      .post(`/newRow/${userId}/`, {layout})
       .then(res => Promise.resolve(res.data))
       .catch(error => console.error(error));
   };
 
-  deleteRow = (rowId) => {
+  deleteRow = (userId, rowId) => {
     console.log(rowId)
     return this.instance.delete(`/rows/${rowId}`)
     .then(res => {
@@ -161,8 +166,8 @@ class ProjectService {
   }
 
   updateRow = rowParams => {
-    const {typeOfContent, rowId, path, slotIdx} = rowParams
-    return this.instance.put(`/rows/${rowId}`, {typeOfContent, path, slotIdx})
+    const {userId, type, rowId, slotIdx} = rowParams
+    return this.instance.put(`/rows/${rowId}`, {userId, type, slotIdx})
     .then(res => {
       return Promise.resolve(res.data)
     })
