@@ -52,11 +52,13 @@ app.use(cors({
   origin: ['http://localhost:3000']
 }));
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 const index = require('./routes');
 app.use('/', index);
+
+// Config Heroku
+app.use((req, res) => {     res.sendFile(__dirname + "/public/index.html");    });
 
 module.exports = app;
