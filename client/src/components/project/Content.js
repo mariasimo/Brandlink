@@ -5,11 +5,28 @@ export class Content extends Component {
     super(props)
   }
 
+  componentDidMount() {
+
+  }
+
   render() {
-    console.log("props content")
-    console.log(this.props.slot)
+    const { path, slot }  = this.props
     return (
-    <div>Generic content</div>
+    <div>Generic content: {slot.order}
+
+      {!slot.colorPalette.length && 
+      <p>You have no colors declared in your palette. <a href={`/project/${path}/edit/ColorPalette/new`}>Add one</a></p>}
+    
+      {slot.colorPalette.length && 
+     slot.colorPalette.map(color => 
+        <div className='color'>
+        <div
+          className='circle-color'
+          style={{ backgroundColor: color.hexadecimal }}
+        ></div>
+        <span>{color.name}</span>
+        </div>)}
+    </div>
     );
   }
 }

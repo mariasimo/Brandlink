@@ -23,7 +23,6 @@ export default class MainContent extends Component {
     const { path } = this.props;
     this.projectService.createNewRow({ path, layout: layout }).then(
       projectWithRowAdded => {
-        console.log(projectWithRowAdded);
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
@@ -34,7 +33,6 @@ export default class MainContent extends Component {
   };
 
   deleteRow = rowId => {
-    console.log(rowId);
     this.projectService.deleteRow(rowId).then(
       project => {
         this.fetchOneProject();
@@ -52,7 +50,6 @@ export default class MainContent extends Component {
     this.projectService
       .updateRow({ typeOfContent, rowId, path, slotIdx })
       .then(rowUpdated => {
-        console.log(rowUpdated)
         this.fetchOneProject();
 
       });
@@ -60,11 +57,9 @@ export default class MainContent extends Component {
 
   componentDidMount() {
     this.fetchOneProject();
-    console.log(this.state);
   }
 
   render() {
-    console.log(this.state.rows)
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}

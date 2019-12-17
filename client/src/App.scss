@@ -135,18 +135,19 @@ body {
       text-transform: capitalize;
     }
   }
-  .circle-color{
-    border: 1px solid $grey-light;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    height: 56px;
-    width: 56px
-  }  
 
   .is-grouped a:first-child{
     margin-right: 0.5rem;
   }
 }
+
+.circle-color{
+  border: 1px solid $grey-light;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  height: 56px;
+  width: 56px
+}  
 
 .preview-text{
   margin: 1.5rem 0;
