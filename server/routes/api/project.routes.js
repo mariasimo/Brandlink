@@ -262,7 +262,7 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
   if(req.body.layout === "is-full"){
     Rows.create({
       layout: 'is-full', 
-      content: [{slot: "is-full"}]
+      slots: ["is-full"]
     })
     .then(newRow => {
       return Project.findOneAndUpdate(
@@ -281,12 +281,12 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
   if(req.body.layout === "is-half"){
     Rows.create({
       layout: 'is-half', 
-      content:[ {slot: "is-half"}, {slot: "is-half"}]
+      slots:[ "is-half", "is-half"]
     })
     .then(newRow => {
       return Project.findOneAndUpdate(
       { path: projectPath },
-      { $push: { rows: newRow._id } },
+      { $push: { rows: newRow._id} },
       { new: true }
     )
     .populate('rows')
@@ -300,7 +300,7 @@ router.post(`/newRow/:projectPath`, (req, res,next) => {
   if(req.body.layout === "is-one-third"){
     Rows.create({
       layout: 'is-one-third', 
-      content:[ {slot: "is-one-third"}, {slot: "is-one-third"}, {slot: "is-one-third"}]
+      slots:[ "is-one-third", "is-one-third", "is-one-third"]
     })
     .then(newRow => {
       return Project.findOneAndUpdate(
@@ -333,6 +333,76 @@ router.delete("/rows/:rowId", (req, res, next) => {
     })
   })
 });
+
+
+router.put('/rows/:rowId', (req, res,next) => {
+    const { rowId } = req.params;
+    const {typeOfContent, path} = req.body
+
+    Project.findOne({path})
+    .then(foundProject => {
+        
+        let newObject = {
+          colorPalette: foundProject.colorPalette,
+        }
+
+        return newObject;
+    })
+    .then(newObject => {
+      Rows.findByIdAndUpdate({_id: rowId},
+        {$push : {content: {newObject}}},
+        {returnNewDocument: true,
+        new : true,
+        strict : false,}
+      )
+      .then(slotUpdated => {
+        console.log(slotUpdated)
+      })
+  
+    })
+})
+
+// router.put('/rows/:rowId', (req,res,next)=> {
+//   const { rowId } = req.params;
+//   const {typeOfContent, path} = req.body
+//   // let rowObjectId = mongoose.Types.ObjectId(rowId)
+
+
+
+//   Project.findOne({ path })
+//   .then(foundProject => {
+
+//     Rows.findById({_id: rowId})
+//     .then(foundRow => {
+//       let newObject = {
+//         colorPalette: foundProject.colorPalette,
+//         slot: foundRow.content[0].slot
+//       }
+
+//       Rows.findByIdAndUpdate({_id: rowId},
+//         {$set : {newObject}},
+//         {returnNewDocument: true,
+//         new : true,
+//         strict : false,}
+//       )
+//       .then(slotUpdated => {
+//         console.log(slotUpdated)
+//       })
+//     })
+//   })
+// })
+
+
+  // return Rows.findByIdAndUpdate(
+  //   {_id: rowId},
+  //   {$set : {"content.$": newObject}}
+  // ).then(slotUpdated => {
+  //   console.log(slotUpdated)
+  //   // res.status(200).json(textstylesData);
+  // })
+
+
+
 
 
 module.exports = router;

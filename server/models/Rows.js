@@ -4,7 +4,10 @@ const Schema   = mongoose.Schema;
 const rowSchema = new Schema({
     _id: { type: Schema.ObjectId, auto: true }, 
     layout: String,
-    content: [{_id: { type: Schema.ObjectId, auto: true }}]
+    slots: [],
+    content: []
+}, {
+   strict: false 
 }, {
   timestamps: true,
   // toJSON: {

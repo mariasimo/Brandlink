@@ -160,6 +160,14 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
+  updateRow = rowParams => {
+    const {typeOfContent, rowId, path} = rowParams
+
+    console.log(rowParams)
+
+    return this.instance.put(`/rows/${rowId}`, {typeOfContent, path})
+    .then(res => console.log(res))
+  }
 
 }
 

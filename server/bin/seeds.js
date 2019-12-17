@@ -6,6 +6,7 @@
 const mongoose = require("mongoose");
 const Users = require("../models/User");
 const Projects = require("../models/Project");
+const Rows = require("../models/Rows");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
@@ -75,48 +76,52 @@ users.map(user => {
 let projectsArr = [];
 
 
-Projects.deleteMany()
+Rows.deleteMany()
 .then(() => {
-    return Projects.create(projects)
-})
-.then(projectsCreated => {
-
-    projectsCreated.forEach(project => {
-        projectsArr.push(project._id)
-    })
-
-    return Users.deleteMany()
-})
-.then(() => {
-
-    return  Users.create(users)
-})
-.then(usersCreated => {
-
-    let projectsForUser;
-
-    usersCreated.forEach(user => {
-        // This assing two projects form original array to every user
-        projectsArr = projectsArr.sort(() => 0.5 - Math.random())
-        projectsForUser = projectsArr.slice(0, 2)
-
-        projectsForUser.forEach(projectU => {
-            projectsArr = projectsArr.filter(projectA => projectA !== projectU)
-        })
-
-        // console.log(`User ${user.username} has created projects ${projectsForUser}`)
-        // console.log(`These are the projects that remain to be assigned ${projectsArr}`)
-
-        Users.findByIdAndUpdate(user._id, {
-            $push: {projects: projectsForUser}
-        })
-        .then(payload => {
-            console.log("Database was seed")
-            console.log(payload)
-            process.exit(0)
-        })
-        .catch(err => console.log(err))
-    })
-})
+  Projects.deleteMany()
+  .then(() => {
+      return Projects.create(projects)
+  })
+  .then(projectsCreated => {
+  
+      projectsCreated.forEach(project => {
+          projectsArr.push(project._id)
+      })
+  
+      return Users.deleteMany()
+  })
+  .then(() => {
+  
+      return  Users.create(users)
+  })
+  .then(usersCreated => {
+  
+      let projectsForUser;
+  
+      usersCreated.forEach(user => {
+          // This assing two projects form original array to every user
+          projectsArr = projectsArr.sort(() => 0.5 - Math.random())
+          projectsForUser = projectsArr.slice(0, 2)
+  
+          projectsForUser.forEach(projectU => {
+              projectsArr = projectsArr.filter(projectA => projectA !== projectU)
+          })
+  
+          // console.log(`User ${user.username} has created projects ${projectsForUser}`)
+          // console.log(`These are the projects that remain to be assigned ${projectsArr}`)
+  
+          Users.findByIdAndUpdate(user._id, {
+              $push: {projects: projectsForUser}
+          })
+          .then(payload => {
+              console.log("Database was seed")
+              console.log(payload)
+              process.exit(0)
+          })
+          .catch(err => console.log(err))
+      })
+  })
+  
+});
 
 

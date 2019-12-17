@@ -46,22 +46,12 @@ export default class MainContent extends Component {
     );
   };
 
-  // addContent = (typeOfContent, slotDOMId) => {
-  //   const slot = document.querySelector(`#${slotDOMId}`)
-  //   console.log(slot)
-  //   console.log(this.state[typeOfContent])
+  addContent = (typeOfContent, rowId) => {
+    const { path } = this.props;
 
-  //   const { path } = this.props;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     })
-  //     if(!this.state[typeOfContent].length){
-  //       slot.innerHTML="Donde vas con mantón de manila"
-  //     }
-  //   });
-  // }
+    this.projectService.updateRow({typeOfContent, rowId, path})
+    .then(rowUpdated => console.log(rowUpdated))
+  }
 
   componentDidMount() {
     this.fetchOneProject();
@@ -74,48 +64,55 @@ export default class MainContent extends Component {
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
       >
         <section className='section rows-container is-paddingless	'>
+         
           {this.state.rows &&
             this.state.rows.map((row,rowIdx) => (
              
               <div key={row._id} className='columns is-multiline is-marginless'>
                 
-                {row.content.map((slot, slotIdx) => (
-                  <div key={slot._id} id={`slot-${rowIdx}-${slotIdx}`} className={`${row.layout} column row slot`}>
-                    {slot._id}
-                    <div className='dropdown is-hoverable'>
-                      <div className='dropdown-trigger'>
-                          <button className='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
-                            <span>Add content</span>
-                            <span className='icon is-small'>
-                              <img src={`${process.env.REACT_APP_URL}/chevron-down.svg`}></img>
-                            </span>
-                          </button>
-                      </div>
-                      <div
-                        className='dropdown-menu'
-                        id='dropdown-menu4'
-                        role='menu'
-                      >
-                        <div className='dropdown-content'>
-                          <div className='dropdown-item'>
-                            <div>
-                              <button onClick={this.addContent} className='button'>Text editor</button>
-                            </div>
-                            <div>
-                              <button onClick={()=>this.addContent("colorPalette", `slot-${rowIdx}-${slotIdx}`)} className='button'>Color Palette</button>
-                            </div>
-                            <div>
-                              <button onClick={this.addContent} className='button'>Image</button>
-                            </div>
-                            <div>
-                              <button onClick={this.addContent} className='button'>
-                                Typography display
+                {row.slots.map((slot, slotIdx) => (
+                  <div key={slotIdx} id={`slot-${rowIdx}-${slotIdx}`} className={`${row.layout} column row slot`}>
+
+                        {/* If row content is empty, show dropdown menu */}
+                        {/* Make this component later */}
+                        <div className='dropdown is-hoverable'>
+                          <div className='dropdown-trigger'>
+                              <button className='button' aria-haspopup='true' aria-controls='dropdown-menu4'>
+                                <span>Add content</span>
+                                <span className='icon is-small'>
+                                  <img src={`${process.env.REACT_APP_URL}/chevron-down.svg`}></img>
+                                </span>
                               </button>
+                          </div>
+                          <div
+                            className='dropdown-menu'
+                            id='dropdown-menu4'
+                            role='menu'
+                          >
+                            <div className='dropdown-content'>
+                              <div className='dropdown-item'>
+                                <div>
+                                  <button onClick={this.addContent} className='button'>Text editor</button>
+                                </div>
+                                <div>
+                                  <button onClick={()=>this.addContent("colorPalette", row._id)} className='button'>Color Palette</button>
+                                </div>
+                                <div>
+                                  <button onClick={this.addContent} className='button'>Image</button>
+                                </div>
+                                <div>
+                                  <button onClick={this.addContent} className='button'>
+                                    Typography display
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+
+                        {/* If there'is content in the slot */}
+                        {/* Print component with slot data */}
+                        
                   </div>
                 ))}
                 <button
