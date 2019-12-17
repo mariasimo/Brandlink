@@ -161,12 +161,11 @@ class ProjectService {
   }
 
   updateRow = rowParams => {
-    const {typeOfContent, rowId, path} = rowParams
-
-    console.log(rowParams)
-
-    return this.instance.put(`/rows/${rowId}`, {typeOfContent, path})
-    .then(res => console.log(res))
+    const {typeOfContent, rowId, path, slotIdx} = rowParams
+    return this.instance.put(`/rows/${rowId}`, {typeOfContent, path, slotIdx})
+    .then(res => {
+      return Promise.resolve(res.data)
+    })
   }
 
 }

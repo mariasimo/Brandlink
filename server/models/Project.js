@@ -16,7 +16,7 @@ const projectSchema = new Schema({
   ],
   textstyles : [
     {
-      name: {type: String, required: true, unique: true},
+      name: { type: String },
       fontFamily: {type: String}, //Just can be one of the fonts added previously
       fontWeight: {type: Number},
       fontSize: {type: Number},

@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 
 export class Content extends Component {
+  constructor(props){
+    super(props)
+  }
+
   render() {
-    return <div>Generic content</div>;
+    console.log("props content")
+    console.log(this.props.slot)
+    return (
+    <div>Generic content</div>
+    );
   }
 }
 

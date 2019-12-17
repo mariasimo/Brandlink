@@ -337,26 +337,28 @@ router.delete("/rows/:rowId", (req, res, next) => {
 
 router.put('/rows/:rowId', (req, res,next) => {
     const { rowId } = req.params;
-    const {typeOfContent, path} = req.body
+    const {typeOfContent, path, slotIdx} = req.body
 
     Project.findOne({path})
     .then(foundProject => {
-        
+    
         let newObject = {
           colorPalette: foundProject.colorPalette,
+          order: slotIdx
         }
 
         return newObject;
     })
     .then(newObject => {
       Rows.findByIdAndUpdate({_id: rowId},
-        {$push : {content: {newObject}}},
+        {$push : {content: {...newObject}}},
         {returnNewDocument: true,
         new : true,
         strict : false,}
       )
       .then(slotUpdated => {
         console.log(slotUpdated)
+        res.status(200).json(slotUpdated);
       })
   
     })
