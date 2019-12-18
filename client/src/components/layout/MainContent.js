@@ -49,6 +49,8 @@ export default class MainContent extends Component {
     const path = this.props.path;
     const { colorPalette } = this.props;
 
+    console.log(colorPalette)
+
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
@@ -77,7 +79,7 @@ export default class MainContent extends Component {
                          </div>
                       ))}
 
-                      {!colorPalette && <div>Add your first color</div>}
+                      {!colorPalette.length && <div>Add your first color. <a href={`/project/${path}/edit/colorPalette/new`}>New color</a></div>}
                       </React.Fragment>
                     )}
 
