@@ -91,6 +91,7 @@ router.get('/colorPalette/:userId', (req, res, next) => {
   User.findById({ _id: userId }).then(user => {
     Project.findOne({ path: user.activeProject })
       .then(project => {
+        console.log(project.colorPalette)
         res.status(200).json(project.colorPalette);
       })
       .catch(error => {
@@ -359,30 +360,18 @@ router.delete('/rows/:userId/:rowId', (req, res, next) => {
 
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
-  const { userId, type, slotIdx } = req.body;
+  const { slotIdx } = req.body;
 
-  User.findById({_id: userId})
-  .then(user => {
-    Project.findOne({path: user.activeProject})
-    .then(foundProject => {
-      console.log(foundProject)
-      let newObject = {
-        colorPalette: foundProject.colorPalette,
-        order: slotIdx,
-        type: colorPalette,
-      };
-      return newObject;
-    })
-    .then(newObject => {
+  console.log(rowId)
+  
       Rows.findByIdAndUpdate(
         { _id: rowId },
-        { $push: { content: { ...newObject } } },
+        { $push: { content: { type: 'colorPalette' } } },
         { returnNewDocument: true, new: true, strict: false }
       ).then(slotUpdated => {
+        console.log(slotUpdated)
         res.status(200).json(slotUpdated);
       });
-    });
-  })
 });
 
 module.exports = router;

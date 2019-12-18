@@ -165,14 +165,14 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
-  updateRow = rowParams => {
-    const {userId, type, rowId, slotIdx} = rowParams
-    return this.instance.put(`/rows/${rowId}`, {userId, type, slotIdx})
+  addContent = rowParams => {
+    const {rowId, slotIdx} = rowParams
+    console.log(rowId)
+    return this.instance.put(`/rows/${rowId}`, {slotIdx})
     .then(res => {
       return Promise.resolve(res.data)
     })
   }
-
 }
 
 export default ProjectService;

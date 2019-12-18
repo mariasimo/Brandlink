@@ -11,22 +11,21 @@ export default class MainContent extends Component {
   }
 
   displayRows = () => {
-    const userId = this.props.user.id
+    const userId = this.props.user.id;
 
-    this.projectService.displayRows(userId)
-    .then(rows => {
+    this.projectService.displayRows(userId).then(rows => {
       this.setState({
         ...this.state,
         rows: rows
-      })
+      });
 
-      console.log(this.state)
-    })
-  }
+      console.log(this.state);
+    });
+  };
 
   addNewRow = layout => {
-    const userId = this.props.user.id
-    this.projectService.createNewRow({layout, userId }).then(
+    const userId = this.props.user.id;
+    this.projectService.createNewRow({ layout, userId }).then(
       projectWithRowAdded => {
         this.setState({
           ...this.state,
@@ -37,70 +36,76 @@ export default class MainContent extends Component {
     );
   };
 
-  // deleteRow = rowId => {
-  //   this.projectService.deleteRow(rowId).then(
-  //     project => {
-  //       console.log(project)
-  //       this.fetchOneProject()
-  //     },
-  //     error => {
-  //       const { message } = error;
-  //       console.error(message);
-  //     }
-  //   );
-  // };
-
-  addContent = (type, rowId, slotIdx) => {
-    const userId = this.props.user.id
-
-    console.log(type, rowId, slotIdx)
-
-    this.projectService
-      .updateRow({ userId, type, rowId, slotIdx })
-      .then(rowUpdated => {
-        console.log("rowUpdated")
-        this.displayRows()
-      });
-  };
+  addContent = (rowId, slotIdx) => {
+    console.log(rowId, slotIdx)
+    this.projectService.addContent({rowId, slotIdx})
+    .then(payload => {
+      console.log(payload)
+      this.displayRows()
+    })
+  }
 
   componentDidMount() {
     this.displayRows()
   }
 
   render() {
-    const path = this.props.path
+    const path = this.props.path;
+    const { colorPalette } = this.props;
 
+    console.log(colorPalette)
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
       >
         <section className='section rows-container is-paddingless	'>
-
-        {this.state.rows &&
-          this.state.rows.map((row, rowIdx) => (
-          <div key={row._id} className='columns is-multiline is-marginless'>
-            {row.slots.map((slot, slotIdx) =>(
-              <div
-                key={slotIdx}
-                id={`slot-${rowIdx}-${slotIdx}`}
-                className={`${row.layout} column row slot`}
-              >
-                    
-                  {row.content[slotIdx] &&
-                  <Content slot={row.content[slotIdx]} path={path}></Content>}
-
-                  {!row.content[slotIdx] && 
-                    <Dropdown row={row} slotIdx={slotIdx} addContent={(type, rowId, slotIdx) =>this.addContent(type, rowId, slotIdx)}></Dropdown>
-                  }
+          {this.state.rows &&
+            this.state.rows.map((row, rowIdx) => (
+              <div key={row._id} className='columns is-multiline is-marginless'>
                 
-              </div>          
-            ))}
+                {row.slots.map((slot, slotIdx) => (
+                  <div
+                    key={slotIdx}
+                    id={`slot-${rowIdx}-${slotIdx}`}
+                    className={`${row.layout} column row slot`}
+                  >
 
-            <button className='close' onClick={() => this.deleteRow(row._id)}>Cerrar</button>
-          </div>
-        ))}
-          
-        
+                    {row.content[slotIdx] && (
+                      <React.Fragment>
+                      {colorPalette && colorPalette.map(color => (
+                          <div className='color'>
+                            <div
+                              className='circle-color'
+                              style={{ backgroundColor: color.hexadecimal }}
+                            ></div>
+                            <span>{color.name}</span>
+                         </div>
+                      ))}
+
+                      {!colorPalette && <div>Add your first color</div>}
+                      </React.Fragment>
+                    )}
+
+                    {!row.content[slotIdx] && 
+                      <button
+                      onClick={(slodIdx) => this.addContent(row._id, slotIdx)}
+                      className='button'
+                      >
+                        Color Palette
+                      </button>
+                    }
+                
+                  </div>
+                ))}
+
+                <button
+                  className='close'
+                  onClick={() => this.deleteRow(row._id)}
+                >
+                  Cerrar
+                </button>
+              </div>
+            ))}
 
           <div className='column is-full layout-btn-container'>
             <a className='header'>Add new row</a>

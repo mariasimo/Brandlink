@@ -111,12 +111,11 @@ export default class ColorPalette extends Component {
           </div>
         </SideMenu>
         <MainContent
+          colorPalette={colorPalette}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
           user={this.props.loggedInUser}
         >
-          
         </MainContent>
       </>
     );

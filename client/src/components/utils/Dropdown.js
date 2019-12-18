@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 export default class Dropdown extends Component {
     render() {
         const {row, slotIdx} = this.props
-        console.log(this.props)
         return (
             <div className='dropdown is-hoverable'>
                       <div className='dropdown-trigger'>
@@ -38,7 +37,7 @@ export default class Dropdown extends Component {
                             <div>
                               <button
                                 onClick={() =>
-                                  this.props.addContent('colorPalette', row._id, slotIdx)
+                                  this.props.addContent()
                                 }
                                 className='button'
                               >

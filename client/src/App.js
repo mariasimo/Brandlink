@@ -28,7 +28,6 @@ export default class App extends React.Component {
     this.projectService = new ProjectService();
     this.state = {
       user: null,
-      activeProject: "",
       menuIsOpen: "show"
     };
   }
@@ -72,20 +71,6 @@ export default class App extends React.Component {
       .catch(err => console.log(err));
   };
 
-  setPath = path => {
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        activeProject: project
-      });
-
-      // this.addFontsLinks()
-      this.state.activeProject.typeset.map(type => {
-        this.addFontsLinks(type.fontFamily);
-      });
-    });
-  };
-
   setActiveProject = path => {
     const {id} = this.state.user
     this.authService.setActiveProject({path, id})
@@ -115,7 +100,7 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    const { user, activeProject, menuIsOpen } = this.state;
+    const { user, menuIsOpen } = this.state;
 
     return (
       <div className="App">
@@ -165,8 +150,6 @@ export default class App extends React.Component {
                 exact
                 path="/project/:path/edit"
                 user={user}
-                activeProject={activeProject}
-                title={activeProject.title}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 component={EditProject}
