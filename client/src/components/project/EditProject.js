@@ -30,7 +30,7 @@ export default class EditProject extends Component {
   }
 
   render() {
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets} = this.props;
 
     return (
       < >
@@ -76,6 +76,7 @@ export default class EditProject extends Component {
           colorPalette={colorPalette}
           typeset={typeset}
           user={this.props.loggedInUser}
+          assets={assets}
         >
           
         </MainContent>

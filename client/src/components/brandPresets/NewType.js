@@ -22,7 +22,7 @@ export default class NewType extends Component {
 
   render() {
     const { source, path } = this.props.match.params;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets } = this.props;
 
     console.log(this.props)
 
@@ -64,6 +64,7 @@ export default class NewType extends Component {
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
           typeset={typeset}
+          assets={assets}
         >
           
         </MainContent>

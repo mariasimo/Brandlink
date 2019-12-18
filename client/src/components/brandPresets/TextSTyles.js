@@ -34,7 +34,7 @@ export default class TextStyles extends Component {
   render() {
     const { path } = this.props.match.params;
     const { textstyles } = this.state;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets } = this.props;
 
     return (
       < >
@@ -102,6 +102,7 @@ export default class TextStyles extends Component {
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
           typeset={typeset}
+          assets={assets}
         >
           
         </MainContent>

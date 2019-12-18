@@ -94,7 +94,7 @@ export default class NewTextStyle extends Component {
       lineHeight,
       letterSpacing
     } = this.state.textstyle;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets} = this.props;
 
     return (
       < >
@@ -259,6 +259,7 @@ export default class NewTextStyle extends Component {
           path={this.props.match.params.path}
           colorPalette={colorPalette}
           typeset={typeset}
+          assets={assets}
         >
           
         </MainContent>

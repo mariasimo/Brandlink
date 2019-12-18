@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProjectService from '../../services/ProjectService';
 import { Content } from '../project/Content';
 import Dropdown from '../utils/Dropdown';
+import Dropzone from 'react-dropzone';
 
 export default class MainContent extends Component {
   constructor(props) {
@@ -40,13 +41,21 @@ export default class MainContent extends Component {
     });
   };
 
+
+  handleUpload = file => {
+
+    console.log(file)
+
+    // this.props.addAsset({uploadData, path})
+  };
+
   componentDidMount() {
     this.displayRows();
   }
 
   render() {
     const path = this.props.user.activeProject;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets } = this.props;
 
     return (
       <div
@@ -64,6 +73,40 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
+
+                        {row.content[slotIdx].type === 'assets' && (
+                          <>
+                            {assets &&
+
+                              <Dropzone
+                              onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}
+                              >
+                              {({ getRootProps, getInputProps }) => (
+                                <section class='file-label'>
+                                  <div {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    <p>
+                                      Drag 'n' drop some files here, or click to select files
+                                    </p>
+                                  </div>
+                                </section>
+                              )}
+                              </Dropzone>
+                              // assets.map(asset => "holi")
+                            }
+
+                            {!assets.length && (
+                              <div>
+                                Add your first asset.{' '}
+                                <a
+                                  href={`/project/${path}/edit/assets`}
+                                >
+                                  New asset
+                                </a>
+                              </div>
+                            )}
+                          </>
+                        )}
                        
                         {row.content[slotIdx].type === 'typeset' && (
                           <>
@@ -116,23 +159,19 @@ export default class MainContent extends Component {
 
                     {!row.content[slotIdx] && (
                       <React.Fragment>
-                        <button
-                          onClick={slodIdx =>
-                            this.addContent(row._id, slotIdx, 'colorPalette')
-                          }
-                          className='button'
-                        >
+                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'colorPalette') } className='button'>
                           Color Palette
                         </button>
 
-                        <button
-                          onClick={slodIdx =>
-                            this.addContent(row._id, slotIdx, 'typeset')
-                          }
-                          className='button'
-                        >
+                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'typeset')} className='button'>
                           Typography
                         </button>
+
+                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'assets')} className='button'>
+                          Image
+                        </button>
+
+
                       </React.Fragment>
                     )}
                   </div>

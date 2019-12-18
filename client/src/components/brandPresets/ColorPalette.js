@@ -21,7 +21,7 @@ export default class ColorPalette extends Component {
 
   render() {
     const { path } = this.props.match.params;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets } = this.props;
     
     return (
       <>
@@ -88,6 +88,7 @@ export default class ColorPalette extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           typeset={typeset}
+          assets={assets}
         >
           
         </MainContent>

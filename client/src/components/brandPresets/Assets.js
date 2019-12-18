@@ -124,6 +124,7 @@ export default class Assets extends Component {
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
           typeset={typeset}
+          assets={assets}
         >
           
         </MainContent>
