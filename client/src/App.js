@@ -194,6 +194,16 @@ export default class App extends React.Component {
     );
   };
 
+  onDragStart = (ev, id) => {
+    console.log('dragstart:', id);
+    ev.dataTransfer.setData('id', id);
+  };
+
+  onDrop = (ev, id) => {
+    let fileId = ev.dataTransfer.getData('id')
+    this.setState({ ...this.state, file:fileId});
+    console.log(fileId)
+  };
 
   componentDidMount() {
     this.fetchUser();
@@ -201,6 +211,8 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
+    console.log(this.state)
+
     const { user, menuIsOpen, colorPalette, typeset, assets } = this.state;
 
     return (
@@ -322,6 +334,9 @@ export default class App extends React.Component {
                 assets={assets}
                 addAsset={this.addAsset}
                 deleteAsset={this.deleteAsset}
+                onDragStart={this.onDragStart}
+                onDrop={this.onDrop}
+                file={this.state.file}
                 component={Assets}
                 />
 

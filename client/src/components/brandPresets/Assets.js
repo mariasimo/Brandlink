@@ -16,16 +16,13 @@ export default class Assets extends Component {
     };
   }
 
-
-
   handleUpload = file => {
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
     const { path } = this.props.match.params;
 
-    this.props.addAsset({uploadData, path})
+    this.props.addAsset({ uploadData, path });
   };
-
 
   //   editName = () => {
   //     // Append one child and remove another
@@ -53,7 +50,7 @@ export default class Assets extends Component {
   render() {
     const { path } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
-    
+
     return (
       <React.Fragment>
         <SideMenu
@@ -86,7 +83,13 @@ export default class Assets extends Component {
             <div className='assets-list columns is-multiline'>
               {assets &&
                 assets.map(asset => (
-                  <div key={asset._id}>
+                  <div
+                    key={asset._id}
+                    draggable
+                    className='draggable'
+                    onDragStart={e => this.props.onDragStart(e, asset._id)}
+                    onDrop={e => this.props.onDrop(e, asset._id)}
+                  >
                     <figure className='column is-half'>
                       <button
                         onClick={() => this.props.deleteAsset(asset._id)}
@@ -125,9 +128,10 @@ export default class Assets extends Component {
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}
-        >
+          onDragStart={this.props.onDragStart}
+          onDrop={this.props.onDrop}
           
-        </MainContent>
+        ></MainContent>
       </React.Fragment>
     );
   }

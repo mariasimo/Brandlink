@@ -41,14 +41,6 @@ export default class MainContent extends Component {
     });
   };
 
-
-  handleUpload = file => {
-
-    console.log(file)
-
-    // this.props.addAsset({uploadData, path})
-  };
-
   componentDidMount() {
     this.displayRows();
   }
@@ -77,21 +69,19 @@ export default class MainContent extends Component {
                         {row.content[slotIdx].type === 'assets' && (
                           <>
                             {assets &&
-
-                              <Dropzone
-                              onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}
+                              <React.Fragment>
+                              <div className="droppable"
+                              onDrop={(e) => this.props.onDrop(e)}
                               >
-                              {({ getRootProps, getInputProps }) => (
                                 <section class='file-label'>
-                                  <div {...getRootProps()}>
-                                    <input {...getInputProps()} />
+                                  <div >
                                     <p>
                                       Drag 'n' drop some files here, or click to select files
                                     </p>
                                   </div>
                                 </section>
-                              )}
-                              </Dropzone>
+                              </div>
+                              </React.Fragment>
                               // assets.map(asset => "holi")
                             }
 
