@@ -347,9 +347,10 @@ router.put('/rows/:rowId', (req, res, next) => {
   
       Rows.findByIdAndUpdate(
         { _id: rowId },
-        { $push: { content: { type: type } } },
-        { returnNewDocument: true, new: true, strict: false }
-      ).then(slotUpdated => {
+        { $push: { content: { type: type} } },
+        { returnNewDocument: true, new: true, strict: false },
+      )
+      .then(slotUpdated => {
         res.status(200).json(slotUpdated);
       });
 });

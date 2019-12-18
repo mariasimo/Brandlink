@@ -36,7 +36,6 @@ export default class MainContent extends Component {
 
   addContent = (rowId, slotIdx, type) => {
     this.projectService.addContent({ rowId, slotIdx, type }).then(payload => {
-      console.log(payload);
       this.displayRows();
     });
   };
@@ -48,8 +47,6 @@ export default class MainContent extends Component {
   render() {
     const path = this.props.user.activeProject;
     const { colorPalette, typeset } = this.props;
-
-    console.log(this.props, this.state.rows);
 
     return (
       <div

@@ -16,16 +16,6 @@ export default class TypeSet extends Component {
     };
   }
 
-  // fetchOneProject = () => {
-  //   const path = this.props.match.params.path;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     });
-  //   });
-  // };
-
   deleteType = typeId => {
     this.projectService.deleteType(typeId).then(
       project => {

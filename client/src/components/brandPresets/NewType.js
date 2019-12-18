@@ -17,18 +17,14 @@ export default class NewType extends Component {
     const { path } = this.props.match.params;
     const { history } = this.props;
 
-    this.projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
-      () => {
-        this.setState({ ...this.state, fontFamily: "" });
-        history.push(`/project/${path}/edit/typeSet`);
-      },
-      error => console.error(error)
-    );
+    this.props.saveType({fontFamily, type, path, history});
   };
 
   render() {
     const { source, path } = this.props.match.params;
     const { colorPalette, typeset } = this.props;
+
+    console.log(this.props)
 
     return (
       < >

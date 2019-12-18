@@ -17,7 +17,6 @@ export default class NewColor extends Component {
   }
 
   componentDidMount() {
-    
     this.getColorData();
   }
 
@@ -48,6 +47,7 @@ export default class NewColor extends Component {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
   };
+
 
   handleSubmit = e => {
     e.preventDefault();

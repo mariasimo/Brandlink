@@ -11,6 +11,7 @@ export default function PrivateRoute({
   addFontLinks,
   redirectPath,
   addColorToPalette,
+  saveType,
   deleteColor,
   ...rest
 }) {
@@ -30,6 +31,7 @@ export default function PrivateRoute({
                 typeset={typeset}
                 addColorToPalette={addColorToPalette}
                 deleteColor={deleteColor}
+                saveType={saveType}
                 {...props}
               />
             );

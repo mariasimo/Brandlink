@@ -50,7 +50,6 @@ export default class App extends React.Component {
           user
         })
       } else {
-        console.log(project)
         this.setState({
           ...this.state,
           colorPalette: project.colorPalette,
@@ -148,6 +147,18 @@ export default class App extends React.Component {
       }
     );
   };
+
+  saveType = ({fontFamily, type, path, history}) => {
+    console.log("holi")
+    console.log({fontFamily, type, path, history})
+    this.projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
+      (updatedProject) => {
+        this.setState({ ...this.state, fontFamily: "", typeset:updatedProject.typeset });
+        history.push(`/project/${path}/edit/typeSet`);
+      },
+      error => console.error(error)
+    );
+  }
   
   componentDidMount() {
     this.fetchUser();
@@ -210,7 +221,7 @@ export default class App extends React.Component {
                 component={EditProject}
                 colorPalette={colorPalette}
                 typeset={typeset}
-                />
+              />
 
               <PrivateRoute
                 exact
@@ -255,7 +266,8 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 menuIsOpen={menuIsOpen}
                 typeset={typeset}
-                />
+                saveType={this.saveType}
+              />
 
               <PrivateRoute
                 exact
