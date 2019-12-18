@@ -30,6 +30,8 @@ export default class EditProject extends Component {
   }
 
   render() {
+    const { colorPalette } = this.props;
+
     return (
       < >
       <SideMenu
@@ -71,7 +73,7 @@ export default class EditProject extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
+          colorPalette={colorPalette}
           user={this.props.loggedInUser}
         >
           

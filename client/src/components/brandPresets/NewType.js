@@ -26,12 +26,9 @@ export default class NewType extends Component {
     );
   };
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     const { source, path } = this.props.match.params;
+    const { colorPalette } = this.props;
 
     return (
       < >
@@ -68,7 +65,8 @@ export default class NewType extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
+          user={this.props.loggedInUser}
+          colorPalette={colorPalette}
         >
           
         </MainContent>

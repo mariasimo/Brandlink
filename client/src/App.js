@@ -41,8 +41,18 @@ export default class App extends React.Component {
   };
 
   setUser = user => {
-    this.setState({ ...this.state, user });
+    let userId = user.id
+    this.projectService.displayColorPalette(userId)
+    .then(colorPalette => {
+      this.setState({
+        ...this.state,
+        colorPalette,
+        user
+      })
+    })
+    // this.setState({ ...this.state, user });
   };
+
 
   fetchUser = () => {
     if (this.state.user === null) {
@@ -62,6 +72,7 @@ export default class App extends React.Component {
     }
   };
 
+
   logout = () => {
     this.authService
       .logout()
@@ -71,14 +82,15 @@ export default class App extends React.Component {
       .catch(err => console.log(err));
   };
 
+
   setActiveProject = path => {
     const {id} = this.state.user
     this.authService.setActiveProject({path, id})
     .then(userHasAnActiveProject => {
       this.setUser(userHasAnActiveProject)
-      console.log(this.state)
     })
   }
+
 
   addFontsLinks = type => {
     const link = document.createElement("link");
@@ -93,14 +105,48 @@ export default class App extends React.Component {
     document.head.appendChild(link);
   };
 
+  // displayColorPalette = () => {
+  //   const userId = this.state.user.id
+  //   this.projectService.displayColorPalette(userId)
+  //   .then(colorPalette => {
+  //     this.setState({
+  //       ...this.state,
+  //       colorPalette
+  //     })
+  //   })
+  // }
+
+  addColorToPalette= ({name, hexadecimal, path, colorId, history}) => {
+    this.projectService
+    .addColorToPalette({ name, hexadecimal, path, colorId })
+    .then(
+      (updatedProject) => {
+        this.setState({ ...this.state, name: "", hexadecimal: "" , colorPalette:updatedProject.colorPalette });
+        history.push(`/project/${path}/edit/colorPalette`,{state:this.state.colorPalette});
+      },
+      error => console.error(error)
+    );
+  }
+
+  deleteColor = colorId => {
+    this.projectService.deleteColor(colorId).then(
+      project => {
+        this.displayColorPalette()
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  };
+  
   componentDidMount() {
     this.fetchUser();
-    // this.addFontsLinks()
   }
 
   render() {
     this.fetchUser();
-    const { user, menuIsOpen } = this.state;
+    const { user, menuIsOpen, colorPalette } = this.state;
 
     return (
       <div className="App">
@@ -153,6 +199,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 component={EditProject}
+                colorPalette={colorPalette}
                 />
 
               <PrivateRoute
@@ -161,14 +208,19 @@ export default class App extends React.Component {
                 user={user}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
                 component={ColorPalette}
-                />
+                deleteColor={this.deleteColor}
+              />
+
               <PrivateRoute
                 exact
                 path="/project/:path/edit/colorPalette/new/:colorId?"
                 user={user}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
+                addColorToPalette={this.addColorToPalette}
                 component={NewColor}
                 />
 
@@ -178,6 +230,7 @@ export default class App extends React.Component {
                 user={user}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
                 component={TypeSet}
                 />
               <PrivateRoute
@@ -186,6 +239,7 @@ export default class App extends React.Component {
                 user={user}
                 component={NewType}
                 toggleMenu={this.toggleMenu} 
+                colorPalette={colorPalette}
                 menuIsOpen={menuIsOpen}
                 />
 
@@ -196,6 +250,7 @@ export default class App extends React.Component {
                 component={Assets}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
                 />
 
               <PrivateRoute
@@ -205,6 +260,7 @@ export default class App extends React.Component {
                 component={TextStyles}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
                 />
               <PrivateRoute
                 exact
@@ -213,6 +269,7 @@ export default class App extends React.Component {
                 component={NewTextStyle}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
+                colorPalette={colorPalette}
                 />
             </Switch>
           )}

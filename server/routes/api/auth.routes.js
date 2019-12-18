@@ -136,7 +136,6 @@ router.put("/edit/addProject/:id", (req, res, next) => {
     },
     { new: true }
   ).then(userUpdated => {
-    console.log(userUpdated)
     res.status(200).json(userUpdated);
   })
   .catch(err => res.json(err))

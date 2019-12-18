@@ -18,8 +18,6 @@ export default class MainContent extends Component {
         ...this.state,
         rows: rows
       });
-
-      console.log(this.state);
     });
   };
 
@@ -37,10 +35,8 @@ export default class MainContent extends Component {
   };
 
   addContent = (rowId, slotIdx) => {
-    console.log(rowId, slotIdx)
     this.projectService.addContent({rowId, slotIdx})
     .then(payload => {
-      console.log(payload)
       this.displayRows()
     })
   }
@@ -53,7 +49,6 @@ export default class MainContent extends Component {
     const path = this.props.path;
     const { colorPalette } = this.props;
 
-    console.log(colorPalette)
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}

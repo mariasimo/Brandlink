@@ -18,15 +18,15 @@ export default class Assets extends Component {
     this.loadingParent = '';
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      });
-    });
-  };
+  // fetchOneProject = () => {
+  //   const path = this.props.match.params.path;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     });
+  //   });
+  // };
 
   handleUpload = file => {
     const uploadData = new FormData();
@@ -41,7 +41,7 @@ export default class Assets extends Component {
     this.projectService
       .uploadAsset({ uploadData, path })
       .then(() => {
-        this.fetchOneProject();
+        // this.fetchOneProject();
         this.loadingParent.removeChild(this.loadingImg);
       })
       .catch(error => console.log(error));
@@ -83,12 +83,14 @@ export default class Assets extends Component {
   //   }
 
   componentDidMount() {
-    this.fetchOneProject();
+    // this.fetchOneProject();
   }
 
   render() {
     const { assets } = this.state;
     const { path } = this.props.match.params;
+    const { colorPalette } = this.props;
+    
     return (
       <React.Fragment>
         <SideMenu
@@ -156,7 +158,8 @@ export default class Assets extends Component {
         <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
+          user={this.props.loggedInUser}
+          colorPalette={colorPalette}
         >
           
         </MainContent>

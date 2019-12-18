@@ -17,23 +17,24 @@ export default class TextStyles extends Component {
     };
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      });
-    });
-  };
+  // fetchOneProject = () => {
+  //   const path = this.props.match.params.path;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     });
+  //   });
+  // };
 
   componentDidMount() {
-    this.fetchOneProject();
+    // this.fetchOneProject();
   }
 
   render() {
     const { path } = this.props.match.params;
     const { textstyles } = this.state;
+    const { colorPalette } = this.props;
 
     return (
       < >
@@ -98,7 +99,8 @@ export default class TextStyles extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
+          user={this.props.loggedInUser}
+          colorPalette={colorPalette}
         >
           
         </MainContent>

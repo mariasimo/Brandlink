@@ -53,8 +53,6 @@ class AuthService {
 
   setActiveProject = (projectData) => {
     const {path, id} = projectData;
-
-    console.log(path, id)
     return this.instance.put(`/edit/addProject/${id}`, {path})
     .then(res => {
       return Promise.resolve(res.data)

@@ -27,11 +27,9 @@ export default class TypeSet extends Component {
   };
 
   deleteType = typeId => {
-    console.log('Delete method in component typeset' + typeId);
     this.projectService.deleteType(typeId).then(
       project => {
-        console.log(project);
-        this.fetchOneProject(project.path);
+        // this.fetchOneProject(project.path);
       },
       error => {
         const { message } = error;
@@ -41,14 +39,13 @@ export default class TypeSet extends Component {
   };
 
   componentDidMount() {
-    this.fetchOneProject();
+    // this.fetchOneProject();
   }
 
   render() {
     const { path } = this.props.match.params;
     const { typeset } = this.state;
-
-    console.log(typeset)
+    const { colorPalette } = this.props;
 
     return (
       < >
@@ -110,7 +107,8 @@ export default class TypeSet extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
+          colorPalette={colorPalette}
+          user={this.props.loggedInUser}
         >
           
         </MainContent>

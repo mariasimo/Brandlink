@@ -101,8 +101,6 @@ class ProjectService {
     return this.instance
       .get("/getGoogleFonts")
       .then(res => {
-        console.log("back to service")
-        console.log("res data")
         return Promise.resolve(res.data);
       })
       .catch(error => console.error(error));
@@ -125,10 +123,6 @@ class ProjectService {
   }
 
   addTextStyle = updateProjectParams => {
-
-    console.log("service")
-    console.log(updateProjectParams)
-    
     const { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, name, path, styleId } = updateProjectParams;
     return this.instance
       .put(`/textStyle/${path}/${styleId}?`, { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, uppercase, name })
@@ -139,8 +133,6 @@ class ProjectService {
   };
 
   getTextStyleData  = (styleId) => {
-    console.log("service")
-    console.log(styleId)
     return this.instance.get(`/textstyle/${styleId}?`)
     .then(res => {
       return Promise.resolve(res.data);
@@ -157,7 +149,6 @@ class ProjectService {
   };
 
   deleteRow = (userId, rowId) => {
-    console.log(rowId)
     return this.instance.delete(`/rows/${rowId}`)
     .then(res => {
       return Promise.resolve(res.data);
@@ -167,7 +158,6 @@ class ProjectService {
 
   addContent = rowParams => {
     const {rowId, slotIdx} = rowParams
-    console.log(rowId)
     return this.instance.put(`/rows/${rowId}`, {slotIdx})
     .then(res => {
       return Promise.resolve(res.data)

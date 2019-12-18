@@ -11,11 +11,13 @@ export default class NewColor extends Component {
 
     this.state = {
       name: "",
-      hexadecimal: ""
+      hexadecimal: "",
+      colorPalette: ""
     };
   }
 
   componentDidMount() {
+    
     this.getColorData();
   }
 
@@ -25,7 +27,6 @@ export default class NewColor extends Component {
     if (colorId !== undefined) {
       this.projectService.getColorData(colorId).then(
         colorData => {
-          console.log(colorData);
           let color = colorData.colorPalette.filter(
             color => color._id === colorId
           );
@@ -55,20 +56,14 @@ export default class NewColor extends Component {
     const { path, colorId } = this.props.match.params;
     const { history } = this.props;
 
-    this.projectService
-      .addColorToPalette({ name, hexadecimal, path, colorId })
-      .then(
-        () => {
-          this.setState({ ...this.state, name: "", hexadecimal: "" });
-          history.push(`/project/${path}/edit/colorPalette`);
-        },
-        error => console.error(error)
-      );
+    this.props.addColorToPalette({name, hexadecimal, path, colorId, history})
   };
+ 
 
   render() {
     const { name, hexadecimal } = this.state;
     const { colorId, path } = this.props.match.params;
+    const { colorPalette } = this.props;
 
     return (
       < >
@@ -150,12 +145,12 @@ export default class NewColor extends Component {
       <MainContent
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
-          path={this.props.match.params.path}
           user={this.props.loggedInUser}
-        >
+          colorPalette={colorPalette}
+      >
           
-        </MainContent>
-            </ >
+      </MainContent>
+      </ >
     );
   }
 }

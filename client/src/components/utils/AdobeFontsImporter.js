@@ -18,12 +18,8 @@ export default class AdobeFontsImporter extends Component {
     const projectId = document.querySelector('input[name="projectId"]').value;
     const token = document.querySelector('input[name="token"]').value;
 
-    console.log({ projectId, token });
-    console.log("component")
-
     this.projectService.getGoogleFonts()
     .then(fonts => { 
-      console.log("back to component")
       this.setState({
         ...this.state,
         ...fonts

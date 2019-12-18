@@ -79,7 +79,6 @@ router.delete('/:id', (req, res, next) => {
         res.status(200).json({ message: 'Project deleted' });
       })
       .catch(error => {
-        console.log(error);
         res.status(500).json({ message: 'Something went wrong' });
       });
   });
@@ -91,11 +90,9 @@ router.get('/colorPalette/:userId', (req, res, next) => {
   User.findById({ _id: userId }).then(user => {
     Project.findOne({ path: user.activeProject })
       .then(project => {
-        console.log(project.colorPalette)
         res.status(200).json(project.colorPalette);
       })
       .catch(error => {
-        console.log(error);
         res.status(500).json({ message: 'Something went wrong' });
       });
   });
@@ -256,7 +253,6 @@ router.get('/rows/:userId', (req,res,next) => {
     Project.findOne({path: user.activeProject})
     .populate('rows')
     .then(projectRows => {
-      console.log(projectRows.rows)
       res.status(200).json(projectRows.rows);
     })
     .catch(error => {
@@ -284,7 +280,6 @@ router.post(`/newRow/:userId`, (req, res, next) => {
           )
             .populate('rows')
             .then(projectUpdated => {
-              console.log(projectUpdated)
               res.status(200).json(projectUpdated);
             });
 
@@ -327,7 +322,6 @@ router.post(`/newRow/:userId`, (req, res, next) => {
         newRow => {
           return User.findById({_id:userId})
           .then(user => {
-            console.log(user.activeProject)
             Project.findOneAndUpdate(
               { path: user.activeProject },
               { $push: { rows: newRow._id } },
@@ -335,7 +329,6 @@ router.post(`/newRow/:userId`, (req, res, next) => {
             )
             .populate('rows')
             .then(projectUpdated => {
-              console.log(projectUpdated)
               res.status(200).json(projectUpdated);
             });
           })
@@ -361,15 +354,12 @@ router.delete('/rows/:userId/:rowId', (req, res, next) => {
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
   const { slotIdx } = req.body;
-
-  console.log(rowId)
   
       Rows.findByIdAndUpdate(
         { _id: rowId },
         { $push: { content: { type: 'colorPalette' } } },
         { returnNewDocument: true, new: true, strict: false }
       ).then(slotUpdated => {
-        console.log(slotUpdated)
         res.status(200).json(slotUpdated);
       });
 });

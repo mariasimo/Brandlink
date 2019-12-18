@@ -64,7 +64,6 @@ export default class NewTextStyle extends Component {
     const { path, styleId } = this.props.match.params;
     const { history } = this.props;
 
-    console.log(this.state)
     this.projectService
       .addTextStyle({ ...this.state.textstyle, path, styleId })
       .then(
@@ -96,6 +95,7 @@ export default class NewTextStyle extends Component {
       lineHeight,
       letterSpacing
     } = this.state.textstyle;
+    const { colorPalette } = this.props;
 
     return (
       < >
@@ -258,6 +258,7 @@ export default class NewTextStyle extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
+          colorPalette={colorPalette}
         >
           
         </MainContent>

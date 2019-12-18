@@ -19,38 +19,10 @@ export default class ColorPalette extends Component {
     };
   }
 
-  displayColorPalette = () => {
-    const userId = this.props.loggedInUser.id
-    this.projectService.displayColorPalette(userId)
-    .then(colorPalette => {
-      this.setState({
-        ...this.state,
-        colorPalette
-      })
-    })
-  }
-
-  deleteColor = colorId => {
-    console.log('Delete method in component color palette' + colorId);
-    this.projectService.deleteColor(colorId).then(
-      project => {
-        this.displayColorPalette()
-      },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
-  };
-
-  componentDidMount() {
-    this.displayColorPalette();
-  }
-
   render() {
     const { path } = this.props.match.params;
-    const { colorPalette } = this.state;
-
+    const { colorPalette } = this.props;
+    
     return (
       <>
         <SideMenu
@@ -83,7 +55,7 @@ export default class ColorPalette extends Component {
                         Edit
                       </Link>
                       <button
-                        onClick={() => this.deleteColor(color._id)}
+                        onClick={() => this.props.deleteColor(color._id)}
                         className='button is-rounded is-small is-danger is-outlined'
                       >
                         Delete
@@ -116,6 +88,7 @@ export default class ColorPalette extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
         >
+          
         </MainContent>
       </>
     );
