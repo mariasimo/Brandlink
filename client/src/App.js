@@ -56,6 +56,9 @@ export default class App extends React.Component {
           typeset: project.typeset,
           user
         })
+
+        this.addFontsLinks(this.state.typeset);
+
       }
     })
     // this.setState({ ...this.state, user });
@@ -100,29 +103,20 @@ export default class App extends React.Component {
   }
 
 
-  addFontsLinks = type => {
-    const link = document.createElement("link");
-    link.setAttribute(
-      "href",
-      `https://fonts.googleapis.com/css?family=${type.replace(
-        " ",
-        "+"
-      )}&display=swap`
-    );
-    link.setAttribute("rel", `stylesheet`);
-    document.head.appendChild(link);
+  addFontsLinks = typeset => {
+    typeset.map(type => {
+      const link = document.createElement("link");
+      link.setAttribute(
+        "href",
+        `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
+          " ",
+          "+"
+        )}&display=swap`
+      );
+      link.setAttribute("rel", `stylesheet`);
+      document.head.appendChild(link);
+    }) 
   };
-
-  // displayColorPalette = () => {
-  //   const userId = this.state.user.id
-  //   this.projectService.displayColorPalette(userId)
-  //   .then(colorPalette => {
-  //     this.setState({
-  //       ...this.state,
-  //       colorPalette
-  //     })
-  //   })
-  // }
 
   addColorToPalette= ({name, hexadecimal, path, colorId, history}) => {
     this.projectService
@@ -149,8 +143,6 @@ export default class App extends React.Component {
   };
 
   saveType = ({fontFamily, type, path, history}) => {
-    console.log("holi")
-    console.log({fontFamily, type, path, history})
     this.projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
       (updatedProject) => {
         this.setState({ ...this.state, fontFamily: "", typeset:updatedProject.typeset });
