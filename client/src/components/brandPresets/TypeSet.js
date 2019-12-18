@@ -16,15 +16,15 @@ export default class TypeSet extends Component {
     };
   }
 
-  fetchOneProject = () => {
-    const path = this.props.match.params.path;
-    this.projectService.fetchOneProject(path).then(project => {
-      this.setState({
-        ...this.state,
-        ...project
-      });
-    });
-  };
+  // fetchOneProject = () => {
+  //   const path = this.props.match.params.path;
+  //   this.projectService.fetchOneProject(path).then(project => {
+  //     this.setState({
+  //       ...this.state,
+  //       ...project
+  //     });
+  //   });
+  // };
 
   deleteType = typeId => {
     this.projectService.deleteType(typeId).then(
@@ -38,14 +38,9 @@ export default class TypeSet extends Component {
     );
   };
 
-  componentDidMount() {
-    // this.fetchOneProject();
-  }
-
   render() {
     const { path } = this.props.match.params;
-    const { typeset } = this.state;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -108,6 +103,7 @@ export default class TypeSet extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           colorPalette={colorPalette}
+          typeset={typeset}
           user={this.props.loggedInUser}
         >
           

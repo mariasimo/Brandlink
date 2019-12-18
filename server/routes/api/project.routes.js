@@ -84,13 +84,13 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
-router.get('/colorPalette/:userId', (req, res, next) => {
+router.get('/project/:userId', (req, res, next) => {
   const { userId } = req.params;
 
   User.findById({ _id: userId }).then(user => {
     Project.findOne({ path: user.activeProject })
       .then(project => {
-        res.status(200).json(project.colorPalette);
+        res.status(200).json(project);
       })
       .catch(error => {
         res.status(500).json({ message: 'Something went wrong' });
@@ -262,6 +262,7 @@ router.post(`/newRow/:userId`, (req, res, next) => {
       newRow => {
         return User.findById({_id:userId})
         .then(user => {
+          console.log(user.activeProject)
           Project.findOneAndUpdate(
             { path : user.activeProject },
             { $push: { rows: newRow._id } },
@@ -269,7 +270,6 @@ router.post(`/newRow/:userId`, (req, res, next) => {
           )
             .populate('rows')
             .then(projectUpdated => {
-              console.log(projectUpdated)
               res.status(200).json(projectUpdated);
             });
 
@@ -343,11 +343,11 @@ router.delete('/rows/:userId/:rowId', (req, res, next) => {
 
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
-  const { slotIdx } = req.body;
+  const { slotIdx, type } = req.body;
   
       Rows.findByIdAndUpdate(
         { _id: rowId },
-        { $push: { content: { type: 'colorPalette' } } },
+        { $push: { content: { type: type } } },
         { returnNewDocument: true, new: true, strict: false }
       ).then(slotUpdated => {
         res.status(200).json(slotUpdated);

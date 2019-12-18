@@ -63,7 +63,7 @@ export default class NewColor extends Component {
   render() {
     const { name, hexadecimal } = this.state;
     const { colorId, path } = this.props.match.params;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -147,6 +147,7 @@ export default class NewColor extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
+          typeset={typeset}
       >
           
       </MainContent>

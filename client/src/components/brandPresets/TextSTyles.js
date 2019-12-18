@@ -34,7 +34,7 @@ export default class TextStyles extends Component {
   render() {
     const { path } = this.props.match.params;
     const { textstyles } = this.state;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -101,6 +101,7 @@ export default class TextStyles extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
+          typeset={typeset}
         >
           
         </MainContent>

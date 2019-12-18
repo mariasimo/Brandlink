@@ -34,20 +34,22 @@ export default class MainContent extends Component {
     );
   };
 
-  addContent = (rowId, slotIdx) => {
-    this.projectService.addContent({rowId, slotIdx})
-    .then(payload => {
-      this.displayRows()
-    })
-  }
+  addContent = (rowId, slotIdx, type) => {
+    this.projectService.addContent({ rowId, slotIdx, type }).then(payload => {
+      console.log(payload);
+      this.displayRows();
+    });
+  };
 
   componentDidMount() {
-    this.displayRows()
+    this.displayRows();
   }
 
   render() {
     const path = this.props.user.activeProject;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
+
+    console.log(this.props, this.state.rows);
 
     return (
       <div
@@ -57,39 +59,65 @@ export default class MainContent extends Component {
           {this.state.rows &&
             this.state.rows.map((row, rowIdx) => (
               <div key={row._id} className='columns is-multiline is-marginless'>
-                
                 {row.slots.map((slot, slotIdx) => (
                   <div
                     key={slotIdx}
                     id={`slot-${rowIdx}-${slotIdx}`}
                     className={`${row.layout} column row slot`}
                   >
-
                     {row.content[slotIdx] && (
                       <React.Fragment>
-                      {colorPalette && colorPalette.map((color, idx) => (
-                          <div className='color' key={idx}>
-                            <div
-                              className='circle-color'
-                              style={{ backgroundColor: color.hexadecimal }}
-                            ></div>
-                            <span>{color.name}</span>
-                         </div>
-                      ))}
+                        {row.content[slotIdx].type === 'typeset' &&
+                          typeset[0].fontFamily}
 
-                      {!colorPalette.length && <div>Add your first color. <a href={`/project/${path}/edit/colorPalette/new`}>New color</a></div>}
+                        {row.content[slotIdx].type === 'colorPalette' &&
+                          < >
+                          {colorPalette &&
+                            colorPalette.map((color, idx) => (
+                              <div className='color' key={idx}>
+                                <div
+                                  className='circle-color'
+                                  style={{ backgroundColor: color.hexadecimal }}
+                                ></div>
+                                <span>{color.name}</span>
+                              </div>
+                            ))}
+  
+                          {!colorPalette.length && (
+                            <div>
+                              Add your first color.{' '}
+                              <a href={`/project/${path}/edit/colorPalette/new`}>
+                                New color
+                              </a>
+                            </div>
+                          )}
+                          </ >
+                        }
+                                                  
                       </React.Fragment>
                     )}
 
-                    {!row.content[slotIdx] && 
-                      <button
-                      onClick={(slodIdx) => this.addContent(row._id, slotIdx)}
-                      className='button'
-                      >
-                        Color Palette
-                      </button>
-                    }
-                
+                    {!row.content[slotIdx] && (
+                      <React.Fragment>
+                        <button
+                          onClick={slodIdx =>
+                            this.addContent(row._id, slotIdx, 'colorPalette')
+                          }
+                          className='button'
+                        >
+                          Color Palette
+                        </button>
+
+                        <button
+                          onClick={slodIdx =>
+                            this.addContent(row._id, slotIdx, 'typeset')
+                          }
+                          className='button'
+                        >
+                          Typography
+                        </button>
+                      </React.Fragment>
+                    )}
                   </div>
                 ))}
 

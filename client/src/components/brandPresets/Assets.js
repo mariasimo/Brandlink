@@ -89,7 +89,7 @@ export default class Assets extends Component {
   render() {
     const { assets } = this.state;
     const { path } = this.props.match.params;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
     
     return (
       <React.Fragment>
@@ -160,6 +160,7 @@ export default class Assets extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
+          typeset={typeset}
         >
           
         </MainContent>

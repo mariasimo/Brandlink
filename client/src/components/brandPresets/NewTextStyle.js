@@ -18,33 +18,33 @@ export default class NewTextStyle extends Component {
   }
 
   componentDidMount() {
-    this.getTextStyleData();
+    // this.getTextStyleData();
   }
 
-  getTextStyleData = () => {
-    const { styleId } = this.props.match.params;
+  // getTextStyleData = () => {
+  //   const { styleId } = this.props.match.params;
 
-    if (styleId !== undefined) {
-      this.projectService.getTextStyleData(styleId).then(
-        textstyleData => {
+  //   if (styleId !== undefined) {
+  //     this.projectService.getTextStyleData(styleId).then(
+  //       textstyleData => {
 
-          let textStyle = textstyleData.textstyles.filter(
-            style => style._id === styleId
-          );
+  //         let textStyle = textstyleData.textstyles.filter(
+  //           style => style._id === styleId
+  //         );
           
-          this.setState({
-            ...this.state,
-            textstyle: textStyle[0],
-            typeset : textstyleData.typeset
-          });
-        },
-        error => {
-          const { message } = error;
-          console.error(message);
-        }
-      );
-    }
-  };
+  //         this.setState({
+  //           ...this.state,
+  //           textstyle: textStyle[0],
+  //           typeset : textstyleData.typeset
+  //         });
+  //       },
+  //       error => {
+  //         const { message } = error;
+  //         console.error(message);
+  //       }
+  //     );
+  //   }
+  // };
 
 
   handleChange = e => {
@@ -86,7 +86,6 @@ export default class NewTextStyle extends Component {
 
   render() {
     const { path } = this.props.match.params;
-    const { typeset }  = this.state
     const {
       name,
       fontFamily,
@@ -95,7 +94,7 @@ export default class NewTextStyle extends Component {
       lineHeight,
       letterSpacing
     } = this.state.textstyle;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -259,6 +258,7 @@ export default class NewTextStyle extends Component {
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
           colorPalette={colorPalette}
+          typeset={typeset}
         >
           
         </MainContent>

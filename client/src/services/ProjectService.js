@@ -28,13 +28,21 @@ class ProjectService {
     .catch(error => console.error(error));
   }
 
-  displayColorPalette = userId => {
-    return this.instance.get(`/colorPalette/${userId}`)
+  displayProject = userId => {
+    return this.instance.get(`/project/${userId}`)
     .then(res =>  {
       return Promise.resolve(res.data)
     })
     .catch(error => console.error(error));
   }
+
+  // displayColorPalette = userId => {
+  //   return this.instance.get(`/colorPalette/${userId}`)
+  //   .then(res =>  {
+  //     return Promise.resolve(res.data)
+  //   })
+  //   .catch(error => console.error(error));
+  // }
 
   createProject = project => {
     return this.instance
@@ -157,8 +165,8 @@ class ProjectService {
   }
 
   addContent = rowParams => {
-    const {rowId, slotIdx} = rowParams
-    return this.instance.put(`/rows/${rowId}`, {slotIdx})
+    const {rowId, slotIdx, type} = rowParams
+    return this.instance.put(`/rows/${rowId}`, {type, slotIdx})
     .then(res => {
       return Promise.resolve(res.data)
     })

@@ -5,6 +5,7 @@ export default function PrivateRoute({
   user,
   activeProject,
   colorPalette,
+  typeset,
   toggleMenu,
   menuIsOpen,
   addFontLinks,
@@ -26,6 +27,7 @@ export default function PrivateRoute({
                 toggleMenu={toggleMenu}
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
+                typeset={typeset}
                 addColorToPalette={addColorToPalette}
                 deleteColor={deleteColor}
                 {...props}

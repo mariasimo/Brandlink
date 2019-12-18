@@ -28,7 +28,7 @@ export default class NewType extends Component {
 
   render() {
     const { source, path } = this.props.match.params;
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -67,6 +67,7 @@ export default class NewType extends Component {
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
+          typeset={typeset}
         >
           
         </MainContent>

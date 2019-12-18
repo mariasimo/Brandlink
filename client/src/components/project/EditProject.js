@@ -30,7 +30,7 @@ export default class EditProject extends Component {
   }
 
   render() {
-    const { colorPalette } = this.props;
+    const { colorPalette, typeset } = this.props;
 
     return (
       < >
@@ -74,6 +74,7 @@ export default class EditProject extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           colorPalette={colorPalette}
+          typeset={typeset}
           user={this.props.loggedInUser}
         >
           

@@ -42,11 +42,12 @@ export default class App extends React.Component {
 
   setUser = user => {
     let userId = user.id
-    this.projectService.displayColorPalette(userId)
-    .then(colorPalette => {
+    this.projectService.displayProject(userId)
+    .then(project => {
       this.setState({
         ...this.state,
-        colorPalette,
+        colorPalette: project.colorPalette,
+        typeset: project.typeset,
         user
       })
     })
@@ -146,7 +147,7 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    const { user, menuIsOpen, colorPalette } = this.state;
+    const { user, menuIsOpen, colorPalette, typeset } = this.state;
 
     return (
       <div className="App">
@@ -200,6 +201,7 @@ export default class App extends React.Component {
                 menuIsOpen={menuIsOpen}
                 component={EditProject}
                 colorPalette={colorPalette}
+                typeset={typeset}
                 />
 
               <PrivateRoute
@@ -211,6 +213,7 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 component={ColorPalette}
                 deleteColor={this.deleteColor}
+                typeset={typeset}
               />
 
               <PrivateRoute
@@ -222,6 +225,7 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 addColorToPalette={this.addColorToPalette}
                 component={NewColor}
+                typeset={typeset}
                 />
 
               <PrivateRoute
@@ -232,6 +236,7 @@ export default class App extends React.Component {
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 component={TypeSet}
+                typeset={typeset}
                 />
               <PrivateRoute
                 exact
@@ -241,6 +246,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 colorPalette={colorPalette}
                 menuIsOpen={menuIsOpen}
+                typeset={typeset}
                 />
 
               <PrivateRoute
@@ -251,6 +257,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
+                typeset={typeset}
                 />
 
               <PrivateRoute
@@ -261,6 +268,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
+                typeset={typeset}
                 />
               <PrivateRoute
                 exact
@@ -270,6 +278,7 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
+                typeset={typeset}
                 />
             </Switch>
           )}
