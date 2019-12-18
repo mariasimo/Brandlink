@@ -46,10 +46,8 @@ export default class MainContent extends Component {
   }
 
   render() {
-    const path = this.props.path;
+    const path = this.props.user.activeProject;
     const { colorPalette } = this.props;
-
-    console.log(colorPalette)
 
     return (
       <div
@@ -69,8 +67,8 @@ export default class MainContent extends Component {
 
                     {row.content[slotIdx] && (
                       <React.Fragment>
-                      {colorPalette && colorPalette.map(color => (
-                          <div className='color'>
+                      {colorPalette && colorPalette.map((color, idx) => (
+                          <div className='color' key={idx}>
                             <div
                               className='circle-color'
                               style={{ backgroundColor: color.hexadecimal }}

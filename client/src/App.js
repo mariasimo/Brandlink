@@ -131,7 +131,7 @@ export default class App extends React.Component {
   deleteColor = colorId => {
     this.projectService.deleteColor(colorId).then(
       project => {
-        this.displayColorPalette()
+        this.setUser(this.state.user)
       },
       error => {
         const { message } = error;

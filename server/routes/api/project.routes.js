@@ -210,17 +210,6 @@ router.delete('/assets/:assetId', (req, res, next) => {
 // Updated project (add brand preset)
 router.put('/textStyle/:path/:styleId?', (req, res, next) => {
   const { path, styleId } = req.params;
-
-  // todo: definir qué ocurre cuando ya existe en la base de datos
-  // if (id === "undefined") {
-  //   Project.findOneAndUpdate(
-  //     { path },
-  //     { $push: { textStyle: req.body } },
-  //     { new: true }
-  //   ).then(projectUpdated => {
-  //     res.status(200).json(projectUpdated);
-  //   });
-  // } else {
   Project.findOneAndUpdate(
     { textstyles: { $elemMatch: { _id: styleId } } },
     { 'textstyles.$': req.body },
@@ -228,7 +217,6 @@ router.put('/textStyle/:path/:styleId?', (req, res, next) => {
   ).then(projectUpdated => {
     res.status(200).json(projectUpdated);
   });
-  // }
 });
 
 router.get('/textstyle/:styleId?', (req, res, next) => {
@@ -253,6 +241,7 @@ router.get('/rows/:userId', (req,res,next) => {
     Project.findOne({path: user.activeProject})
     .populate('rows')
     .then(projectRows => {
+      console.log(projectRows)
       res.status(200).json(projectRows.rows);
     })
     .catch(error => {
@@ -280,6 +269,7 @@ router.post(`/newRow/:userId`, (req, res, next) => {
           )
             .populate('rows')
             .then(projectUpdated => {
+              console.log(projectUpdated)
               res.status(200).json(projectUpdated);
             });
 
