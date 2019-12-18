@@ -14,50 +14,18 @@ export default class Assets extends Component {
       title: '',
       assets: null
     };
-    this.loadingImg = '';
-    this.loadingParent = '';
   }
 
-  // fetchOneProject = () => {
-  //   const path = this.props.match.params.path;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     });
-  //   });
-  // };
+
 
   handleUpload = file => {
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
     const { path } = this.props.match.params;
 
-    this.loadingImg = document.createElement('img');
-    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
-    this.loadingParent = document.querySelector('.file-label');
-    this.loadingParent.appendChild(this.loadingImg);
-
-    this.projectService
-      .uploadAsset({ uploadData, path })
-      .then(() => {
-        // this.fetchOneProject();
-        this.loadingParent.removeChild(this.loadingImg);
-      })
-      .catch(error => console.log(error));
+    this.props.addAsset({uploadData, path})
   };
 
-  deleteAsset = assetId => {
-    this.projectService.deleteAsset(assetId).then(
-      project => {
-        this.fetchOneProject();
-      },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
-  };
 
   //   editName = () => {
   //     // Append one child and remove another
@@ -82,14 +50,9 @@ export default class Assets extends Component {
   // //     this.setState({...this.state, assets})
   //   }
 
-  componentDidMount() {
-    // this.fetchOneProject();
-  }
-
   render() {
-    const { assets } = this.state;
     const { path } = this.props.match.params;
-    const { colorPalette, typeset } = this.props;
+    const { colorPalette, typeset, assets } = this.props;
     
     return (
       <React.Fragment>
@@ -126,7 +89,7 @@ export default class Assets extends Component {
                   <div key={asset._id}>
                     <figure className='column is-half'>
                       <button
-                        onClick={() => this.deleteAsset(asset._id)}
+                        onClick={() => this.props.deleteAsset(asset._id)}
                         className='button is-rounded is-small is-danger is-outlined'
                       >
                         Delete

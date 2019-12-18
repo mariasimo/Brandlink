@@ -30,6 +30,8 @@ export default class App extends React.Component {
       user: null,
       menuIsOpen: "show"
     };
+    this.loadingImg = '';
+    this.loadingParent = '';
   }
 
   toggleMenu = () => {
@@ -41,7 +43,6 @@ export default class App extends React.Component {
   };
 
   setUser = user => {
-    
     let userId = user.id
     this.projectService.displayProject(userId)
     .then(project => {
@@ -56,11 +57,11 @@ export default class App extends React.Component {
           ...this.state,
           colorPalette: project.colorPalette,
           typeset: project.typeset,
+          assets: project.assets,
           user
         })
 
         this.addFontsLinks(this.state.typeset);
-
       }
     })
     // this.setState({ ...this.state, user });
@@ -153,10 +154,36 @@ export default class App extends React.Component {
       error => console.error(error)
     );
   }
-  
 
   deleteType = typeId => {
     this.projectService.deleteType(typeId).then(
+      project => {
+        this.setUser(this.state.user)
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  };
+
+  addAsset = ({ uploadData, path }) => {
+    this.loadingImg = document.createElement('img');
+    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
+    this.loadingParent = document.querySelector('.file-label');
+    this.loadingParent.appendChild(this.loadingImg);
+
+    this.projectService
+      .uploadAsset({ uploadData, path })
+      .then(() => {
+        this.setUser(this.state.user)
+        this.loadingParent.removeChild(this.loadingImg);
+      })
+      .catch(error => console.log(error));
+  }
+
+  deleteAsset = assetId => {
+    this.projectService.deleteAsset(assetId).then(
       project => {
         this.setUser(this.state.user)
       },
@@ -174,7 +201,7 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    const { user, menuIsOpen, colorPalette, typeset } = this.state;
+    const { user, menuIsOpen, colorPalette, typeset, assets } = this.state;
 
     return (
       <div className="App">
@@ -226,9 +253,10 @@ export default class App extends React.Component {
                 user={user}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
-                component={EditProject}
                 colorPalette={colorPalette}
                 typeset={typeset}
+                assets={assets}
+                component={EditProject}
               />
 
               <PrivateRoute
@@ -238,9 +266,10 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
-                component={ColorPalette}
                 deleteColor={this.deleteColor}
                 typeset={typeset}
+                assets={assets}
+                component={ColorPalette}
               />
 
               <PrivateRoute
@@ -251,8 +280,9 @@ export default class App extends React.Component {
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 addColorToPalette={this.addColorToPalette}
-                component={NewColor}
                 typeset={typeset}
+                assets={assets}
+                component={NewColor}
                 />
 
               <PrivateRoute
@@ -262,53 +292,62 @@ export default class App extends React.Component {
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
-                component={TypeSet}
                 deleteType={this.deleteType}
+                assets={assets}
                 typeset={typeset}
+                component={TypeSet}
                 />
+
               <PrivateRoute
                 exact
                 path="/project/:path/edit/typeset/new/:source?"
                 user={user}
-                component={NewType}
                 toggleMenu={this.toggleMenu} 
                 colorPalette={colorPalette}
                 menuIsOpen={menuIsOpen}
                 typeset={typeset}
                 saveType={this.saveType}
+                assets={assets}
+                component={NewType}
               />
 
               <PrivateRoute
                 exact
                 path="/project/:path/edit/assets"
                 user={user}
-                component={Assets}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 typeset={typeset}
+                assets={assets}
+                addAsset={this.addAsset}
+                deleteAsset={this.deleteAsset}
+                component={Assets}
                 />
 
               <PrivateRoute
                 exact
                 path="/project/:path/edit/textStyles"
                 user={user}
-                component={TextStyles}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 typeset={typeset}
-                />
+                assets={assets}
+                component={TextStyles}
+              />
+
               <PrivateRoute
                 exact
                 path="/project/:path/edit/textStyles/new/:styleId?"
                 user={user}
-                component={NewTextStyle}
                 toggleMenu={this.toggleMenu} 
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 typeset={typeset}
-                />
+                assets={assets}
+                component={NewTextStyle}
+              />
             </Switch>
           )}
 

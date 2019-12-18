@@ -14,6 +14,9 @@ export default function PrivateRoute({
   saveType,
   deleteColor,
   deleteType,
+  assets,
+  addAsset,
+  deleteAsset,
   ...rest
 }) {
   return (
@@ -34,6 +37,9 @@ export default function PrivateRoute({
                 deleteColor={deleteColor}
                 deleteType={deleteType}
                 saveType={saveType}
+                assets={assets}
+                addAsset={addAsset}
+                deleteAsset={deleteAsset}
                 {...props}
               />
             );
