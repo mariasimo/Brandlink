@@ -44,12 +44,20 @@ export default class App extends React.Component {
     let userId = user.id
     this.projectService.displayProject(userId)
     .then(project => {
-      this.setState({
-        ...this.state,
-        colorPalette: project.colorPalette,
-        typeset: project.typeset,
-        user
-      })
+      if(this.state.user === null) {
+        this.setState({
+          ...this.state,
+          user
+        })
+      } else {
+        console.log(project)
+        this.setState({
+          ...this.state,
+          colorPalette: project.colorPalette,
+          typeset: project.typeset,
+          user
+        })
+      }
     })
     // this.setState({ ...this.state, user });
   };

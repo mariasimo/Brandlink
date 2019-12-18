@@ -60,6 +60,7 @@ export default class MainContent extends Component {
             this.state.rows.map((row, rowIdx) => (
               <div key={row._id} className='columns is-multiline is-marginless'>
                 {row.slots.map((slot, slotIdx) => (
+                  
                   <div
                     key={slotIdx}
                     id={`slot-${rowIdx}-${slotIdx}`}
@@ -67,8 +68,14 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
-                        {row.content[slotIdx].type === 'typeset' &&
-                          typeset[0].fontFamily}
+
+                        {typeset.length && row.content[slotIdx].type === 'typeset' &&
+                          typeset.map(type => type.fontFamily)
+                        }
+
+                        {!typeset.length && row.content[slotIdx].type === 'typeset' &&
+                          <span>No typeset yet</span>
+                        }
 
                         {row.content[slotIdx].type === 'colorPalette' &&
                           < >
