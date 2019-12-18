@@ -41,9 +41,11 @@ export default class App extends React.Component {
   };
 
   setUser = user => {
+    
     let userId = user.id
     this.projectService.displayProject(userId)
     .then(project => {
+      console.log(project)
       if(this.state.user === null) {
         this.setState({
           ...this.state,

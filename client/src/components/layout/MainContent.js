@@ -57,7 +57,6 @@ export default class MainContent extends Component {
             this.state.rows.map((row, rowIdx) => (
               <div key={row._id} className='columns is-multiline is-marginless'>
                 {row.slots.map((slot, slotIdx) => (
-                  
                   <div
                     key={slotIdx}
                     id={`slot-${rowIdx}-${slotIdx}`}
@@ -65,39 +64,53 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
+                       
+                        {row.content[slotIdx].type === 'typeset' && (
+                          <>
+                            {typeset &&
+                              typeset.map(type => type.fontFamily)
+                            }
 
-                        {typeset.length && row.content[slotIdx].type === 'typeset' &&
-                          typeset.map(type => type.fontFamily)
-                        }
-
-                        {!typeset.length && row.content[slotIdx].type === 'typeset' &&
-                          <span>No typeset yet</span>
-                        }
-
-                        {row.content[slotIdx].type === 'colorPalette' &&
-                          < >
-                          {colorPalette &&
-                            colorPalette.map((color, idx) => (
-                              <div className='color' key={idx}>
-                                <div
-                                  className='circle-color'
-                                  style={{ backgroundColor: color.hexadecimal }}
-                                ></div>
-                                <span>{color.name}</span>
+                            {!typeset.length && (
+                              <div>
+                                Add your first type.{' '}
+                                <a
+                                  href={`/project/${path}/edit/typeset/new`}
+                                >
+                                  New type
+                                </a>
                               </div>
-                            ))}
-  
-                          {!colorPalette.length && (
-                            <div>
-                              Add your first color.{' '}
-                              <a href={`/project/${path}/edit/colorPalette/new`}>
-                                New color
-                              </a>
-                            </div>
-                          )}
-                          </ >
-                        }
-                                                  
+                            )}
+                          </>
+                        )}
+
+                        {row.content[slotIdx].type === 'colorPalette' && (
+                          <>
+                            {colorPalette &&
+                              colorPalette.map((color, idx) => (
+                                <div className='color' key={idx}>
+                                  <div
+                                    className='circle-color'
+                                    style={{
+                                      backgroundColor: color.hexadecimal
+                                    }}
+                                  ></div>
+                                  <span>{color.name}</span>
+                                </div>
+                              ))}
+
+                            {!colorPalette.length && (
+                              <div>
+                                Add your first color.{' '}
+                                <a
+                                  href={`/project/${path}/edit/colorPalette/new`}
+                                >
+                                  New color
+                                </a>
+                              </div>
+                            )}
+                          </>
+                        )}
                       </React.Fragment>
                     )}
 
