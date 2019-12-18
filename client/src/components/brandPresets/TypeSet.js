@@ -16,18 +16,6 @@ export default class TypeSet extends Component {
     };
   }
 
-  deleteType = typeId => {
-    this.projectService.deleteType(typeId).then(
-      project => {
-        // this.fetchOneProject(project.path);
-      },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
-  };
-
   render() {
     const { path } = this.props.match.params;
     const { colorPalette, typeset } = this.props;
@@ -53,7 +41,7 @@ export default class TypeSet extends Component {
                       {font.fontFamily}
                     </span>
                     <button
-                      onClick={() => this.deleteType(font._id)}
+                      onClick={() => this.props.deleteType(font._id)}
                       className='button is-rounded is-small is-danger is-outlined'
                     >
                       Delete

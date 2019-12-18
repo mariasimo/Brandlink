@@ -13,6 +13,7 @@ export default function PrivateRoute({
   addColorToPalette,
   saveType,
   deleteColor,
+  deleteType,
   ...rest
 }) {
   return (
@@ -31,6 +32,7 @@ export default function PrivateRoute({
                 typeset={typeset}
                 addColorToPalette={addColorToPalette}
                 deleteColor={deleteColor}
+                deleteType={deleteType}
                 saveType={saveType}
                 {...props}
               />

@@ -152,6 +152,20 @@ export default class App extends React.Component {
     );
   }
   
+
+  deleteType = typeId => {
+    this.projectService.deleteType(typeId).then(
+      project => {
+        this.setUser(this.state.user)
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  };
+
+
   componentDidMount() {
     this.fetchUser();
   }
@@ -247,6 +261,7 @@ export default class App extends React.Component {
                 menuIsOpen={menuIsOpen}
                 colorPalette={colorPalette}
                 component={TypeSet}
+                deleteType={this.deleteType}
                 typeset={typeset}
                 />
               <PrivateRoute
