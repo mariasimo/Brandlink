@@ -77,12 +77,11 @@ export default class App extends React.Component {
 
   setActiveProject = path => {
     const { id } = this.state.user;
-    
     this.authService
       .setActiveProject({ path, id })
       .then(userHasAnActiveProject => {
         this.setUser(userHasAnActiveProject);
-      });
+    });
   };
 
   // addFontsLinks = typeset => {

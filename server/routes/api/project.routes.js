@@ -305,9 +305,10 @@ router.put('/rows/:rowId', (req, res, next) => {
 
   Rows.findByIdAndUpdate(
     { _id: rowId },
-    { $push: { content: { type: type } } },
+    { $push: { content: { type: type, order: slotIdx } } },
     { returnNewDocument: true, new: true, strict: false }
   ).then(slotUpdated => {
+    console.log(slotUpdated)
     res.status(200).json(slotUpdated);
   });
 });

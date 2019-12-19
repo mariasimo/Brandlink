@@ -37,6 +37,7 @@ export default class MainContent extends Component {
 
   addContent = (rowId, slotIdx, type) => {
     this.projectService.addContent({ rowId, slotIdx, type }).then(payload => {
+      console.log(payload)
       this.displayRows();
     });
   };
@@ -65,7 +66,8 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
-
+                        Content Added
+{/* 
                         {row.content[slotIdx].type === 'assets' && (
                           <>
                             {assets &&
@@ -143,7 +145,7 @@ export default class MainContent extends Component {
                               </div>
                             )}
                           </>
-                        )}
+                        )} */}
                       </React.Fragment>
                     )}
 

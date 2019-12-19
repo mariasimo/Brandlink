@@ -168,6 +168,7 @@ class ProjectService {
 
   addContent = rowParams => {
     const {rowId, slotIdx, type} = rowParams
+    console.log(rowParams)
     return this.instance.put(`/rows/${rowId}`, {type, slotIdx})
     .then(res => {
       return Promise.resolve(res.data)
