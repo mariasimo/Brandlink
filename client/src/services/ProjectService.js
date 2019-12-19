@@ -143,6 +143,7 @@ class ProjectService {
   getTextStyleData  = (styleId) => {
     return this.instance.get(`/textstyle/${styleId}?`)
     .then(res => {
+      console.log(res)
       return Promise.resolve(res.data);
     })
     .catch(error => console.error(error));
@@ -158,7 +159,7 @@ class ProjectService {
       .catch(error => console.error(error));
   };
 
-  deleteRow = (userId, rowId) => {
+  deleteRow = (rowId) => {
     return this.instance.delete(`/rows/${rowId}`)
     .then(res => {
       return Promise.resolve(res.data);

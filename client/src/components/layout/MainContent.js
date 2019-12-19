@@ -36,6 +36,19 @@ export default class MainContent extends Component {
     );
   };
 
+   deleteRow = rowId => {
+    this.projectService.deleteRow(rowId).then(
+      project => {
+        console.log(project)
+        this.displayRows()
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  };
+
   addContent = (rowId, slotIdx, type) => {
     this.projectService.addContent({ rowId, slotIdx, type }).then(payload => {
       this.displayRows();

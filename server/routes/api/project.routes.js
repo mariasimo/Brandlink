@@ -223,9 +223,12 @@ router.put('/textStyle/:path/:styleId?', (req, res, next) => {
 router.get('/textstyle/:styleId?', (req, res, next) => {
   const styleId = req.params.styleId;
 
+  console.log(styleId)
+
   Project.findOne({ textstyles: { $elemMatch: { _id: styleId } } })
-    .select({ textstyles: 1, typeset: 1 })
+    // .select({ textstyles: 1, typeset: 1 })
     .then(textstylesData => {
+      console.log(textstylesData)
       res.status(200).json(textstylesData);
     })
     .catch(error => {
@@ -292,7 +295,7 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
 });
 
 
-router.delete('/rows/:userId/:rowId', (req, res, next) => {
+router.delete('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
 
   Rows.findByIdAndDelete({ _id: rowId }).then(deletedRow => {
