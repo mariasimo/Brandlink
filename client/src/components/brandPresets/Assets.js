@@ -24,32 +24,11 @@ export default class Assets extends Component {
     this.props.addAsset({ uploadData, path });
   };
 
-  //   editName = () => {
-  //     // Append one child and remove another
-
-  //     const nameDOMEL = document.querySelector('.asset-name')
-  //     nameDOMEL.childNodes[0].style.display = "none"
-  //     nameDOMEL.childNodes[1].style.display = "block"
-  //   }
-
-  //   editInputName = (assetId) => {
-  //     let stateCopy = Object.assign({}, this.state);
-
-  //     console.log(stateCopy.assets, assetId)
-
-  //     stateCopy.assets.map(asset => {
-  //       if(assetId === asset._id) {
-  //         return asset
-  //       }
-  //     })
-  // //     stateCopy.assets[key].upVotes += 1;
-  // // this.setState(stateCopy);
-  // //     this.setState({...this.state, assets})
-  //   }
-
   render() {
     const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
+
+    console.log(this.props)
 
     return (
       <React.Fragment>

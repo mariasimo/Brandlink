@@ -177,8 +177,8 @@ router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
   const { path } = req.params;
 
   if (req.file) {
-    Project.findOneAndUpdate(
-      { path },
+    Project.findByIdAndUpdate(
+      { _id: req.user.activeProject },
       {
         $push: {
           assets: {

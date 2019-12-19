@@ -67,7 +67,38 @@ export default class MainContent extends Component {
                     {row.content[slotIdx] && (
                       <React.Fragment>
 
-                        {row.content[slotIdx].type === 'assets' && ("Image")}
+                        {row.content[slotIdx].type === 'assets' && (
+                          <>
+                          {assets &&
+                            <React.Fragment>
+                            <div className="droppable"
+                            onDrop={(e) => this.props.onDrop(e)}
+                            >
+                              <section class='file-label'>
+                                <div >
+                                  <p>
+                                    Drag 'n' drop some files here, or click to select files
+                                  </p>
+                                </div>
+                              </section>
+                            </div>
+                            </React.Fragment>
+                            // assets.map(asset => "holi")
+                          }
+
+                          {!assets.length && (
+                            <div>
+                              Add your first asset.{' '}
+                              <a
+                                href={`/project/${path}/edit/assets`}
+                              >
+                                New asset
+                              </a>
+                            </div>
+                          )}
+                        </>
+                        )}
+                        
                         {row.content[slotIdx].type === 'colorPalette' && (
                           <>
                           {colorPalette &&
