@@ -32,13 +32,8 @@ export default class NewProject extends React.Component {
     const user = this.props.loggedInUser;
     const { history } = this.props;
     e.preventDefault();
-    this.projectService.createProject({ title, path }, user._id).then(
-      () => {
-        this.setState({ ...this.state, title: '', path: '' });
-        history.push(`/project/${path}/edit`);
-      },
-      error => console.error(error)
-    );
+
+    this.props.createProject({title, path, history})
   };
 
   render() {

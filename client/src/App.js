@@ -239,6 +239,20 @@ export default class App extends React.Component {
     // console.log( rowId, slotIdx, type )
   };
 
+
+  createProject = ({title, path, history}) => {
+    console.log({title, path, history})
+
+    this.projectService.createProject({ title, path }).then(
+      (projectCreated) => {
+        console.log(projectCreated)
+        this.setState({ ...this.state, title: '', path: '' });
+        history.push(`/project/${this.state.user.activeProject}/edit`);
+      },
+      error => console.error(error)
+    );
+  }
+
   componentDidMount() {
     this.fetchUser();
   }
@@ -297,6 +311,7 @@ export default class App extends React.Component {
                 user={user}
                 component={NewProject}
                 toggleMenu={this.toggleMenu}
+                createProject={this.createProject}
                 menuIsOpen={menuIsOpen}
               />
 

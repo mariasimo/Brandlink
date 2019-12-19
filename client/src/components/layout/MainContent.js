@@ -37,7 +37,8 @@ export default class MainContent extends Component {
   };
 
    deleteRow = rowId => {
-    this.projectService.deleteRow(rowId).then(
+    this.projectService.deleteRow(rowId)
+    .then(
       project => {
         console.log(project)
         this.displayRows()
