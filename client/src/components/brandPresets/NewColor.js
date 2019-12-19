@@ -143,6 +143,7 @@ export default class NewColor extends Component {
         </form>
       </SideMenu>
       <MainContent
+      {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}

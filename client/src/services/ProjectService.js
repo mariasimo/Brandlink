@@ -20,8 +20,8 @@ class ProjectService {
       .catch(error => console.error(error));
   };
 
-  displayRows = userId => {
-    return this.instance.get(`/rows/${userId}`)
+  displayRows = projectId => {
+    return this.instance.get(`/rows/${projectId}`)
     .then(res =>  {
       return Promise.resolve(res.data)
     })

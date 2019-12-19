@@ -70,7 +70,7 @@ export default class EditProject extends Component {
           </li>
         </ul>
       </SideMenu>
-      <MainContent
+      <MainContent {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           colorPalette={colorPalette}

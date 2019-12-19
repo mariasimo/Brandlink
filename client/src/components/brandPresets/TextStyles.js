@@ -73,6 +73,7 @@ export default class TextStyles extends Component {
         </div>
       </SideMenu>
       <MainContent
+      {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}

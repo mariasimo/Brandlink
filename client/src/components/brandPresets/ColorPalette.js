@@ -83,6 +83,7 @@ export default class ColorPalette extends Component {
           </div>
         </SideMenu>
         <MainContent
+        {...this.props}
           colorPalette={colorPalette}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}

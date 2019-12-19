@@ -12,9 +12,9 @@ export default class MainContent extends Component {
   }
 
   displayRows = () => {
-    const userId = this.props.user.id;
+    const {id} = this.props.match.params
 
-    this.projectService.displayRows(userId).then(rows => {
+    this.projectService.displayRows(id).then(rows => {
       this.setState({
         ...this.state,
         rows: rows

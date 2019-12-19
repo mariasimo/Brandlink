@@ -234,20 +234,19 @@ router.get('/textstyle/:styleId?', (req, res, next) => {
     });
 });
 
-router.get('/rows/:userId', (req, res, next) => {
-  const { userId } = req.params;
+router.get('/rows/:projectId', (req, res, next) => {
+  const { projectId } = req.params;
 
-  User.findById({ _id: userId }).then(user => {
-    Project.findOne({ path: user.activeProject })
+    Project.findById(
+      { _id: projectId },
+      )
       .populate('rows')
       .then(projectRows => {
-        console.log(projectRows);
         res.status(200).json(projectRows.rows);
       })
       .catch(error => {
         res.status(500).json({ message: 'Error retrieving project' });
       });
-  });
 });
 
 router.post(`/newRow/:projectId`, (req, res, next) => {

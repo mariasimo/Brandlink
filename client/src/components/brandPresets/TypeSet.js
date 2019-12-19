@@ -78,6 +78,7 @@ export default class TypeSet extends Component {
           
       </SideMenu>
       <MainContent
+      {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           colorPalette={colorPalette}

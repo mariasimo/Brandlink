@@ -254,6 +254,7 @@ export default class NewTextStyle extends Component {
               </form>
       </SideMenu>
       <MainContent
+      {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
