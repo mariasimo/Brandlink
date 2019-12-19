@@ -149,8 +149,8 @@ router.delete('/color/:colorId', (req, res, next) => {
 router.put('/type/:path', (req, res, next) => {
   const { path, id } = req.params;
 
-  Project.findOneAndUpdate(
-    { path },
+  Project.findByIdAndUpdate(
+    { _id: req.user.activeProject },
     { $push: { typeset: req.body } },
     { new: true }
   )
@@ -234,7 +234,7 @@ router.get('/textstyle/:styleId?', (req, res, next) => {
 
 router.get('/rows/:projectId', (req, res, next) => {
   const { projectId } = req.params;
-
+  
     Project.findById(
       { _id: projectId },
       )

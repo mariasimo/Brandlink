@@ -174,7 +174,7 @@ export default class App extends React.Component {
           fontFamily: '',
           typeset: updatedProject.typeset
         });
-        history.push(`/project/${path}/edit/typeSet`);
+        history.push(`/project/${this.state.user.activeProject}/edit/typeSet`);
       },
       error => console.error(error)
     );
