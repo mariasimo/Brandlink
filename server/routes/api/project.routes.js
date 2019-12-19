@@ -210,11 +210,13 @@ router.delete('/assets/:assetId', (req, res, next) => {
 // Updated project (add brand preset)
 router.put('/textStyle/:path/:styleId?', (req, res, next) => {
   const { path, styleId } = req.params;
+  console.log(req.body)
   Project.findOneAndUpdate(
     { textstyles: { $elemMatch: { _id: styleId } } },
     { 'textstyles.$': req.body },
     { new: true }
   ).then(projectUpdated => {
+    console.log(projectUpdated)
     res.status(200).json(projectUpdated);
   });
 });
