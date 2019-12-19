@@ -2,27 +2,9 @@
 
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800&display=swap');
-// // Set your brand colors
-// $purple: #8a4d76;
-// $brown: #757763;
-// $beige-light: #d0d1cd;
-// $beige-lighter: #eff0eb;
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
 $blue: #3c5ac3;
 
-// // Update Bulma's global variables
-// $family-sans-serif: 'Nunito', sans-serif;
-// $grey-dark: $brown;
-// $grey-light: $beige-light;
-// $primary: $purple;
-// $link: $pink;
-// $widescreen-enabled: false;
-// $fullhd-enabled: false;
-
-// // Update some of Bulma's component variables
-// $body-background-color: $beige-lighter;
-// $control-border-width: 2px;
-// $input-border-color: transparent;
-// $input-shadow: none;
 $primary: $blue;
 $is-primary: $blue;
 $has-text-primary: $blue;
@@ -53,7 +35,8 @@ body {
   }
 }
 
-.auth-section{
+.auth-section,
+.landing{
   min-height: 90vh;
   display: flex;
   align-items: center;
@@ -340,6 +323,7 @@ body {
    width: 100%;
    padding: 24px;
    display: flex;
+
   .color{
     position: relative;
     min-height: 240px;
@@ -372,4 +356,44 @@ body {
 	transform: rotate(90deg);
   transform-origin: left top 0;
   float: left;
+}
+
+
+.landing{
+  background-image: url('/bg.png');
+  background-size: cover;
+
+    
+  .container{
+    max-width: 1240px;
+  }
+  .column{
+    // border: 1px solid red;
+  }
+  .is-one-third{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 120px;
+    margin-left: 50px
+  }
+
+  h2{
+    color: #333333;
+    color: #204488;
+    color: $is-primary;
+    font-family: 'Merriweather';
+    letter-spacing: 0.005em;
+    line-height: 1.2;
+  } 
+
+  p{ margin-bottom: 32px;}
+
+  img{margin-left: -88px; margin-top: -24px; min-width: 900px}
+  .is-grouped{
+    
+    .button:first-child{
+      margin-right: 16px
+    }
+  }
 }
