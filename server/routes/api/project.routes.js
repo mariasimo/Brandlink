@@ -88,10 +88,10 @@ router.get('/project/:userId', (req, res, next) => {
   const { userId } = req.params;
 
   User.findById({ _id: userId }).then(user => {
-    console.log(user)
+    console.log(user);
     Project.findOne({ path: user.activeProject })
       .then(project => {
-        console.log(project)
+        console.log(project);
         res.status(200).json(project);
       })
       .catch(error => {
@@ -234,99 +234,57 @@ router.get('/textstyle/:styleId?', (req, res, next) => {
     });
 });
 
-
-router.get('/rows/:userId', (req,res,next) => {
+router.get('/rows/:userId', (req, res, next) => {
   const { userId } = req.params;
 
-  User.findById({_id: userId})
-  .then(user => {
-    Project.findOne({path: user.activeProject})
-    .populate('rows')
-    .then(projectRows => {
-      console.log(projectRows)
-      res.status(200).json(projectRows.rows);
-    })
-    .catch(error => {
-      res.status(500).json({ message: 'Error retrieving project' });
-    });
-  })
-})
+  User.findById({ _id: userId }).then(user => {
+    Project.findOne({ path: user.activeProject })
+      .populate('rows')
+      .then(projectRows => {
+        console.log(projectRows);
+        res.status(200).json(projectRows.rows);
+      })
+      .catch(error => {
+        res.status(500).json({ message: 'Error retrieving project' });
+      });
+  });
+});
 
-router.post(`/newRow/:userId`, (req, res, next) => {
-  const { userId } = req.params;
+router.post(`/newRow/:projectId`, (req, res, next) => {
+  let layoutDescriptor;
 
   if (req.body.layout === 'is-full') {
-    Rows.create({
+    layoutDescriptor = {
       layout: 'is-full',
       slots: ['is-full']
-    })
-    .then(
-      newRow => {
-        return User.findById({_id:userId})
-        .then(user => {
-          console.log(user.activeProject)
-          Project.findOneAndUpdate(
-            { path : user.activeProject },
-            { $push: { rows: newRow._id } },
-            { new: true }
-          )
-            .populate('rows')
-            .then(projectUpdated => {
-              res.status(200).json(projectUpdated);
-            });
-
-        })
-      }
-    )
+    };
   }
 
   if (req.body.layout === 'is-half') {
-    Rows.create({
+    layoutDescriptor = {
       layout: 'is-half',
       slots: ['is-half', 'is-half']
-    })
-    .then(
-      newRow => {
-        return User.findById({_id:userId})
-        .then(user => {
-          Project.findOneAndUpdate(
-            { path: user.activeProject },
-            { $push: { rows: newRow._id } },
-            { new: true }
-          )
-            .populate('rows')
-            .then(projectUpdated => {
-              res.status(200).json(projectUpdated);
-            });
-
-        })
-      }
-    )
+    };
   }
-
 
   if (req.body.layout === 'is-one-third') {
-    Rows.create({
+    layoutDescriptor = {
       layout: 'is-one-third',
       slots: ['is-one-third', 'is-one-third', 'is-one-third']
-    })
-      .then(
-        newRow => {
-          return User.findById({_id:userId})
-          .then(user => {
-            Project.findOneAndUpdate(
-              { path: user.activeProject },
-              { $push: { rows: newRow._id } },
-              { new: true }
-            )
-            .populate('rows')
-            .then(projectUpdated => {
-              res.status(200).json(projectUpdated);
-            });
-          })
-        }
-      )
+    };
   }
+
+  Rows.create(layoutDescriptor).then(newRow => {
+    Project.findOneAndUpdate(
+      { _id: req.user.activeProject },
+      { $push: { rows: newRow._id } },
+      { new: true }
+    )
+      .populate('rows')
+      .then(projectUpdated => {
+        res.status(200).json(projectUpdated);
+      });
+  });
 });
 
 router.delete('/rows/:userId/:rowId', (req, res, next) => {
@@ -342,19 +300,17 @@ router.delete('/rows/:userId/:rowId', (req, res, next) => {
   });
 });
 
-
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
   const { slotIdx, type } = req.body;
-  
-      Rows.findByIdAndUpdate(
-        { _id: rowId },
-        { $push: { content: { type: type} } },
-        { returnNewDocument: true, new: true, strict: false },
-      )
-      .then(slotUpdated => {
-        res.status(200).json(slotUpdated);
-      });
+
+  Rows.findByIdAndUpdate(
+    { _id: rowId },
+    { $push: { content: { type: type } } },
+    { returnNewDocument: true, new: true, strict: false }
+  ).then(slotUpdated => {
+    res.status(200).json(slotUpdated);
+  });
 });
 
 module.exports = router;
