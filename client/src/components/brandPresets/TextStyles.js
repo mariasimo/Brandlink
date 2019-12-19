@@ -19,8 +19,9 @@ export default class TextStyles extends Component {
 
   render() {
     const { id } = this.props.match.params;
-    const { textstyles } = this.state;
-    const { colorPalette, typeset, assets } = this.props;
+    const { colorPalette, typeset, assets, textstyles } = this.props;
+
+    console.log(textstyles)
 
     return (
       < >

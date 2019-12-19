@@ -64,24 +64,25 @@ export default class NewTextStyle extends Component {
     const { path, styleId } = this.props.match.params;
     const { history } = this.props;
 
-    this.projectService
-      .addTextStyle({ ...this.state.textstyle, path, styleId })
-      .then(
-        () => {
-          this.setState({
-            ...this.state,
-            name: "",
-            fontFamily: "",
-            fontSize: 1,
-            fontWeight: null,
-            lineHeight: 1,
-            letterSpacing: 0,
-            uppercase: false
-          });
-          history.push(`/project/${path}/edit/textStyles`);
-        },
-        error => console.error(error)
-      );
+    this.props.addTextStyle({ ...this.state.textstyle, path, styleId })
+    // this.projectService
+    //   .addTextStyle({ ...this.state.textstyle, path, styleId })
+    //   .then(
+    //     () => {
+    //       this.setState({
+    //         ...this.state,
+    //         name: "",
+    //         fontFamily: "",
+    //         fontSize: 1,
+    //         fontWeight: null,
+    //         lineHeight: 1,
+    //         letterSpacing: 0,
+    //         uppercase: false
+    //       });
+    //       history.push(`/project/${path}/edit/textStyles`);
+    //     },
+    //     error => console.error(error)
+    //   );
   };
 
   render() {

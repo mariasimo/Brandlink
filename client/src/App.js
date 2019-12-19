@@ -60,6 +60,7 @@ export default class App extends React.Component {
         colorPalette: project.colorPalette,
         typeset: project.typeset,
         assets: project.assets,
+        textstyles : project.textstyles
       })
       console.log(this.state)
     })
@@ -239,7 +240,7 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    const { user, menuIsOpen, colorPalette, typeset, assets } = this.state;
+    const { user, menuIsOpen, colorPalette, typeset, assets, textstyles } = this.state;
 
     return (
       <div className='App'>
@@ -302,6 +303,7 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 typeset={typeset}
                 assets={assets}
+                textstyles={textstyles}
                 component={EditProject}
               />
 
@@ -315,6 +317,7 @@ export default class App extends React.Component {
                 deleteColor={this.deleteColor}
                 typeset={typeset}
                 assets={assets}
+                textstyles={textstyles}
                 component={ColorPalette}
               />
 
@@ -328,6 +331,7 @@ export default class App extends React.Component {
                 addColorToPalette={this.addColorToPalette}
                 typeset={typeset}
                 assets={assets}
+                textstyles={textstyles}
                 component={NewColor}
               />
 
@@ -341,6 +345,7 @@ export default class App extends React.Component {
                 deleteType={this.deleteType}
                 assets={assets}
                 typeset={typeset}
+                textstyles={textstyles}
                 component={TypeSet}
               />
 
@@ -354,6 +359,7 @@ export default class App extends React.Component {
                 typeset={typeset}
                 saveType={this.saveType}
                 assets={assets}
+                textstyles={textstyles}
                 component={NewType}
               />
 
@@ -371,6 +377,7 @@ export default class App extends React.Component {
                 onDragStart={this.onDragStart}
                 onDrop={this.onDrop}
                 file={this.state.file}
+                textstyles={textstyles}
                 component={Assets}
               />
 
@@ -383,6 +390,7 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 typeset={typeset}
                 assets={assets}
+                textstyles={textstyles}
                 component={TextStyles}
               />
 
@@ -395,6 +403,7 @@ export default class App extends React.Component {
                 colorPalette={colorPalette}
                 typeset={typeset}
                 assets={assets}
+                textstyles={textstyles}
                 component={NewTextStyle}
               />
             </Switch>
