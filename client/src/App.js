@@ -43,6 +43,8 @@ export default class App extends React.Component {
   };
 
   setUser = user => {
+    if (user === undefined || !user.hasOwnProperty("id")) return;
+
     let userId = user.id
     this.projectService.displayProject(userId)
     .then(project => {
@@ -70,10 +72,9 @@ export default class App extends React.Component {
         .loggedInUser()
         .then(
           user => {
-            this.setUser(user);
-          },
-          error => {
-            this.setUser(false);
+            if (user !== undefined) {
+              this.setUser(user);
+            }
           }
         )
         .catch(error => {
