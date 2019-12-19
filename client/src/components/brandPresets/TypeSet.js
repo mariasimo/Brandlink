@@ -20,8 +20,6 @@ export default class TypeSet extends Component {
     const { id , path} = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
-    console.log(id)
-
     return (
       < >
       <SideMenu

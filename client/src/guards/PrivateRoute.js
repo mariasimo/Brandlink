@@ -21,6 +21,8 @@ export default function PrivateRoute({
   deleteAsset,
   setActiveProject,
   textstyles,
+  addTextStyle,
+  projectTitle,
   ...rest
 }) {
   return (
@@ -48,6 +50,8 @@ export default function PrivateRoute({
                 onDrop={onDrop}
                 setActiveProject={setActiveProject}
                 textstyles={textstyles}
+                addTextStyle={addTextStyle}
+                projectTitle = {projectTitle}
                 {...props}
               />
             );

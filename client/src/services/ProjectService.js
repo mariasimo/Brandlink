@@ -21,7 +21,6 @@ class ProjectService {
   };
 
   displayRows = projectId => {
-    console.log(projectId)
     return this.instance.get(`/rows/${projectId}`)
     .then(res =>  {
       return Promise.resolve(res.data)
@@ -32,7 +31,6 @@ class ProjectService {
   displayProject = userId => {
     return this.instance.get(`/project/${userId}`)
     .then(res =>  {
-      console.log(res.data)
       return Promise.resolve(res.data)
     })
     .catch(error => console.error(error));
@@ -143,6 +141,7 @@ class ProjectService {
   };
 
   getTextStyleData  = (styleId) => {
+    console.log(styleId)
     return this.instance.get(`/textstyle/${styleId}?`)
     .then(res => {
       return Promise.resolve(res.data);
@@ -155,7 +154,6 @@ class ProjectService {
     return this.instance
       .post(`/newRow/${userId}/`, {layout})
       .then(res => {
-        console.log(res)
         return Promise.resolve(res.data)}
       )
       .catch(error => console.error(error));
@@ -171,7 +169,6 @@ class ProjectService {
 
   addContent = rowParams => {
     const {rowId, slotIdx, type} = rowParams
-    console.log(rowParams)
     return this.instance.put(`/rows/${rowId}`, {type, slotIdx})
     .then(res => {
       return Promise.resolve(res.data)

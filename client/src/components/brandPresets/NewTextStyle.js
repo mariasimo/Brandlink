@@ -18,33 +18,36 @@ export default class NewTextStyle extends Component {
   }
 
   componentDidMount() {
-    // this.getTextStyleData();
+    this.getTextStyleData();
   }
 
-  // getTextStyleData = () => {
-  //   const { styleId } = this.props.match.params;
+  getTextStyleData = () => {
+    const { styleId } = this.props.match.params;
+    console.log(styleId)
 
-  //   if (styleId !== undefined) {
-  //     this.projectService.getTextStyleData(styleId).then(
-  //       textstyleData => {
+    if (styleId !== undefined) {
+      this.projectService.getTextStyleData(styleId)
+      .then(textstyleData => {
 
-  //         let textStyle = textstyleData.textstyles.filter(
-  //           style => style._id === styleId
-  //         );
+          console.log(textstyleData)
+
+          let textStyle = textstyleData.textstyles.filter(
+            style => style._id === styleId
+          );
           
-  //         this.setState({
-  //           ...this.state,
-  //           textstyle: textStyle[0],
-  //           typeset : textstyleData.typeset
-  //         });
-  //       },
-  //       error => {
-  //         const { message } = error;
-  //         console.error(message);
-  //       }
-  //     );
-  //   }
-  // };
+          this.setState({
+            ...this.state,
+            textstyle: textStyle[0],
+            typeset : textstyleData.typeset
+          });
+        },
+        error => {
+          const { message } = error;
+          console.error(message);
+        }
+      );
+    }
+  };
 
 
   handleChange = e => {
@@ -63,26 +66,9 @@ export default class NewTextStyle extends Component {
     e.preventDefault();
     const { path, styleId } = this.props.match.params;
     const { history } = this.props;
+    const textstyle = this.state.textstyle
 
-    this.props.addTextStyle({ ...this.state.textstyle, path, styleId })
-    // this.projectService
-    //   .addTextStyle({ ...this.state.textstyle, path, styleId })
-    //   .then(
-    //     () => {
-    //       this.setState({
-    //         ...this.state,
-    //         name: "",
-    //         fontFamily: "",
-    //         fontSize: 1,
-    //         fontWeight: null,
-    //         lineHeight: 1,
-    //         letterSpacing: 0,
-    //         uppercase: false
-    //       });
-    //       history.push(`/project/${path}/edit/textStyles`);
-    //     },
-    //     error => console.error(error)
-    //   );
+    this.props.addTextStyle({ textstyle, path, styleId, history })
   };
 
   render() {
@@ -95,7 +81,9 @@ export default class NewTextStyle extends Component {
       lineHeight,
       letterSpacing
     } = this.state.textstyle;
-    const { colorPalette, typeset, assets} = this.props;
+    const { colorPalette, typeset, assets, textstyle} = this.props;
+
+    console.log(this.props, this.state)
 
     return (
       < >
@@ -259,6 +247,7 @@ export default class NewTextStyle extends Component {
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           path={this.props.match.params.path}
+          user={this.props.loggedInUser}
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}

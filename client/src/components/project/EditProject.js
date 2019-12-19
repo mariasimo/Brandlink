@@ -8,16 +8,11 @@ import MainContent from '../layout/MainContent';
 export default class EditProject extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService();
-    this.state = {
-      path: "",
-      title: ""
-    };
   }
 
   render() {
-    const { colorPalette, typeset, assets} = this.props;
-
+    const { colorPalette, typeset, assets, title} = this.props;
+    console.log(this.state, this.props)
     return (
       < >
       <SideMenu
@@ -25,7 +20,7 @@ export default class EditProject extends Component {
       menuIsOpen={this.props.menuIsOpen}
       >   
         <BrandHeader
-          title={this.state.title}
+          title={this.props.projectTitle}
           subtitle='Brand presets'
           {...this.props}
           url={`/panel/${this.props.loggedInUser.username}`}

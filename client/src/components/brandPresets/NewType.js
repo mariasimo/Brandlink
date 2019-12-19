@@ -24,8 +24,6 @@ export default class NewType extends Component {
     const { source, id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
-    console.log(this.props)
-
     return (
       < >
       <SideMenu

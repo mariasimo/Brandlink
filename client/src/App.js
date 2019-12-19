@@ -51,18 +51,16 @@ export default class App extends React.Component {
     });
 
     if(this.state.user.activeProject) {
-    console.log(this.state.user.activeProject)
     this.projectService.displayProject(user.id)
     .then(project => {
-      console.log(project)
       this.setState({
         ...this.state,
+        title:project.title,
         colorPalette: project.colorPalette,
         typeset: project.typeset,
         assets: project.assets,
-        textstyles : project.textstyles
+        textstyles : project.textstyles,
       })
-      console.log(this.state)
     })
     } else {
       this.setState({
@@ -136,7 +134,6 @@ export default class App extends React.Component {
   };
 
   addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
-    console.log({ name, hexadecimal, id, colorId, history })
     this.projectService
       .addColorToPalette({ name, hexadecimal, id, colorId })
       .then(
@@ -193,6 +190,27 @@ export default class App extends React.Component {
     );
   };
 
+  addTextStyle = ({ textstyle, path, styleId, history}) => {
+      this.projectService
+      .addTextStyle({ ...textstyle, path, styleId, history })
+      .then(
+        () => {
+          this.setState({
+            ...this.state,
+            name: "",
+            fontFamily: "",
+            fontSize: 1,
+            fontWeight: null,
+            lineHeight: 1,
+            letterSpacing: 0,
+            uppercase: false
+          });
+          history.push(`/project/${this.state.user.activeProject}/edit/textStyles`);
+        },
+        error => console.error(error)
+      );
+  }
+
   addAsset = ({ uploadData, path }) => {
     this.loadingImg = document.createElement('img');
     this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
@@ -241,6 +259,9 @@ export default class App extends React.Component {
   render() {
     this.fetchUser();
     const { user, menuIsOpen, colorPalette, typeset, assets, textstyles } = this.state;
+    const projectTitle = this.state.title
+
+    console.log(projectTitle)
 
     return (
       <div className='App'>
@@ -304,6 +325,7 @@ export default class App extends React.Component {
                 typeset={typeset}
                 assets={assets}
                 textstyles={textstyles}
+                projectTitle={projectTitle}
                 component={EditProject}
               />
 
@@ -404,6 +426,7 @@ export default class App extends React.Component {
                 typeset={typeset}
                 assets={assets}
                 textstyles={textstyles}
+                addTextStyle={this.addTextStyle}
                 component={NewTextStyle}
               />
             </Switch>

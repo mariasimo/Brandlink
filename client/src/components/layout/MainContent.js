@@ -16,7 +16,6 @@ export default class MainContent extends Component {
 
     this.projectService.displayRows(id)
     .then(rows => {
-      console.log(rows)
       this.setState({
         ...this.state,
         rows: rows
@@ -28,8 +27,6 @@ export default class MainContent extends Component {
     const userId = this.props.user.id;
     this.projectService.createNewRow({ layout, userId }).then(
       projectWithRowAdded => {
-        console.log(projectWithRowAdded)
-
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
@@ -41,7 +38,6 @@ export default class MainContent extends Component {
 
   addContent = (rowId, slotIdx, type) => {
     this.projectService.addContent({ rowId, slotIdx, type }).then(payload => {
-      console.log(payload)
       this.displayRows();
     });
   };
@@ -51,8 +47,6 @@ export default class MainContent extends Component {
   }
 
   render() {
-
-    console.log(this.props)
     const path = this.props.user.activeProject;
     const { colorPalette, typeset, assets } = this.props;
 
@@ -101,7 +95,26 @@ export default class MainContent extends Component {
                           )}
                         </>
                         )}
-                        {row.content[slotIdx].type === 'typeset' && ("Typeset")}
+                        {row.content[slotIdx].type === 'typeset' && (
+                           <>
+                           {typeset &&
+                             typeset.map(type => {
+                               return <p style={{fontFamily: type.fontFamily}}>{type.fontFamily}</p>
+                             })
+                           }
+
+                           {!typeset.length && (
+                             <div>
+                               Add your first type.{' '}
+                               <a
+                                 href={`/project/${path}/edit/typeset`}
+                               >
+                                 New type
+                               </a>
+                             </div>
+                           )}
+                         </>
+                        )}
 {/* 
                         {row.content[slotIdx].type === 'assets' && (
                           <>

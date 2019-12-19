@@ -21,8 +21,6 @@ export default class TextStyles extends Component {
     const { id } = this.props.match.params;
     const { colorPalette, typeset, assets, textstyles } = this.props;
 
-    console.log(textstyles)
-
     return (
       < >
       <SideMenu
