@@ -51,6 +51,19 @@ export default class App extends React.Component {
     });
   };
 
+  displayProject = (userId) => {
+    this.projectservice.displayProject(userId)
+    .then(project => {
+      this.setState({
+        ...this.state,
+        colorPalette: project.colorPalette,
+        typeset: project.typeset,
+        assets: project.assets,
+      })
+    })
+  }
+
+
   fetchUser = () => {
     if (this.state.user === null) {
       this.authService
@@ -84,20 +97,20 @@ export default class App extends React.Component {
     });
   };
 
-  // addFontsLinks = typeset => {
-  //   typeset.map(type => {
-  //     const link = document.createElement("link");
-  //     link.setAttribute(
-  //       "href",
-  //       `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
-  //         " ",
-  //         "+"
-  //       )}&display=swap`
-  //     );
-  //     link.setAttribute("rel", `stylesheet`);
-  //     document.head.appendChild(link);
-  //   })
-  // };
+  addFontsLinks = typeset => {
+    typeset.map(type => {
+      const link = document.createElement("link");
+      link.setAttribute(
+        "href",
+        `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
+          " ",
+          "+"
+        )}&display=swap`
+      );
+      link.setAttribute("rel", `stylesheet`);
+      document.head.appendChild(link);
+    })
+  };
 
   addColorToPalette = ({ name, hexadecimal, path, colorId, history }) => {
     this.projectService
@@ -272,7 +285,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/colorPalette'
+                path='/project/:id/edit/colorPalette'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}
@@ -285,7 +298,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/colorPalette/new/:colorId?'
+                path='/project/:id/edit/colorPalette/new/:colorId?'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}
@@ -298,7 +311,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/typeset'
+                path='/project/:id/edit/typeset'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}
@@ -311,7 +324,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/typeset/new/:source?'
+                path='/project/:id/edit/typeset/new/:source?'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 colorPalette={colorPalette}
@@ -324,7 +337,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/assets'
+                path='/project/:id/edit/assets'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}
@@ -341,7 +354,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/textStyles'
+                path='/project/:id/edit/textStyles'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}
@@ -353,7 +366,7 @@ export default class App extends React.Component {
 
               <PrivateRoute
                 exact
-                path='/project/:path/edit/textStyles/new/:styleId?'
+                path='/project/:id/edit/textStyles/new/:styleId?'
                 user={user}
                 toggleMenu={this.toggleMenu}
                 menuIsOpen={menuIsOpen}

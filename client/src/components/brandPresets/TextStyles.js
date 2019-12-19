@@ -18,7 +18,7 @@ export default class TextStyles extends Component {
   }
 
   render() {
-    const { path } = this.props.match.params;
+    const { id } = this.props.match.params;
     const { textstyles } = this.state;
     const { colorPalette, typeset, assets } = this.props;
 
@@ -31,7 +31,7 @@ export default class TextStyles extends Component {
         <BrandHeader
           title='Text Styles'
           {...this.props}
-          url={`/project/${path}/edit`}
+          url={`/project/${id}/edit`}
         ></BrandHeader>
         <div className='content'>
           <div className='type-set columns is-multiline'>

@@ -85,7 +85,7 @@ export default class NewTextStyle extends Component {
   };
 
   render() {
-    const { path } = this.props.match.params;
+    const { id } = this.props.match.params;
     const {
       name,
       fontFamily,
@@ -103,7 +103,7 @@ export default class NewTextStyle extends Component {
                 title={name}
                 subtitle="Text Styles"
                 {...this.props}
-                url={`/project/${path}/edit/textStyles`}
+                url={`/project/${id}/edit/textStyles`}
               ></BrandHeader>
 
               <form onSubmit={this.handleSubmit}>

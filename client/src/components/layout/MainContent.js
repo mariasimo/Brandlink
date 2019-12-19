@@ -47,6 +47,8 @@ export default class MainContent extends Component {
   }
 
   render() {
+
+    console.log(this.props)
     const path = this.props.user.activeProject;
     const { colorPalette, typeset, assets } = this.props;
 
@@ -66,7 +68,10 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
-                        Content Added
+
+                        {row.content[slotIdx].type === 'assets' && ("Image")}
+                        {row.content[slotIdx].type === 'colorPalette' && ("Color Palette")}
+                        {row.content[slotIdx].type === 'typeset' && ("Typeset")}
 {/* 
                         {row.content[slotIdx].type === 'assets' && (
                           <>

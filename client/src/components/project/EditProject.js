@@ -15,20 +15,6 @@ export default class EditProject extends Component {
     };
   }
 
-  // fetchOneProject = () => {
-  //   const path = this.props.match.params.path;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     });
-  //   });
-  // };
-
-  componentDidMount(){
-    // this.fetchOneProject();
-  }
-
   render() {
     const { colorPalette, typeset, assets} = this.props;
 
@@ -70,7 +56,8 @@ export default class EditProject extends Component {
           </li>
         </ul>
       </SideMenu>
-      <MainContent {...this.props}
+      <MainContent 
+          {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           colorPalette={colorPalette}

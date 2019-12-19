@@ -21,7 +21,7 @@ export default class NewType extends Component {
   };
 
   render() {
-    const { source, path } = this.props.match.params;
+    const { source, id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
     console.log(this.props)
@@ -39,7 +39,7 @@ export default class NewType extends Component {
               title="Google Fonts"
               subtitle="Typeset"
               {...this.props}
-              url={`/project/${path}/edit/typeset`}
+              url={`/project/${id}/edit/typeset`}
             ></BrandHeader>
             <MyFontPicker class="select" saveType={typeObj => this.saveType(typeObj)} />
           </>
@@ -51,7 +51,7 @@ export default class NewType extends Component {
               title="Adobe Fonts"
               subtitle="Typeset"
               {...this.props}
-              url={`/project/${path}/edit/typeset`}
+              url={`/project/${id}/edit/typeset`}
             ></BrandHeader>
             <AdobeFontsImporter></AdobeFontsImporter>
           </>

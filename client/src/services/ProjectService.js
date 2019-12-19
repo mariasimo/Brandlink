@@ -29,7 +29,6 @@ class ProjectService {
   }
   
   displayProject = userId => {
-    console.log(userId)
     return this.instance.get(`/project/${userId}`)
     .then(res =>  {
       console.log(res.data)

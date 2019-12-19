@@ -20,7 +20,7 @@ export default class ColorPalette extends Component {
   }
 
   render() {
-    const { path } = this.props.match.params;
+    const { id, path } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
     
     return (
@@ -32,7 +32,7 @@ export default class ColorPalette extends Component {
           <BrandHeader
             title='Color Palette'
             {...this.props}
-            url={`/project/${path}/edit`}
+            url={`/project/${id}/edit`}
           ></BrandHeader>
 
           <div className='content'>
@@ -83,7 +83,7 @@ export default class ColorPalette extends Component {
           </div>
         </SideMenu>
         <MainContent
-        {...this.props}
+          {...this.props}
           colorPalette={colorPalette}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}

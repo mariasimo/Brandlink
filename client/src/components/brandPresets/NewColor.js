@@ -62,7 +62,7 @@ export default class NewColor extends Component {
 
   render() {
     const { name, hexadecimal } = this.state;
-    const { colorId, path } = this.props.match.params;
+    const { colorId, id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
     return (
@@ -76,7 +76,7 @@ export default class NewColor extends Component {
             title="Edit color"
             subtitle="Color Palette"
             {...this.props}
-            url={`/project/${path}/edit/colorPalette`}
+            url={`/project/${id}/edit/colorPalette`}
           ></BrandHeader>
         )}
         {!colorId && (
@@ -84,7 +84,7 @@ export default class NewColor extends Component {
             title="New color"
             subtitle="Color Palette"
             {...this.props}
-            url={`/project/${path}/edit/colorPalette`}
+            url={`/project/${id}/edit/colorPalette`}
           ></BrandHeader>
         )}
 

@@ -48,7 +48,7 @@ export default class Assets extends Component {
   //   }
 
   render() {
-    const { path } = this.props.match.params;
+    const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
     return (
@@ -60,7 +60,7 @@ export default class Assets extends Component {
           <BrandHeader
             title='Assets Library'
             {...this.props}
-            url={`/project/${path}/edit`}
+            url={`/project/${id}/edit`}
           ></BrandHeader>
 
           <div>

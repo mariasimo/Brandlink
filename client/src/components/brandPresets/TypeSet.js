@@ -17,7 +17,7 @@ export default class TypeSet extends Component {
   }
 
   render() {
-    const { path } = this.props.match.params;
+    const { id , path} = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
     return (
@@ -29,7 +29,7 @@ export default class TypeSet extends Component {
       <BrandHeader
         title='Typography set'
         {...this.props}
-        url={`/project/${path}/edit`}
+        url={`/project/${id}/edit`}
       ></BrandHeader>
 
           <div className='type-set'>
