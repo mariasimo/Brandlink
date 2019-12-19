@@ -28,7 +28,8 @@ export default class App extends React.Component {
     this.projectService = new ProjectService();
     this.state = {
       user: null,
-      menuIsOpen: 'show'
+      menuIsOpen: 'show',
+      file: ""
     };
     this.loadingImg = '';
     this.loadingParent = '';
@@ -71,20 +72,6 @@ export default class App extends React.Component {
       });  
     }
   };
-
-  // displayProject = (userId) => {
-  //   this.projectservice.displayProject(userId)
-  //   .then(project => {
-  //     console.log(project)
-  //     this.setState({
-  //       ...this.state,
-  //       colorPalette: project.colorPalette,
-  //       typeset: project.typeset,
-  //       assets: project.assets,
-  //     })
-  //   })
-  // }
-
 
   fetchUser = () => {
     if (this.state.user === null) {
@@ -245,23 +232,21 @@ export default class App extends React.Component {
     ev.dataTransfer.setData('id', id);
   };
 
-  onDrop = (ev, id) => {
+  onDrop = (ev ) => {
     let fileId = ev.dataTransfer.getData('id');
     this.setState({ ...this.state, file: fileId });
-    console.log(fileId);
+    
+    // console.log( rowId, slotIdx, type )
   };
 
   componentDidMount() {
     this.fetchUser();
-
   }
 
   render() {
     this.fetchUser();
     const { user, menuIsOpen, colorPalette, typeset, assets, textstyles } = this.state;
     const projectTitle = this.state.title
-
-    console.log(projectTitle)
 
     return (
       <div className='App'>

@@ -141,7 +141,6 @@ class ProjectService {
   };
 
   getTextStyleData  = (styleId) => {
-    console.log(styleId)
     return this.instance.get(`/textstyle/${styleId}?`)
     .then(res => {
       return Promise.resolve(res.data);

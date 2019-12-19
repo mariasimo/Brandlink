@@ -83,12 +83,11 @@ export default class MainContent extends Component {
                               </section>
                             </div>
                             </React.Fragment>
-                            // assets.map(asset => "holi")
                           }
 
                           {!assets.length && (
                             <div>
-                              Add your first asset.{' '}
+                              Add your first asset.
                               <a
                                 href={`/project/${path}/edit/assets`}
                               >
@@ -98,7 +97,7 @@ export default class MainContent extends Component {
                           )}
                         </>
                         )}
-                        
+
                         {row.content[slotIdx].type === 'colorPalette' && (
                           <>
                           {colorPalette &&
@@ -116,7 +115,7 @@ export default class MainContent extends Component {
 
                           {!colorPalette.length && (
                             <div>
-                              Add your first color.{' '}
+                              Add your first color.
                               <a
                                 href={`/project/${path}/edit/colorPalette/new`}
                               >
@@ -136,7 +135,7 @@ export default class MainContent extends Component {
 
                            {!typeset.length && (
                              <div>
-                               Add your first type.{' '}
+                               Add your first type.
                                <a
                                  href={`/project/${path}/edit/typeset`}
                                >
@@ -146,85 +145,6 @@ export default class MainContent extends Component {
                            )}
                          </>
                         )}
-{/* 
-                        {row.content[slotIdx].type === 'assets' && (
-                          <>
-                            {assets &&
-                              <React.Fragment>
-                              <div className="droppable"
-                              onDrop={(e) => this.props.onDrop(e)}
-                              >
-                                <section class='file-label'>
-                                  <div >
-                                    <p>
-                                      Drag 'n' drop some files here, or click to select files
-                                    </p>
-                                  </div>
-                                </section>
-                              </div>
-                              </React.Fragment>
-                              // assets.map(asset => "holi")
-                            }
-
-                            {!assets.length && (
-                              <div>
-                                Add your first asset.{' '}
-                                <a
-                                  href={`/project/${path}/edit/assets`}
-                                >
-                                  New asset
-                                </a>
-                              </div>
-                            )}
-                          </>
-                        )}
-                       
-                        {row.content[slotIdx].type === 'typeset' && (
-                          <>
-                            {typeset &&
-                              typeset.map(type => type.fontFamily)
-                            }
-
-                            {!typeset.length && (
-                              <div>
-                                Add your first type.{' '}
-                                <a
-                                  href={`/project/${path}/edit/typeset`}
-                                >
-                                  New type
-                                </a>
-                              </div>
-                            )}
-                          </>
-                        )}
-
-                        {row.content[slotIdx].type === 'colorPalette' && (
-                          <>
-                            {colorPalette &&
-                              colorPalette.map((color, idx) => (
-                                <div className='color' key={idx}>
-                                  <div
-                                    className='circle-color'
-                                    style={{
-                                      backgroundColor: color.hexadecimal
-                                    }}
-                                  ></div>
-                                  <span>{color.name}</span>
-                                </div>
-                              ))}
-
-                            {!colorPalette.length && (
-                              <div>
-                                Add your first color.{' '}
-                                <a
-                                  href={`/project/${path}/edit/colorPalette/new`}
-                                >
-                                  New color
-                                </a>
-                              </div>
-                            )}
-                          </>
-                        )} */}
                       </React.Fragment>
                     )}
 

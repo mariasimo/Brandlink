@@ -23,13 +23,10 @@ export default class NewTextStyle extends Component {
 
   getTextStyleData = () => {
     const { styleId } = this.props.match.params;
-    console.log(styleId)
 
     if (styleId !== undefined) {
       this.projectService.getTextStyleData(styleId)
       .then(textstyleData => {
-
-          console.log(textstyleData)
 
           let textStyle = textstyleData.textstyles.filter(
             style => style._id === styleId
@@ -82,8 +79,6 @@ export default class NewTextStyle extends Component {
       letterSpacing
     } = this.state.textstyle;
     const { colorPalette, typeset, assets, textstyle} = this.props;
-
-    console.log(this.props, this.state)
 
     return (
       < >

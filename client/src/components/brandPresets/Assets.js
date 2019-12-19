@@ -28,8 +28,6 @@ export default class Assets extends Component {
     const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
-    console.log(this.props)
-
     return (
       <React.Fragment>
         <SideMenu
@@ -67,7 +65,7 @@ export default class Assets extends Component {
                     draggable
                     className='draggable'
                     onDragStart={e => this.props.onDragStart(e, asset._id)}
-                    onDrop={e => this.props.onDrop(e, asset._id)}
+                    // onDrop={e => this.props.onDrop(e, asset._id)}
                   >
                     <figure className='column is-half'>
                       <button
@@ -109,7 +107,6 @@ export default class Assets extends Component {
           typeset={typeset}
           assets={assets}
           onDragStart={this.props.onDragStart}
-          onDrop={this.props.onDrop}
           
         ></MainContent>
       </React.Fragment>
