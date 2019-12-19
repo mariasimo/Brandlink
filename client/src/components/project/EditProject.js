@@ -28,7 +28,7 @@ export default class EditProject extends Component {
           title={this.state.title}
           subtitle='Brand presets'
           {...this.props}
-          url={`/panel/${this.props.loggedInUser}`}
+          url={`/panel/${this.props.loggedInUser.username}`}
         ></BrandHeader>
 
         <p>Let's begin! Start by adding some brand presets to your project</p>

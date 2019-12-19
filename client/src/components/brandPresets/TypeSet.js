@@ -20,6 +20,8 @@ export default class TypeSet extends Component {
     const { id , path} = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
+    console.log(id)
+
     return (
       < >
       <SideMenu
@@ -57,7 +59,7 @@ export default class TypeSet extends Component {
             <div className='field fonts-buttons is-group'>
             <div className='google-fonts-button control'>
               <Link
-                to={`/project/${path}/edit/typeSet/new/google-font?`}
+                to={`/project/${id}/edit/typeSet/new/google-font?`}
                 className='button is-link'
               >
                 Add Google Font
@@ -66,7 +68,7 @@ export default class TypeSet extends Component {
 
             <div className='adobe-fonts-button control'>
               <Link
-                to={`/project/${path}/edit/typeSet/new/adobe-font?`}
+                to={`/project/${id}/edit/typeSet/new/adobe-font?`}
                 className='button is-link'
               >
                 Add Adobe Font

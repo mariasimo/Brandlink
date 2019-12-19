@@ -277,12 +277,19 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
       { $push: { rows: newRow._id } },
       { new: true }
     )
-      .populate('rows')
-      .then(projectUpdated => {
-        res.status(200).json(projectUpdated);
-      });
+      .then(() => {
+        console.log(req.user.activeProject)
+        Project.findById({_id: req.user.activeProject})
+        .populate('rows')
+        .then(projectUpdated => {
+          console.log(projectUpdated)
+          res.status(200).json(projectUpdated);
+        });
+      })
+
   });
 });
+
 
 router.delete('/rows/:userId/:rowId', (req, res, next) => {
   const { rowId } = req.params;

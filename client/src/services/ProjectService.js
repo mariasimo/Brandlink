@@ -21,6 +21,7 @@ class ProjectService {
   };
 
   displayRows = projectId => {
+    console.log(projectId)
     return this.instance.get(`/rows/${projectId}`)
     .then(res =>  {
       return Promise.resolve(res.data)
@@ -153,7 +154,10 @@ class ProjectService {
     const {layout, userId} = rowParams
     return this.instance
       .post(`/newRow/${userId}/`, {layout})
-      .then(res => Promise.resolve(res.data))
+      .then(res => {
+        console.log(res)
+        return Promise.resolve(res.data)}
+      )
       .catch(error => console.error(error));
   };
 

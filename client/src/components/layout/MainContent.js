@@ -14,7 +14,9 @@ export default class MainContent extends Component {
   displayRows = () => {
     const {id} = this.props.match.params
 
-    this.projectService.displayRows(id).then(rows => {
+    this.projectService.displayRows(id)
+    .then(rows => {
+      console.log(rows)
       this.setState({
         ...this.state,
         rows: rows
@@ -26,6 +28,8 @@ export default class MainContent extends Component {
     const userId = this.props.user.id;
     this.projectService.createNewRow({ layout, userId }).then(
       projectWithRowAdded => {
+        console.log(projectWithRowAdded)
+
         this.setState({
           ...this.state,
           rows: projectWithRowAdded.rows
