@@ -108,7 +108,7 @@ export default class MainContent extends Component {
                               <div>
                                 Add your first type.{' '}
                                 <a
-                                  href={`/project/${path}/edit/typeset/new`}
+                                  href={`/project/${path}/edit/typeset`}
                                 >
                                   New type
                                 </a>

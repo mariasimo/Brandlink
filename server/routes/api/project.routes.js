@@ -88,8 +88,10 @@ router.get('/project/:userId', (req, res, next) => {
   const { userId } = req.params;
 
   User.findById({ _id: userId }).then(user => {
+    console.log(user)
     Project.findOne({ path: user.activeProject })
       .then(project => {
+        console.log(project)
         res.status(200).json(project);
       })
       .catch(error => {

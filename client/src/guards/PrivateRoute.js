@@ -19,6 +19,7 @@ export default function PrivateRoute({
   onDragStart,
   onDrop,
   deleteAsset,
+  setActiveProject,
   ...rest
 }) {
   return (
@@ -44,6 +45,7 @@ export default function PrivateRoute({
                 deleteAsset={deleteAsset}
                 onDragStart={onDragStart}
                 onDrop={onDrop}
+                setActiveProject={setActiveProject}
                 {...props}
               />
             );

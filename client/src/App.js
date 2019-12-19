@@ -46,7 +46,6 @@ export default class App extends React.Component {
     let userId = user.id
     this.projectService.displayProject(userId)
     .then(project => {
-      console.log(project)
       if(this.state.user === null) {
         this.setState({
           ...this.state,
@@ -60,11 +59,8 @@ export default class App extends React.Component {
           assets: project.assets,
           user
         })
-
-        this.addFontsLinks(this.state.typeset);
       }
     })
-    // this.setState({ ...this.state, user });
   };
 
 
@@ -105,21 +101,20 @@ export default class App extends React.Component {
     })
   }
 
-
-  addFontsLinks = typeset => {
-    typeset.map(type => {
-      const link = document.createElement("link");
-      link.setAttribute(
-        "href",
-        `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
-          " ",
-          "+"
-        )}&display=swap`
-      );
-      link.setAttribute("rel", `stylesheet`);
-      document.head.appendChild(link);
-    }) 
-  };
+  // addFontsLinks = typeset => {
+  //   typeset.map(type => {
+  //     const link = document.createElement("link");
+  //     link.setAttribute(
+  //       "href",
+  //       `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
+  //         " ",
+  //         "+"
+  //       )}&display=swap`
+  //     );
+  //     link.setAttribute("rel", `stylesheet`);
+  //     document.head.appendChild(link);
+  //   }) 
+  // };
 
   addColorToPalette= ({name, hexadecimal, path, colorId, history}) => {
     this.projectService
@@ -207,12 +202,14 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.fetchUser();
+    if(this.state.typeset && this.state.typeset.length){
+      this.addFontsLinks(this.state.typeset);
+    }
   }
 
   render() {
     this.fetchUser();
-    console.log(this.state)
-
+    console.log(this.state.typeset)
     const { user, menuIsOpen, colorPalette, typeset, assets } = this.state;
 
     return (

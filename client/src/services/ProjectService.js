@@ -27,10 +27,12 @@ class ProjectService {
     })
     .catch(error => console.error(error));
   }
-
+  
   displayProject = userId => {
+    console.log(userId)
     return this.instance.get(`/project/${userId}`)
     .then(res =>  {
+      console.log(res.data)
       return Promise.resolve(res.data)
     })
     .catch(error => console.error(error));
