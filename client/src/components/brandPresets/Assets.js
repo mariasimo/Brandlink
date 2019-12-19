@@ -65,7 +65,7 @@ export default class Assets extends Component {
                     draggable
                     className='draggable'
                     onDragStart={e => this.props.onDragStart(e, asset._id)}
-                    // onDrop={e => this.props.onDrop(e, asset._id)}
+                    onDrop={e => this.props.onDrop(e, asset._id)}
                   >
                     <figure className='column is-half'>
                       <button

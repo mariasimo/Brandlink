@@ -56,6 +56,13 @@ export default class MainContent extends Component {
     });
   };
 
+  addFontAsContent = (rowId, slotIdx, type) => {
+    this.projectService.addFontAsContent({ rowId, slotIdx, type }).then(payload => {
+      console.log(payload)
+      // this.displayRows();
+    });
+  };
+
   componentDidMount() {
     this.displayRows();
   }
@@ -86,7 +93,7 @@ export default class MainContent extends Component {
                           {assets &&
                             <React.Fragment>
                             <div className="droppable"
-                            onDrop={(e) => this.props.onDrop(e)}
+                            onDrop={(e, slotIdx) => this.props.onDrop(e, slotIdx)}
                             >
                               <section class='file-label'>
                                 <div >
@@ -115,19 +122,21 @@ export default class MainContent extends Component {
                         {row.content[slotIdx].type === 'colorPalette' && (
                           <>
                           {colorPalette &&
-                            colorPalette.map((color, idx) => (
-                              <div className='color' key={idx}>
-                                <div
-                                  className='circle-color'
-                                  style={{
-                                    backgroundColor: color.hexadecimal
-                                  }}
-                                ></div>
-                                <span>{color.name}</span>
+                            <div className="color-container">
+                            {colorPalette.map((color, idx) => (
+                                <div className='color' key={idx}
+                              style={{
+                                width: 100/colorPalette.length + "%",
+                                backgroundColor: color.hexadecimal
+                              }}
+                              >
+                                <span class="color-name vertical-text">{color.name}</span>
                               </div>
-                            ))}
+                            ))}</div>}
+                              
 
                           {!colorPalette.length && (
+                            <div className="color-container">
                             <div>
                               Add your first color.
                               <a
@@ -136,16 +145,20 @@ export default class MainContent extends Component {
                                 New color
                               </a>
                             </div>
-                          )}
+                          </div>)}
                         </>
                         )}
                         {row.content[slotIdx].type === 'typeset' && (
                            <>
+                           <div className="field has-addons">
                            {typeset &&
-                             typeset.map(type => {
-                               return <p style={{fontFamily: type.fontFamily}}>{type.fontFamily}</p>
-                             })
+                             typeset.map(type => 
+                              <p className="control">
+                                <button className="button is-small" onClick={slodIdx => this.addFontAsContent(row._id, slotIdx, 'typeset')} style={{fontFamily: type.fontFamily}}>{type.fontFamily}</button>
+                              </p>
+                             )
                            }
+                           </div>
 
                            {!typeset.length && (
                              <div>
@@ -164,17 +177,24 @@ export default class MainContent extends Component {
 
                     {!row.content[slotIdx] && (
                       <React.Fragment>
-                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'colorPalette') } className='button'>
+                        <div className="field has-addons">
+                        <p className="control">
+                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'colorPalette') } >
                           Color Palette
                         </button>
-
-                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'typeset')} className='button'>
+                        </p>
+                        <p className="control">
+                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'typeset')} >
                           Typography
                         </button>
+                        </p>
 
-                        <button onClick={slodIdx => this.addContent(row._id, slotIdx, 'assets')} className='button'>
+                        <p className="control">
+                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'assets')} >
                           Image
                         </button>
+                        </p>
+                        </div>
 
 
                       </React.Fragment>

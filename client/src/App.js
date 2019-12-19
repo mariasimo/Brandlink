@@ -232,11 +232,11 @@ export default class App extends React.Component {
     ev.dataTransfer.setData('id', id);
   };
 
-  onDrop = (ev ) => {
+  onDrop = (ev , slotIdx) => {
     let fileId = ev.dataTransfer.getData('id');
     this.setState({ ...this.state, file: fileId });
     
-    // console.log( rowId, slotIdx, type )
+    // console.log( fileId, slotIdx)
   };
 
 
