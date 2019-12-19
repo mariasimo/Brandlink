@@ -87,26 +87,24 @@ router.delete('/:id', (req, res, next) => {
 router.get('/project/:userId', (req, res, next) => {
   const { userId } = req.params;
 
-  User.findById({ _id: userId }).then(user => {
-    console.log(user);
-    Project.findOne({ path: user.activeProject })
+    Project.findById({ _id: req.user.activeProject })
       .then(project => {
-        console.log(project);
         res.status(200).json(project);
       })
       .catch(error => {
         res.status(500).json({ message: 'Something went wrong' });
       });
-  });
 });
 
 // Updated project (add brand preset)
-router.put('/color/:path/:id?', (req, res, next) => {
-  const { path, id } = req.params;
+router.put('/color/:projectId/:id?', (req, res, next) => {
+  const { projectId, id } = req.params;
+
+  console.log(req.params)
 
   if (id === 'undefined') {
-    Project.findOneAndUpdate(
-      { path },
+    Project.findByIdAndUpdate(
+      { _id: projectId },
       { $push: { colorPalette: req.body } },
       { new: true }
     ).then(projectUpdated => {

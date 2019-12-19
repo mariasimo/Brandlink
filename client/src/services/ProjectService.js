@@ -62,9 +62,9 @@ class ProjectService {
   };
 
   addColorToPalette = updateProjectParams => {
-    const { name, hexadecimal, path, colorId } = updateProjectParams;
+    const { name, hexadecimal, id, colorId } = updateProjectParams;
     return this.instance
-      .put(`/color/${path}/${colorId}?`, { name, hexadecimal })
+      .put(`/color/${id}/${colorId}?`, { name, hexadecimal })
       .then(res => {
         return Promise.resolve(res.data);
       })

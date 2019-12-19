@@ -49,19 +49,39 @@ export default class App extends React.Component {
       ...this.state,
       user
     });
-  };
 
-  displayProject = (userId) => {
-    this.projectservice.displayProject(userId)
+    if(this.state.user) {
+    this.projectService.displayProject(user.id)
     .then(project => {
+      console.log(project)
       this.setState({
         ...this.state,
         colorPalette: project.colorPalette,
         typeset: project.typeset,
         assets: project.assets,
       })
+      console.log(this.state)
     })
-  }
+    } else {
+      this.setState({
+        ...this.state,
+        user
+      });  
+    }
+  };
+
+  // displayProject = (userId) => {
+  //   this.projectservice.displayProject(userId)
+  //   .then(project => {
+  //     console.log(project)
+  //     this.setState({
+  //       ...this.state,
+  //       colorPalette: project.colorPalette,
+  //       typeset: project.typeset,
+  //       assets: project.assets,
+  //     })
+  //   })
+  // }
 
 
   fetchUser = () => {
@@ -71,6 +91,7 @@ export default class App extends React.Component {
         .then(user => {
           if (user !== undefined) {
             this.setUser(user);
+            this.displayProject(user.id)
           }
         })
         .catch(error => {
@@ -112,9 +133,10 @@ export default class App extends React.Component {
     })
   };
 
-  addColorToPalette = ({ name, hexadecimal, path, colorId, history }) => {
+  addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
+    console.log({ name, hexadecimal, id, colorId, history })
     this.projectService
-      .addColorToPalette({ name, hexadecimal, path, colorId })
+      .addColorToPalette({ name, hexadecimal, id, colorId })
       .then(
         updatedProject => {
           this.setState({
@@ -123,7 +145,7 @@ export default class App extends React.Component {
             hexadecimal: '',
             colorPalette: updatedProject.colorPalette
           });
-          history.push(`/project/${path}/edit/colorPalette`, {
+          history.push(`/project/${id}/edit/colorPalette`, {
             state: this.state.colorPalette
           });
         },
@@ -216,7 +238,6 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    console.log(this.state.typeset);
     const { user, menuIsOpen, colorPalette, typeset, assets } = this.state;
 
     return (

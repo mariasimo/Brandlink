@@ -53,10 +53,9 @@ export default class NewColor extends Component {
     e.preventDefault();
 
     const { name, hexadecimal } = this.state;
-    const { path, colorId } = this.props.match.params;
+    const { id, colorId } = this.props.match.params;
     const { history } = this.props;
-
-    this.props.addColorToPalette({name, hexadecimal, path, colorId, history})
+    this.props.addColorToPalette({name, hexadecimal, id, colorId, history})
   };
  
 

@@ -20,7 +20,7 @@ export default class ColorPalette extends Component {
   }
 
   render() {
-    const { id, path } = this.props.match.params;
+    const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
     
     return (
@@ -49,7 +49,7 @@ export default class ColorPalette extends Component {
                     </div>
                     <div className='is-grouped'>
                       <Link
-                        to={`/project/${path}/edit/colorPalette/new/${color._id}`}
+                        to={`/project/${id}/edit/colorPalette/new/${color._id}`}
                         className='button is-rounded is-small is-success is-outlined'
                       >
                         Edit
@@ -74,7 +74,7 @@ export default class ColorPalette extends Component {
 
             <div className='control'>
               <Link
-                to={`/project/${path}/edit/colorPalette/new`}
+                to={`/project/${id}/edit/colorPalette/new`}
                 className='button is-link'
               >
                 Add new color
