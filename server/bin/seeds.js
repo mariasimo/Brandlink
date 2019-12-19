@@ -56,13 +56,13 @@ const users = [
     username: "Pedro",
     password: "123",
     projects: [],
-    activeProject: ""
+    activeProject: null
   },
   {
     username: "Ana",
     password: "123",
     projects: [],
-    activeProject: ""
+    activeProject: null
 
   }
 ];

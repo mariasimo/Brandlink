@@ -117,8 +117,7 @@ router.put("/edit/:id", (req, res, next) => {
   User.findByIdAndUpdate(
     id,
     {
-      username: req.body.username,
-      picture : req.body.picture
+      activeProject: req.body.path
     },
     { new: true }
   ).then(userUpdated => {
