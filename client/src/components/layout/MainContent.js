@@ -70,7 +70,33 @@ export default class MainContent extends Component {
                       <React.Fragment>
 
                         {row.content[slotIdx].type === 'assets' && ("Image")}
-                        {row.content[slotIdx].type === 'colorPalette' && ("Color Palette")}
+                        {row.content[slotIdx].type === 'colorPalette' && (
+                          <>
+                          {colorPalette &&
+                            colorPalette.map((color, idx) => (
+                              <div className='color' key={idx}>
+                                <div
+                                  className='circle-color'
+                                  style={{
+                                    backgroundColor: color.hexadecimal
+                                  }}
+                                ></div>
+                                <span>{color.name}</span>
+                              </div>
+                            ))}
+
+                          {!colorPalette.length && (
+                            <div>
+                              Add your first color.{' '}
+                              <a
+                                href={`/project/${path}/edit/colorPalette/new`}
+                              >
+                                New color
+                              </a>
+                            </div>
+                          )}
+                        </>
+                        )}
                         {row.content[slotIdx].type === 'typeset' && ("Typeset")}
 {/* 
                         {row.content[slotIdx].type === 'assets' && (

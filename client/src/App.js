@@ -50,7 +50,8 @@ export default class App extends React.Component {
       user
     });
 
-    if(this.state.user) {
+    if(this.state.user.activeProject) {
+    console.log(this.state.user.activeProject)
     this.projectService.displayProject(user.id)
     .then(project => {
       console.log(project)
