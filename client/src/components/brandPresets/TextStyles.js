@@ -17,20 +17,6 @@ export default class TextStyles extends Component {
     };
   }
 
-  // fetchOneProject = () => {
-  //   const path = this.props.match.params.path;
-  //   this.projectService.fetchOneProject(path).then(project => {
-  //     this.setState({
-  //       ...this.state,
-  //       ...project
-  //     });
-  //   });
-  // };
-
-  componentDidMount() {
-    // this.fetchOneProject();
-  }
-
   render() {
     const { path } = this.props.match.params;
     const { textstyles } = this.state;
@@ -84,16 +70,6 @@ export default class TextStyles extends Component {
             {!textstyles && <div>You dont have any text styles yet</div>}
           </div>
 
-          {/* <div className="field fonts-buttons is-group">
-                  <div className="control">
-                    <Link
-                      to={`${this.props.location.pathname}/new/}`}
-                      className="button is-link"
-                    >
-                      Add New Text Style
-                    </Link>
-                  </div>
-                </div> */}
         </div>
       </SideMenu>
       <MainContent
