@@ -174,7 +174,6 @@ router.delete('/type/:typeId', (req, res, next) => {
 });
 
 router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
-  const { path } = req.params;
 
   if (req.file) {
     Project.findByIdAndUpdate(

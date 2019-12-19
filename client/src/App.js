@@ -61,6 +61,8 @@ export default class App extends React.Component {
         assets: project.assets,
         textstyles : project.textstyles,
       })
+
+      this.addFontsLinks(this.state.typeset);
     })
     } else {
       this.setState({
@@ -251,9 +253,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.fetchUser();
-    if (this.state.typeset && this.state.typeset.length) {
-      this.addFontsLinks(this.state.typeset);
-    }
+
   }
 
   render() {
