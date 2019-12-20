@@ -12,13 +12,15 @@ export default class MainContent extends Component {
   }
 
   displayRows = () => {
+    console.log("display rows")
     const { id } = this.props.match.params;
 
     this.projectService.displayRows(id).then(rows => {
       this.setState({
         ...this.state,
         rows: rows
-      });
+      })
+      console.log(this.state.rows)
     });
   };
 
@@ -54,6 +56,20 @@ export default class MainContent extends Component {
     });
   };
 
+  addContentFront = (rowId, slotIdx, type) => {
+    console.log(rowId)
+    this.projectService.fetchContent(rowId)
+    .then( payload => {
+      let content = payload;
+
+      content[slotIdx] = {order: slotIdx, type: type};
+
+      this.projectService.insertSlot(content, rowId)
+      .then(payload => this.displayRows())
+      .catch(err=>console.log(err))
+    })
+  } 
+
   addFontAsContent = (rowId, slotIdx, type) => {
     this.projectService
       .addFontAsContent({ rowId, slotIdx, type })
@@ -72,7 +88,6 @@ export default class MainContent extends Component {
     this.projectService.addImageAsContent({uploadData, slotIdx, rowId })
     .then(payload => {
       console.log(payload)
-      this.displayRows();
     });
   };
 
@@ -109,9 +124,8 @@ export default class MainContent extends Component {
                     id={`slot-${rowIdx}-${slotIdx}`}
                     className={`${row.layout} column row slot`}
                   >
-                    {row.content[slotIdx] && (
+                    {row.content[slotIdx].type && (
                       <React.Fragment>
-                        {row.content[slotIdx].type}
                         {row.content[slotIdx].type === 'assets' && (
                           <>
                             {/* {assets && assets.length > 0 && ( */}
@@ -239,20 +253,21 @@ export default class MainContent extends Component {
                       </React.Fragment>
                     )}
 
-                    {!row.content[slotIdx] && (
-                      <React.Fragment>
+                      {!row.content[slotIdx].type && (
+                        <React.Fragment>
                         <div className='content-container'>
                           <div className='field has-addons'>
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                onClick={slodIdx =>
-                                  this.addContent(
-                                    row._id,
-                                    slotIdx,
-                                    'colorPalette'
-                                  )
-                                }
+                                // onClick={slotIdx =>
+                                //   this.addContent(
+                                //     row._id,
+                                //     slotIdx,
+                                //     'colorPalette'
+                                //   )
+                                // }
+                                onClick = {() => this.addContentFront(row._id, slotIdx, 'colorPalette')}
                               >
                                 Color Palette
                               </button>
@@ -260,9 +275,11 @@ export default class MainContent extends Component {
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                onClick={slodIdx =>
-                                  this.addContent(row._id, slotIdx, 'typeset')
-                                }
+                                // onClick={slodIdx =>
+                                //   this.addContent(row._id, slotIdx, 'typeset')
+                                // }
+                                onClick = {() => this.addContentFront(row._id, slotIdx, 'typeset')}
+
                               >
                                 Typography
                               </button>
@@ -271,9 +288,11 @@ export default class MainContent extends Component {
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                onClick={slodIdx =>
-                                  this.addContent(row._id, slotIdx, 'assets')
-                                }
+                                // onClick={slodIdx =>
+                                //   this.addContent(row._id, slotIdx, 'assets')
+                                // }
+                                onClick = {() => this.addContentFront(row._id, slotIdx, 'assets')}
+
                               >
                                 Image
                               </button>
@@ -281,7 +300,8 @@ export default class MainContent extends Component {
                           </div>
                         </div>
                       </React.Fragment>
-                    )}
+                      )}
+                    
                   </div>
                 ))}
 

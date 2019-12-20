@@ -257,21 +257,24 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
   if (req.body.layout === 'is-full') {
     layoutDescriptor = {
       layout: 'is-full',
-      slots: ['is-full']
+      slots: ['is-full'],
+      content: [{order: 1}, {order: 2}]
     };
   }
 
   if (req.body.layout === 'is-half') {
     layoutDescriptor = {
       layout: 'is-half',
-      slots: ['is-half', 'is-half']
+      slots: ['is-half', 'is-half'],
+      content: [{order: 1}, {order: 2}]
     };
   }
 
   if (req.body.layout === 'is-one-third') {
     layoutDescriptor = {
       layout: 'is-one-third',
-      slots: ['is-one-third', 'is-one-third', 'is-one-third']
+      slots: ['is-one-third', 'is-one-third', 'is-one-third'],
+      content: [{order: 1}, {order: 2}, {order: 3}]
     };
   }
 
@@ -311,18 +314,17 @@ router.delete('/rows/:rowId', (req, res, next) => {
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
   const { slotIdx, type } = req.body;
-
-  Rows.findByIdAndUpdate(
-    { _id: rowId },
-    // { array: { $push: { property: {$each: ['value'], $position: 0 } } } }, 
-
-    { content:{ $set: { type: type, order: slotIdx, $position: 0 } } },
-    { returnNewDocument: true, new: true, strict: false }
-  ).then(slotUpdated => {
-    console.log(slotUpdated)
-    res.status(200).json(slotUpdated);
-  });
+  
+      Rows.findByIdAndUpdate(
+        { _id: rowId },
+        { $push: { content: { type: type} } },
+        { returnNewDocument: true, new: true, strict: false },
+      )
+      .then(slotUpdated => {
+        res.status(200).json(slotUpdated);
+      });
 });
+
 
 
 router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
@@ -343,6 +345,31 @@ router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
   }
 });
 
+
+router.get(`/content/:rowId`, (req, res) => {
+  const { rowId } = req.params;
+
+  Rows.findById({_id: rowId})
+  .then(rowToUpdate => {
+    res.status(200).json(rowToUpdate.content);
+  })
+})
+
+router.put(`/content/:rowId`, (req, res) => {
+  const { rowId } = req.params;
+  console.log(req.body, rowId)
+
+  Rows.findByIdAndUpdate(
+    rowId,
+    { content : req.body},
+    {new: true}
+  )
+  .then(rowUpdated => {
+    // console.log(rowUpdated)
+    res.status(200).json(rowUpdated);
+  })
+  .catch(err => console.log(err))
+})
 
 
 // router.post('/rows/image/:rowId', uploader.single('file'), (req, res, next) => { 

@@ -176,6 +176,23 @@ class ProjectService {
     })
   }
 
+  fetchContent =  rowId => {
+    console.log(rowId)
+    // this.projectService.fetchContent(rowId)
+    return this.instance.get(`/content/${rowId}`)
+    .then(res =>  {
+      return Promise.resolve(res.data)  
+    })
+  }
+
+  insertSlot = (content,rowId) => {
+  
+    return this.instance.put(`/content/${rowId}`, content)
+    .then(res =>  {
+      return Promise.resolve(res.data)  
+    })
+  }
+
   addImageAsContent = fileParams => {
     // console.log(fileParams)
     return this.instance.post(`/rows/image/${fileParams.rowId}`, fileParams.uploadData,  fileParams.slotIdx )
