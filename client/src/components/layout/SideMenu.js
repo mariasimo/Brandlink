@@ -10,7 +10,7 @@ export default class SideMenu extends Component {
    
           <Link to='/' className='navbar-item'>
             <img
-              src={`http://localhost:3000/logo.png`}
+              src={`${proccess.env.REACT_APP_URL}/logo.png`}
               height='24'
               alt='BrandLink'
             ></img>
