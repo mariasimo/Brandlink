@@ -42,15 +42,21 @@ export default class ProjectList extends React.Component {
 
   render() {
     // const username = this.props.loggedInUser.username;
-    const { projects } = this.state;        
+    const { projects } = this.state;  
+    console.log(this.projects)      
+
     return (
       <div>
-        <section className="section main-content">
+        <section className="section landing">
           <div className="columns">
             <div className="column is-one-third">
-              <div className="hero">
-                  <h2 className="title is-1">All Projects</h2>
-              </div>
+            <div className='hero'>
+              <h2 className='title is-1'>Welcome to your panel</h2>
+              <p class=''>
+                Here you can admin your projects or create new ones.
+              </p>
+      
+            </div>
             </div>
             <div className="column is-two-thirds projects-wrapper">
 
@@ -63,7 +69,7 @@ export default class ProjectList extends React.Component {
                   ></Project>
                 ))}
 
-              {(projects === null || projects === [] || !projects) && (
+              {!projects && (
                 <div>You dont have any projects yet</div>
               )}
 

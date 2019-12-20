@@ -10,6 +10,7 @@ export default class Navbar extends Component {
 
   render() {
     const user = this.props.user;
+    console.log(this.props)
 
     return (
       <nav className='navbar' role='navigation' aria-label='main navigation'>
@@ -39,10 +40,10 @@ export default class Navbar extends Component {
               <div className='buttons'>
                 {!user && (
                   <React.Fragment>
-                    <Link to='/signup' className='button is-rounded'>
+                    <Link to='/signup' className='button is-rounded is-primary is-outlined'>
                       Signup
                     </Link>
-                    <Link to='/login' className='button is-rounded'>
+                    <Link to='/login' className='button is-rounded is-primary is-outlined'>
                       Login
                     </Link>
                   </React.Fragment>
@@ -67,7 +68,7 @@ export default class Navbar extends Component {
                     <Link
                       to='/'
                       onClick={e => this.props.logout()}
-                      className='button is-rounded'
+                      className='button is-rounded is-danger is-outlined'
                     >
                       Logout
                     </Link>

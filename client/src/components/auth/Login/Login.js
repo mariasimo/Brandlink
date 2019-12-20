@@ -1,6 +1,8 @@
 import React from 'react';
 import AuthService from '../../../services/AuthService';
 import Hero from '../../layout/Hero';
+import { Link } from 'react-router-dom';
+
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -41,14 +43,14 @@ export default class Login extends React.Component {
   render() {
     const { username, password } = this.state;
     return (
-      <section className='section auth-section'>
+      <section className='section auth-section landing'>
         <div className='container columns'>
-          <div className='column is-half'>
-            {/* todo Here goes another component for the left para of the screen */}
-            <Hero></Hero>
-          </div>
+        <div className='column is-one-third'>
+          <Hero></Hero>
+        </div>
 
-          <div className='column is-half form-container'>
+
+          <div className='column is-two-third form-container'>
             <h3 className='title'>Login</h3>
             <form onSubmit={this.handleLogin}>
               <div className='field'>
@@ -63,6 +65,7 @@ export default class Login extends React.Component {
                     id='username'
                     value={username}
                     onChange={this.handleChange}
+                    placeholder="Username"
                   />
                 </div>
               </div>
@@ -76,6 +79,7 @@ export default class Login extends React.Component {
                     type='password'
                     name='password'
                     id='password'
+                    placeholder="Password"
                     value={password}
                     onChange={this.handleChange}
                   />
@@ -85,7 +89,7 @@ export default class Login extends React.Component {
               <div className='control'>
                 <input
                   type='submit'
-                  className='button is-link'
+                  className='button is-link is-rounded'
                   value='Log in'
                 ></input>
               </div>

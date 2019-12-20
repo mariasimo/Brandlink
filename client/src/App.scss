@@ -9,6 +9,9 @@ $primary: $blue;
 $is-primary: $blue;
 $has-text-primary: $blue;
 $grey-lightest: #ddd;
+$yellow: #ffc400;
+$green: #6de0af;
+$orange: #ff8d01;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";
@@ -37,7 +40,7 @@ body {
 
 .auth-section,
 .landing{
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   
@@ -52,6 +55,23 @@ body {
   border: 1px solid $grey-light;
   padding: 2rem 3rem;
   border-radius: 4px;
+  background: white;
+  margin: 0 3rem;
+  border-color: rgba(60,90,195, 0.2);
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-height: 400px;
+  
+  h3{
+    font-weight: 100;
+  }
+
+  .button {
+    margin-top: 16px
+  }
 }
 
 .profile-picture {
@@ -77,6 +97,8 @@ body {
   padding: 1rem;
   border-radius: 4px;
   margin: 1rem;
+  border-color: rgba(60,90,195, 0.2);
+
 
   .title{
     margin-bottom: 1rem
@@ -181,9 +203,9 @@ body {
   }
 
   .btn-side-menu {
-    color: black;
+    color: $green;
     position: absolute;
-    right: 5%;
+    right: 2%;
     top: 50%;
   }
 
@@ -363,13 +385,10 @@ body {
   background-image: url('/bg.png');
   background-size: cover;
 
-    
   .container{
     max-width: 1240px;
   }
-  .column{
-    // border: 1px solid red;
-  }
+
   .is-one-third{
     display: flex;
     align-items: center;
@@ -396,4 +415,33 @@ body {
       margin-right: 16px
     }
   }
+}
+
+.new-project-main{
+  height: 100%;
+
+  .section{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img{
+      max-height: 500px;
+    } 
+  }
+}
+
+.new-project-section{
+  input[type="submit"]{
+    margin-top: 16px;
+  }
+}
+
+.side-menu-header .title {
+  color: $is-primary;
+  font-family: 'Merriweather';
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+  
 }
