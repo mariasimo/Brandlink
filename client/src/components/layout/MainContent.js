@@ -12,10 +12,9 @@ export default class MainContent extends Component {
   }
 
   displayRows = () => {
-    const {id} = this.props.match.params
+    const { id } = this.props.match.params;
 
-    this.projectService.displayRows(id)
-    .then(rows => {
+    this.projectService.displayRows(id).then(rows => {
       this.setState({
         ...this.state,
         rows: rows
@@ -36,12 +35,11 @@ export default class MainContent extends Component {
     );
   };
 
-   deleteRow = rowId => {
-    this.projectService.deleteRow(rowId)
-    .then(
+  deleteRow = rowId => {
+    this.projectService.deleteRow(rowId).then(
       project => {
-        console.log(project)
-        this.displayRows()
+        console.log(project);
+        this.displayRows();
       },
       error => {
         const { message } = error;
@@ -57,11 +55,36 @@ export default class MainContent extends Component {
   };
 
   addFontAsContent = (rowId, slotIdx, type) => {
-    this.projectService.addFontAsContent({ rowId, slotIdx, type }).then(payload => {
+    this.projectService
+      .addFontAsContent({ rowId, slotIdx, type })
+      .then(payload => {
+        console.log(payload);
+        // this.displayRows();
+      });
+  };
+
+  addImageAsContent = (file, slotIdx, rowId ) => {
+    const uploadData = new FormData();
+    uploadData.append('file', file[0]);
+
+    console.log(uploadData)
+
+    this.projectService.addImageAsContent({uploadData, slotIdx, rowId })
+    .then(payload => {
       console.log(payload)
-      // this.displayRows();
+      this.displayRows();
     });
   };
+
+
+  // handleUpload = file => {
+  //   const uploadData = new FormData();
+  //   uploadData.append('file', file[0]);
+  //   const { path } = this.props.match.params;
+
+  //   this.props.addAsset({ uploadData, path });
+  // };
+
 
   componentDidMount() {
     this.displayRows();
@@ -71,6 +94,7 @@ export default class MainContent extends Component {
     const path = this.props.user.activeProject;
     const { colorPalette, typeset, assets } = this.props;
 
+    console.log(this.state.rows);
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
@@ -87,121 +111,175 @@ export default class MainContent extends Component {
                   >
                     {row.content[slotIdx] && (
                       <React.Fragment>
-
+                        {row.content[slotIdx].type}
                         {row.content[slotIdx].type === 'assets' && (
                           <>
-                          {assets &&
-
-                            <React.Fragment>
-                            <div className="assets-container content-container">
-
-                            <div className="droppable"
-                            onDrop={(e, slotIdx) => this.props.onDrop(e, slotIdx)}
-                            >
-                              <section class='file-label'>
-                                <div >
-                                  <p>
-                                    Drag 'n' drop some files here, or click to select files
-                                  </p>
+                            {/* {assets && assets.length > 0 && ( */}
+                              <React.Fragment>
+                                <div className='assets-container content-container'>
+                                  <Dropzone
+                                    onDrop={(acceptedFiles, slotIdx) =>
+                                      this.addImageAsContent(acceptedFiles, slotIdx, row._id )
+                                    }
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <section class='file-label'>
+                                        <div {...getRootProps()}>
+                                          <input {...getInputProps()} />
+                                          <p>
+                                            Drag 'n' drop some files here, or
+                                            click to select files
+                                          </p>
+                                        </div>
+                                      </section>
+                                    )}
+                                  </Dropzone>
                                 </div>
-                              </section>
-                            </div>
-                            </div>
-                            </React.Fragment>
-                          }
+                              </React.Fragment>
+                             {/*)}*/}
 
-                          {!assets.length && (
-                            <div>
-                              Add your first asset.
-                              <a
-                                href={`/project/${path}/edit/assets`}
-                              >
-                                New asset
-                              </a>
-                            </div>
-                          )}
-                        </>
+
+                            {/* {!assets.length && (
+                              <div class='content-container'>
+                                <div class='notification is-info'>
+                                  Add your first asset.{' '}
+                                  <a href={`/project/${path}/edit/assets`}>
+                                    New asset
+                                  </a>
+                                </div>
+                              </div>
+                            )} */}
+                          </>
                         )}
 
                         {row.content[slotIdx].type === 'colorPalette' && (
                           <>
-                          {colorPalette &&
-                            <div className="color-container content-container">
-                            {colorPalette.map((color, idx) => (
-                                <div className='color' key={idx}
-                              style={{
-                                width: 100/colorPalette.length + "%",
-                                backgroundColor: color.hexadecimal
-                              }}
-                              >
-                                <span class="color-name vertical-text">{color.name}</span>
+                            {colorPalette && colorPalette.length > 0 && (
+                              <div className='color-container content-container'>
+                                {colorPalette.map((color, idx) => (
+                                  <div
+                                    className='color'
+                                    key={idx}
+                                    style={{
+                                      width: 100 / colorPalette.length + '%',
+                                      backgroundColor: color.hexadecimal
+                                    }}
+                                  >
+                                    <span class='color-name vertical-text'>
+                                      {color.name}
+                                    </span>
+                                  </div>
+                                ))}
                               </div>
-                            ))}</div>}
-                              
+                            )}
 
-                          {!colorPalette.length && (
-                            <div className="color-container content-container">
-                            <div>
-                              Add your first color.
-                              <a
-                                href={`/project/${path}/edit/colorPalette/new`}
-                              >
-                                New color
-                              </a>
-                            </div>
-                          </div>)}
-                        </>
+                            {!colorPalette.length && (
+                              <div className='color-container content-container'>
+                                <div class='notification is-info'>
+                                  Add your first color.{' '}
+                                  <a
+                                    href={`/project/${path}/edit/colorPalette/new`}
+                                  >
+                                    New color
+                                  </a>
+                                </div>
+                              </div>
+                            )}
+                          </>
                         )}
                         {row.content[slotIdx].type === 'typeset' && (
-                           <>
-                           <div className="field has-addons">
-                           {typeset &&
-                              <div className="typeset-container content-container">
-                             {typeset.map(type => 
-                              <p className="control">
-                                <button className="button is-small" onClick={slodIdx => this.addFontAsContent(row._id, slotIdx, 'typeset')} style={{fontFamily: type.fontFamily}}>{type.fontFamily}</button>
-                              </p>
-                             )}</div>
-                           }
-                           </div>
+                          <>
+                            <div className='field has-addons'>
+                              {typeset && typeset.length > 0 && (
+                                <div className='typeset-container content-container'>
+                                  {typeset.map(type => (
+                                    // <p className='control'>
+                                    //   <button
+                                    //     className='button is-small'
+                                    //     onClick={slodIdx =>
+                                    //       this.addFontAsContent(
+                                    //         row._id,
+                                    //         slotIdx,
+                                    //         'typeset'
+                                    //       )
+                                    //     }
+                                    //     style={{ fontFamily: type.fontFamily }}
+                                    //   >
+                                    //     {type.fontFamily}
+                                    //   </button>
+                                    // </p>
+                                    <React.Fragment>
+                                      <div>{type.fontFamily}</div>
+                                      <div
+                                        style={{ fontFamily: type.fontFamily }}
+                                        className='is-size-3'
+                                      >
+                                        Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
+                                        Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
+                                        0123456789 !"#$%&/()=?´¨@
+                                      </div>
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
 
-                           {!typeset.length && (
-                              <div className="typeset-container content-container">
-                              Add your first type.
-                               <a
-                                 href={`/project/${path}/edit/typeset`}
-                               >
-                                 New type
-                               </a>
-                             </div>
-                           )}
-                         </>
+                            {!typeset.length && (
+                              <div className='typeset-container content-container'>
+                                <div class='notification is-info'>
+                                  Add your first type.{' '}
+                                  <a href={`/project/${path}/edit/typeset`}>
+                                    New type
+                                  </a>
+                                </div>
+                              </div>
+                            )}
+                          </>
                         )}
                       </React.Fragment>
                     )}
 
                     {!row.content[slotIdx] && (
                       <React.Fragment>
-                        <div className="field has-addons">
-                        <p className="control">
-                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'colorPalette') } >
-                          Color Palette
-                        </button>
-                        </p>
-                        <p className="control">
-                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'typeset')} >
-                          Typography
-                        </button>
-                        </p>
+                        <div className='content-container'>
+                          <div className='field has-addons'>
+                            <p className='control'>
+                              <button
+                                className='button is-small'
+                                onClick={slodIdx =>
+                                  this.addContent(
+                                    row._id,
+                                    slotIdx,
+                                    'colorPalette'
+                                  )
+                                }
+                              >
+                                Color Palette
+                              </button>
+                            </p>
+                            <p className='control'>
+                              <button
+                                className='button is-small'
+                                onClick={slodIdx =>
+                                  this.addContent(row._id, slotIdx, 'typeset')
+                                }
+                              >
+                                Typography
+                              </button>
+                            </p>
 
-                        <p className="control">
-                        <button className="button is-small" onClick={slodIdx => this.addContent(row._id, slotIdx, 'assets')} >
-                          Image
-                        </button>
-                        </p>
+                            <p className='control'>
+                              <button
+                                className='button is-small'
+                                onClick={slodIdx =>
+                                  this.addContent(row._id, slotIdx, 'assets')
+                                }
+                              >
+                                Image
+                              </button>
+                            </p>
+                          </div>
                         </div>
-
-
                       </React.Fragment>
                     )}
                   </div>
@@ -217,7 +295,7 @@ export default class MainContent extends Component {
             ))}
 
           <div className='column is-full layout-btn-container'>
-            <a className='header'>Add new row</a>
+            <a className='header subtitle is-4 is-primary'>Choose layout</a>
             <div className='inner'>
               <div
                 className='layout-btn'

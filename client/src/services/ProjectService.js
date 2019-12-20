@@ -115,6 +115,7 @@ class ProjectService {
   }
 
   uploadAsset = (fileParams) => {
+    console.log(fileParams)
     return this.instance.post(`/uploadAsset/${fileParams.path}`, fileParams.uploadData)
     .then(res => {
       return Promise.resolve(res.data)
@@ -174,6 +175,24 @@ class ProjectService {
       return Promise.resolve(res.data)
     })
   }
+
+  addImageAsContent = fileParams => {
+    // console.log(fileParams)
+    return this.instance.post(`/rows/image/${fileParams.rowId}`, fileParams.uploadData,  fileParams.slotIdx )
+    .then(res => {
+      // console.log(res.data)
+      return Promise.resolve(res.data)
+    })
+  }
+
+  // uploadAsset = (fileParams) => {
+  //   console.log(fileParams)
+  //   return this.instance.post(`/uploadAsset/${fileParams.path}`, fileParams.uploadData)
+  //   .then(res => {
+  //     return Promise.resolve(res.data)
+  //   })
+  //   .catch(error => console.error(error))
+  // }
 }
 
 export default ProjectService;

@@ -10,8 +10,9 @@ $is-primary: $blue;
 $has-text-primary: $blue;
 $grey-lightest: #ddd;
 $yellow: #ffc400;
-$green: #6de0af;
+$green: hsl(171, 100%, 41%);
 $orange: #ff8d01;
+$info: hsl(171, 100%, 41%);
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/bulma.sass";
@@ -318,9 +319,10 @@ body {
 
   .layout-btn-container{
     width: 100%;
+    padding: 4rem 0 5rem;
 
     .header {
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }    
 
     .inner{
@@ -343,7 +345,6 @@ body {
 .row{
  .color-container{
    width: 100%;
-   padding: 24px;
    display: flex;
 
   .color{
@@ -446,6 +447,24 @@ body {
   
 }
 
-.content-container{
-  padding: 5rem 3rem;
+.row{
+  .content-container{
+    padding: 5rem 3rem;
+  
+    .notification{
+      margin: 0 auto;
+      text-align: center;
+  
+      a{color: $blue !important; text-decoration: none !important}
+    }
+  }
+
+  .color-container{
+    padding: 1rem;
+    height: 100%;
+  }
+
+  .typeset-container {
+    padding: 3rem;
+  }
 }

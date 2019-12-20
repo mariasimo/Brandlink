@@ -314,13 +314,59 @@ router.put('/rows/:rowId', (req, res, next) => {
 
   Rows.findByIdAndUpdate(
     { _id: rowId },
-    { $push: { content: { type: type, order: slotIdx } } },
+    // { array: { $push: { property: {$each: ['value'], $position: 0 } } } }, 
+
+    { content:{ $set: { type: type, order: slotIdx, $position: 0 } } },
     { returnNewDocument: true, new: true, strict: false }
   ).then(slotUpdated => {
     console.log(slotUpdated)
     res.status(200).json(slotUpdated);
   });
 });
+
+
+router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
+  console.log(req.file)
+  const { rowId } = req.params;
+
+  if (req.file) {
+    Rows.findByIdAndUpdate(
+      { _id: rowId },
+      { $push: { content: { type: "assets", image: req.file.secure_url } } },
+      { returnNewDocument: true, new: true, strict: false }
+    ).then(slotUpdated => {
+      console.log(slotUpdated)
+      res.status(200).json(slotUpdated);
+    });
+  } else {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
+
+
+
+// router.post('/rows/image/:rowId', uploader.single('file'), (req, res, next) => { 
+//   console.log(uploadData)
+
+//   console.log("req.file")
+//   if (req.file) {
+//     Project.findByIdAndUpdate(
+//       { _id: req.user.activeProject },
+//       {
+//         $push: {
+//           content: {
+//             image: req.file.secure_url,
+//           }
+//         }
+//       }
+//     ).then(projectUpdated => {
+//       console.log(projectUpdated)
+//       res.status(200).json(projectUpdated);
+//     });
+//   } else {
+//     res.status(500).json({ message: 'Something went wrong' });
+//   }
+// });
 
 
 
