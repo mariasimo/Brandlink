@@ -75,8 +75,8 @@ router.delete('/:id', (req, res, next) => {
       $pull: { projects: deletedProject._id },
       new: true
     })
-      .then(() => {
-        res.status(200).json({ message: 'Project deleted' });
+      .then(project => {
+        res.status(200).json(project);
       })
       .catch(error => {
         res.status(500).json({ message: 'Something went wrong' });
@@ -412,6 +412,7 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
       // .then(payload => console.log(payload))
       // let order = order++;
       // console.log(projectUpdated.assets)
+      console.log(projectUpdated.assets[0].secure_url)
       res.status(200).json(projectUpdated.assets[0].secure_url);
     });
   } else {

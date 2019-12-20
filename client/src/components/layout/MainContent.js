@@ -3,6 +3,7 @@ import ProjectService from '../../services/ProjectService';
 import { Content } from '../project/Content';
 import Dropdown from '../utils/Dropdown';
 import Dropzone from 'react-dropzone';
+import TextEditor from '../utils/TextEditor';
 
 export default class MainContent extends Component {
   constructor(props) {
@@ -138,8 +139,6 @@ export default class MainContent extends Component {
                             {/* {assets && assets.length > 0 && ( */}
                               <React.Fragment>
                                 <div className='assets-container content-container'>
-                                  
-
                                   {!row.content[slotIdx].image && (
                                     <Dropzone
                                     onDrop={(acceptedFiles) =>
@@ -250,6 +249,8 @@ export default class MainContent extends Component {
                                   ))}
                                 </div>
                               )}
+
+                              
                             </div>
 
                             {!typeset.length && (
@@ -264,9 +265,19 @@ export default class MainContent extends Component {
                             )}
                           </>
                         )}
+
+
+                        {row.content[slotIdx].type === 'textedit' && (
+                          <div className="content-container textedit-container">
+                            <TextEditor></TextEditor>
+                          </div>
+                        )}
+
+
                       </React.Fragment>
                     )}
 
+                    
                       {!row.content[slotIdx].type && (
                         <React.Fragment>
                         <div className='content-container'>
@@ -274,13 +285,6 @@ export default class MainContent extends Component {
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                // onClick={slotIdx =>
-                                //   this.addContent(
-                                //     row._id,
-                                //     slotIdx,
-                                //     'colorPalette'
-                                //   )
-                                // }
                                 onClick = {() => this.addContentFront(row._id, slotIdx, 'colorPalette')}
                               >
                                 Color Palette
@@ -289,9 +293,6 @@ export default class MainContent extends Component {
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                // onClick={slodIdx =>
-                                //   this.addContent(row._id, slotIdx, 'typeset')
-                                // }
                                 onClick = {() => this.addContentFront(row._id, slotIdx, 'typeset')}
 
                               >
@@ -302,13 +303,20 @@ export default class MainContent extends Component {
                             <p className='control'>
                               <button
                                 className='button is-small'
-                                // onClick={slodIdx =>
-                                //   this.addContent(row._id, slotIdx, 'assets')
-                                // }
                                 onClick = {() => this.addContentFront(row._id, slotIdx, 'assets')}
 
                               >
                                 Image
+                              </button>
+                            </p>
+
+                            <p className='control'>
+                              <button
+                                className='button is-small'
+                                onClick = {() => this.addContentFront(row._id, slotIdx, 'textedit')}
+
+                              >
+                                TextEditor
                               </button>
                             </p>
                           </div>

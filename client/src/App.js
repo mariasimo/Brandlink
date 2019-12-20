@@ -122,6 +122,18 @@ export default class App extends React.Component {
     })
   };
 
+  deleteProject = (projectId) => {
+    this.projectService.deleteProject(projectId).then(
+      () => {
+        this.setUser(this.state.user);
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  }
+
   addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
     this.projectService
       .addColorToPalette({ name, hexadecimal, id, colorId })
@@ -300,6 +312,7 @@ export default class App extends React.Component {
                     {...match}
                     setPath={this.setPath}
                     setActiveProject={this.setActiveProject}
+                    deleteProject={this.deleteProject}
                     setUser={this.setUser}
                   />
                 )}
