@@ -32,6 +32,7 @@ export default class TextStyles extends Component {
           {...this.props}
           url={`/project/${id}/edit`}
         ></BrandHeader>
+        
         <div className='content'>
           <div className='type-set columns is-multiline'>
             {textstyles && 

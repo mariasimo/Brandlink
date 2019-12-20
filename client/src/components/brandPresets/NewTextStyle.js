@@ -23,7 +23,6 @@ export default class NewTextStyle extends Component {
 
   getTextStyleData = () => {
     const { styleId } = this.props.match.params;
-
     console.log(styleId)
 
     if (styleId !== undefined) {
@@ -66,7 +65,6 @@ export default class NewTextStyle extends Component {
     const { path, styleId } = this.props.match.params;
     const { history } = this.props;
     const textstyle = this.state.textstyle
-
     this.props.addTextStyle({ textstyle, path, styleId, history })
   };
 
@@ -82,6 +80,7 @@ export default class NewTextStyle extends Component {
     } = this.state.textstyle;
     const { colorPalette, typeset, assets, textstyle} = this.props;
 
+    console.log(this.props)
     return (
       < >
       <SideMenu toggleMenu={this.props.toggleMenu} menuIsOpen={this.props.menuIsOpen}>

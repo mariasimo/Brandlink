@@ -125,7 +125,7 @@ export default class MainContent extends Component {
 
   render() {
     const path = this.props.user.activeProject;
-    const { colorPalette, typeset, assets } = this.props;
+    const { colorPalette, typeset, assets, textstyles } = this.props;
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
@@ -281,6 +281,30 @@ export default class MainContent extends Component {
                           </div>
                         )}
 
+                        {row.content[slotIdx].type === 'textstyles' && (
+                          <>
+                            {textstyles && (
+                              <div className='type-container content-container'>
+                                {textstyles.map((style, idx) => (
+                                  <div
+                                    className='type'
+                                    key={idx}
+
+                                    style={{
+                                      fontFamily: style.fontFamily,
+                                      fontWeight: style.fontWeight,
+                                      fontSize: `${style.fontSize}rem`,
+                                      letterSpacing: `${style.letterSpacing}rem`,
+                                      lineHeight: style.lineHeight
+                                    }}
+                                  >
+                                      {style.name}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
 
                       </React.Fragment>
                     )}
@@ -325,6 +349,16 @@ export default class MainContent extends Component {
 
                               >
                                 TextEditor
+                              </button>
+                            </p>
+
+                            <p className='control'>
+                              <button
+                                className='button is-small'
+                                onClick = {() => this.addContentFront(row._id, slotIdx, 'textstyles')}
+
+                              >
+                                TextStyles
                               </button>
                             </p>
                           </div>
