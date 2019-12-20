@@ -43,7 +43,6 @@ export default class ProjectList extends React.Component {
   render() {
     // const username = this.props.loggedInUser.username;
     const { projects } = this.state;  
-    console.log(this.projects)      
 
     return (
       <div>
