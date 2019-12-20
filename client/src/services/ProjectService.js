@@ -194,13 +194,15 @@ class ProjectService {
   }
 
   addImageAsContent = fileParams => {
-    // console.log(fileParams)
-    return this.instance.post(`/rows/image/${fileParams.rowId}`, fileParams.uploadData,  fileParams.slotIdx )
+    console.log(fileParams)
+
+    return this.instance.post(`/rows/image`, fileParams.uploadData)
     .then(res => {
-      // console.log(res.data)
+      console.log(res.data)
       return Promise.resolve(res.data)
     })
   }
+
 
   // uploadAsset = (fileParams) => {
   //   console.log(fileParams)

@@ -371,29 +371,53 @@ router.put(`/content/:rowId`, (req, res) => {
   .catch(err => console.log(err))
 })
 
+// router.post('/uploadAsset/:path', uploader.single('file'), (req, res) => {
 
-// router.post('/rows/image/:rowId', uploader.single('file'), (req, res, next) => { 
-//   console.log(uploadData)
-
-//   console.log("req.file")
 //   if (req.file) {
 //     Project.findByIdAndUpdate(
 //       { _id: req.user.activeProject },
 //       {
 //         $push: {
-//           content: {
-//             image: req.file.secure_url,
+//           assets: {
+//             secure_url: req.file.secure_url,
+//             format: req.file.format,
+//             name: req.file.originalname
 //           }
 //         }
 //       }
 //     ).then(projectUpdated => {
-//       console.log(projectUpdated)
 //       res.status(200).json(projectUpdated);
 //     });
 //   } else {
 //     res.status(500).json({ message: 'Something went wrong' });
 //   }
 // });
+
+router.post('/rows/image', uploader.single('file'), (req, res, next) => { 
+
+  if (req.file) {
+    Project.findByIdAndUpdate(
+      { _id: req.user.activeProject },
+      {
+        $push: {
+          assets: {
+            secure_url: req.file.secure_url,
+            format: req.file.format,
+            name: req.file.originalname
+          }
+        }
+      }
+    ).then(projectUpdated => {
+      // Projects.findOne({ assets: { $elemMatch: { _id: projectUpdated.assets._id } } })
+      // .then(payload => console.log(payload))
+      // let order = order++;
+      // console.log(projectUpdated.assets)
+      res.status(200).json(projectUpdated.assets[0].secure_url);
+    });
+  } else {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
 
 
 

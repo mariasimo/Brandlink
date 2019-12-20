@@ -12,14 +12,13 @@ export default class MainContent extends Component {
   }
 
   displayRows = () => {
-    console.log("display rows")
     const { id } = this.props.match.params;
 
     this.projectService.displayRows(id).then(rows => {
       this.setState({
         ...this.state,
         rows: rows
-      })
+      }, () => {console.log(this.state.rows)})
     });
   };
 
@@ -39,7 +38,6 @@ export default class MainContent extends Component {
   deleteRow = rowId => {
     this.projectService.deleteRow(rowId).then(
       project => {
-        console.log(project);
         this.displayRows();
       },
       error => {
@@ -56,7 +54,6 @@ export default class MainContent extends Component {
   };
 
   addContentFront = (rowId, slotIdx, type) => {
-    console.log(rowId)
     this.projectService.fetchContent(rowId)
     .then( payload => {
       let content = payload;
@@ -78,16 +75,29 @@ export default class MainContent extends Component {
       });
   };
 
-  addImageAsContent = (file, slotIdx, rowId ) => {
+  addImageAsContent = (file, rowId, slotIdx, type ) => {
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
+    const { id } = this.props.match.params;
 
-    console.log(uploadData)
+    console.log(slotIdx)
 
-    this.projectService.addImageAsContent({uploadData, slotIdx, rowId })
-    .then(payload => {
-      console.log(payload)
-    });
+    this.projectService.addImageAsContent({uploadData, id})
+    .then(imageURl => {
+      let image = imageURl; 
+      this.projectService.fetchContent(rowId)
+      .then(payload => {
+        let content = payload;
+        content[slotIdx] = {order: slotIdx, image: image, type: type};
+        // this.displayRows();
+        this.projectService.insertSlot(content, rowId)
+        .then(payload => {
+          console.log(payload)
+          this.displayRows()
+        })
+        .catch(err=>console.log(err))
+      })
+    })
   };
 
 
@@ -128,9 +138,12 @@ export default class MainContent extends Component {
                             {/* {assets && assets.length > 0 && ( */}
                               <React.Fragment>
                                 <div className='assets-container content-container'>
-                                  <Dropzone
-                                    onDrop={(acceptedFiles, slotIdx) =>
-                                      this.addImageAsContent(acceptedFiles, slotIdx, row._id )
+                                  
+
+                                  {!row.content[slotIdx].image && (
+                                    <Dropzone
+                                    onDrop={(acceptedFiles) =>
+                                      this.addImageAsContent(acceptedFiles, row._id, slotIdx, "assets" )
                                     }
                                   >
                                     {({ getRootProps, getInputProps }) => (
@@ -145,6 +158,10 @@ export default class MainContent extends Component {
                                       </section>
                                     )}
                                   </Dropzone>
+                                  )}
+                                  {row.content[slotIdx].image && (
+                                    <img src={row.content[slotIdx].image} alt="" srcset=""/>
+                                  )}
                                 </div>
                               </React.Fragment>
                              {/*)}*/}
