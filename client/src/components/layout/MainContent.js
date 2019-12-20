@@ -10,6 +10,8 @@ export default class MainContent extends Component {
     super(props);
     this.state = {};
     this.projectService = new ProjectService();
+    this.loadingImg = '';
+    this.loadingParent = '';
   }
 
   displayRows = () => {
@@ -77,6 +79,12 @@ export default class MainContent extends Component {
   };
 
   addImageAsContent = (file, rowId, slotIdx, type ) => {
+    this.loadingImg = document.createElement('img');
+    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
+    this.loadingParent = document.querySelector('.file-label');
+    this.loadingParent.appendChild(this.loadingImg);
+
+
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
     const { id } = this.props.match.params;

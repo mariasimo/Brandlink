@@ -477,5 +477,9 @@ body {
   height: 200px;
   width: 100%;
   min-width: 460px;
-  padding: 1.5rem
+  padding: 1.5rem 3rem;
+
+  .dante-menu.dante-menu--active{
+    z-index: 9999999;
+  }
 }
