@@ -91,7 +91,10 @@ export default class MainContent extends Component {
                         {row.content[slotIdx].type === 'assets' && (
                           <>
                           {assets &&
+
                             <React.Fragment>
+                            <div className="assets-container content-container">
+
                             <div className="droppable"
                             onDrop={(e, slotIdx) => this.props.onDrop(e, slotIdx)}
                             >
@@ -102,6 +105,7 @@ export default class MainContent extends Component {
                                   </p>
                                 </div>
                               </section>
+                            </div>
                             </div>
                             </React.Fragment>
                           }
@@ -122,7 +126,7 @@ export default class MainContent extends Component {
                         {row.content[slotIdx].type === 'colorPalette' && (
                           <>
                           {colorPalette &&
-                            <div className="color-container">
+                            <div className="color-container content-container">
                             {colorPalette.map((color, idx) => (
                                 <div className='color' key={idx}
                               style={{
@@ -136,7 +140,7 @@ export default class MainContent extends Component {
                               
 
                           {!colorPalette.length && (
-                            <div className="color-container">
+                            <div className="color-container content-container">
                             <div>
                               Add your first color.
                               <a
@@ -152,17 +156,18 @@ export default class MainContent extends Component {
                            <>
                            <div className="field has-addons">
                            {typeset &&
-                             typeset.map(type => 
+                              <div className="typeset-container content-container">
+                             {typeset.map(type => 
                               <p className="control">
                                 <button className="button is-small" onClick={slodIdx => this.addFontAsContent(row._id, slotIdx, 'typeset')} style={{fontFamily: type.fontFamily}}>{type.fontFamily}</button>
                               </p>
-                             )
+                             )}</div>
                            }
                            </div>
 
                            {!typeset.length && (
-                             <div>
-                               Add your first type.
+                              <div className="typeset-container content-container">
+                              Add your first type.
                                <a
                                  href={`/project/${path}/edit/typeset`}
                                >
