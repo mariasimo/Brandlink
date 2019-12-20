@@ -12,10 +12,10 @@ class ProjectService {
     return this.instance
       .get("/")
       .then(res => {
-        let arrData = Object.keys(res.data).map(key => {
-          return res.data[key];
-        });
-        return Promise.resolve(arrData);
+        // let arrData = Object.keys(res.data).map(key => {
+        //   return res.data[key];
+        // });
+        return Promise.resolve(res.data);
       })
       .catch(error => console.error(error));
   };

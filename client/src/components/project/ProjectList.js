@@ -19,6 +19,7 @@ export default class ProjectList extends React.Component {
   updateProjects = () => {
     this.projectService.fetchProjects().then(
       projects => {
+        console.log(projects)
         this.setState({ ...this.state, projects });
       },
       error => {

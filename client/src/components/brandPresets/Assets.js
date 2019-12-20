@@ -99,7 +99,7 @@ export default class Assets extends Component {
           </div>
         </SideMenu>
         <MainContent
-        {...this.props}
+          {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}

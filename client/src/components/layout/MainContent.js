@@ -20,7 +20,6 @@ export default class MainContent extends Component {
         ...this.state,
         rows: rows
       })
-      console.log(this.state.rows)
     });
   };
 
@@ -108,8 +107,6 @@ export default class MainContent extends Component {
   render() {
     const path = this.props.user.activeProject;
     const { colorPalette, typeset, assets } = this.props;
-
-    console.log(this.state.rows);
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
