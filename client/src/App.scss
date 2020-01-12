@@ -3,14 +3,19 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i,800&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
-$blue: #3c5ac3;
+$blue: #3040C4;
+$pink: #F9D9EB;
+$red: #F36B7F;
+$green: #82B5A5;
+$cream: #FCF0E3;
+$black: #302E31;
 
 $primary: $blue;
 $is-primary: $blue;
 $has-text-primary: $blue;
 $grey-lightest: #ddd;
 $yellow: #ffc400;
-$green: hsl(171, 100%, 41%);
+// $green: hsl(171, 100%, 41%);
 $orange: #ff8d01;
 $info: hsl(171, 100%, 41%);
 
@@ -39,8 +44,7 @@ body {
   }
 }
 
-.auth-section,
-.landing{
+.auth-section{
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -381,40 +385,182 @@ body {
   float: left;
 }
 
+.title{
+  color: $is-primary;
+  font-family: 'Merriweather';
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+}     
 
-.landing{
-  background-image: url('/bg.png');
-  background-size: cover;
+p{ margin-bottom: 32px;}
 
-  .container{
-    max-width: 1240px;
+
+// Landing
+.landing-page{
+  width: 100vw;
+
+  .container {
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
   }
 
-  .is-one-third{
-    display: flex;
+  .hero {
+    background-image: url('/bg.png');
+    background-size: cover;
+    min-height: 92vh;
+
+    .img{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 120px;
+    }
+
+    p{ margin-bottom: 32px;}
+  
+    .is-grouped{
+      .button:first-child{
+        margin-right: 16px
+      }
+    }
+  }
+
+  .blocks {
+    height: 100%;
+    border: 1px solid $grey-lightest;
+
+    overflow: hidden;
+
+    .block{
+      min-height: 92vh;
+      .text {
+        padding: 8em 5em;
+        .title {
+          line-height: 1.5;
+        }
+      }
+
+      .img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      } 
+
+      &.block-1 {
+        .text{
+          background-color: $blue;
+          background-image: url('/blue-buble.png');
+          background-size: cover;
+      
+          color: white;
+  
+          .title {color:white}
+        }
+
+        .img{
+          background-color: $pink;
+        } 
+      }
+
+      &.block-2 {
+        .text{
+          background-color: $red;
+          background-image: url('/red-buble.png');
+          background-size: cover;
+          color: $black;
+  
+          .title {color:$black}
+        }
+
+        .img{
+          background-color: $cream;
+        } 
+      }
+
+      &.block-3 {
+        .text{
+          background-color: $green;
+          background-image: url('/green-buble.png');
+          background-size: cover;
+          color: $black;
+  
+          .title {color:$black}
+        }
+      }
+    }
+  }
+
+  .features {
+    height: 100%;
+    min-height: 70vh;
+    background-image: url('/bg-features.png');
+    background-size: cover;
+
+    display:flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 120px;
-    margin-left: 50px
+
+    padding: 6em 0 3em; 
+
+    .title {
+      margin-bottom: 2em;
+    }
+
+    .features-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin: 0 -3em;
+
+      .feature{
+        width: 33%;
+        margin-bottom: 3em;
+        padding: 0 3em;
+
+        .title {
+          font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        }
+      }
+    }
   }
 
-  h2{
-    color: #333333;
-    color: #204488;
-    color: $is-primary;
-    font-family: 'Merriweather';
-    letter-spacing: 0.005em;
-    line-height: 1.2;
-  } 
+  .banner {
+    padding-bottom: 4em;
 
-  p{ margin-bottom: 32px;}
+    .banner-content {
+      background-image: url('/banner-bg.png');
+      background-size: cover;
+      background-color: $blue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 3em 0;
 
-  img{margin-left: -88px; margin-top: -24px; min-width: 900px}
-  .is-grouped{
-    
-    .button:first-child{
-      margin-right: 16px
+      .title, p{ color: white;}
+
+      img, p{margin-bottom: 2em;}
     }
+  }
+}
+
+.landing-page-footer {
+  border-top: 1px solid lightgray;
+  padding: 1em;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  img{
+    height: 18px;
+  }
+  .small {
+    font-size: 0.85em;
+    margin: 0;
   }
 }
 

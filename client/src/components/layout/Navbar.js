@@ -18,7 +18,7 @@ export default class Navbar extends Component {
         <div className='navbar-brand'>
             <Link to='/' className='navbar-item'>
               <img
-              src={`${process.env.REACT_APP_URL}/logo.png`}
+              src={`${process.env.REACT_APP_URL}/logo.svg`}
               height='24'
                 alt='BrandLink'
               ></img>
