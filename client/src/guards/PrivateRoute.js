@@ -30,7 +30,6 @@ export default function PrivateRoute({
     <Route
       {...rest}
       render={props => {
-        {
           if (user) {
             return (
               <Component
@@ -60,7 +59,6 @@ export default function PrivateRoute({
           } else {
             return <Redirect to={{ pathname: redirectPath }} />;
           }
-        }
       }}
     />
   );

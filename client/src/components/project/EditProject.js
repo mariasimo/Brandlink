@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BrandHeader from '../layout/BrandHeader';
 import SideMenu from '../layout/SideMenu';
-import ProjectService from "../../services/ProjectService";
+// import ProjectService from "../../services/ProjectService";
 import MainContent from '../layout/MainContent';
 
 export default class EditProject extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    const { colorPalette, typeset, assets, title} = this.props;
+    const { colorPalette, typeset, assets} = this.props;
     console.log(this.state, this.props)
     return (
       < >

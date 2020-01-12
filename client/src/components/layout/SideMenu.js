@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default class SideMenu extends Component {
 
     render() {
-      const {user} = this.props
+      // const {user} = this.props
         return (
       <section className={`section side-menu ${this.props.menuIsOpen}`}>
    
@@ -18,7 +18,7 @@ export default class SideMenu extends Component {
         
 
             <button className="btn-side-menu remove-btn" onClick={this.props.toggleMenu}>
-              <img src={`${process.env.REACT_APP_URL}/menu.svg`}></img>
+              <img src={`${process.env.REACT_APP_URL}/menu.svg`} alt="Menu"></img>
             </button>
 
             {this.props.children}

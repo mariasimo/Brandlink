@@ -78,7 +78,7 @@ export default class NewTextStyle extends Component {
       lineHeight,
       letterSpacing
     } = this.state.textstyle;
-    const { colorPalette, typeset, assets, textstyle} = this.props;
+    const { colorPalette, typeset, assets} = this.props;
 
     console.log(this.props)
     return (

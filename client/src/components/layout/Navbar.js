@@ -29,7 +29,7 @@ export default class Navbar extends Component {
           <div className='navbar-start'>
             {user && 
               <Link to={`/panel/${user.username}`} className='back-projects-link navbar-item'>
-                <img src={`${process.env.REACT_APP_URL}/back.svg`}></img>
+                <img src={`${process.env.REACT_APP_URL}/back.svg`} alt="go back"></img>
                 <span>Back to projects</span>
               </Link>
             }

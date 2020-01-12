@@ -17,7 +17,7 @@ export default class TypeSet extends Component {
   }
 
   render() {
-    const { id , path} = this.props.match.params;
+    const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
 
     return (
@@ -48,7 +48,7 @@ export default class TypeSet extends Component {
                     </button>                    
                 </div>
               ))}
-            {!typeset || !typeset.length && 
+            {(!typeset || !typeset.length) && 
               <div>You dont have any fonts yet. Add your first font now.</div>
             }
 

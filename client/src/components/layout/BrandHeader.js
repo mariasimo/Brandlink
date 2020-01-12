@@ -12,7 +12,7 @@ export default class BrandHeader extends Component {
     return (
       <div className="side-menu-header">
         <button className="remove-btn back-link" onClick={this.previousPage}>
-        <img src={`${process.env.REACT_APP_URL}/back.svg`}></img> 
+        <img src={`${process.env.REACT_APP_URL}/back.svg`} alt="go back"></img> 
         <span className="is-size-5 has-text-weight-medium	">Back</span>
         </button>
         {this.props.subtitle &&

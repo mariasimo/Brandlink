@@ -15,8 +15,8 @@ export default class AdobeFontsImporter extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const projectId = document.querySelector('input[name="projectId"]').value;
-    const token = document.querySelector('input[name="token"]').value;
+    // const projectId = document.querySelector('input[name="projectId"]').value;
+    // const token = document.querySelector('input[name="token"]').value;
 
     this.projectService.getGoogleFonts()
     .then(fonts => { 

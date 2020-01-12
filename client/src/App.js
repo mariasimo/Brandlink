@@ -118,7 +118,7 @@ export default class App extends React.Component {
         )}&display=swap`
       );
       link.setAttribute("rel", `stylesheet`);
-      document.head.appendChild(link);
+      return document.head.appendChild(link);
     })
   };
 
