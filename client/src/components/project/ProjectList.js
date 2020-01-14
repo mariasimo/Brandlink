@@ -47,7 +47,8 @@ export default class ProjectList extends React.Component {
 
     return (
       <div>
-        <section className="section landing">
+        <section className="section admin-panel">
+          <div className="container">
           <div className="columns">
             <div className="column is-one-third">
             <div className='hero'>
@@ -75,6 +76,7 @@ export default class ProjectList extends React.Component {
 
               <Link to="/project/new" className="project-card">Create new project</Link>
             </div>
+          </div>
           </div>
         </section>
       </div>

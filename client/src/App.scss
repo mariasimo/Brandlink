@@ -44,10 +44,30 @@ body {
   }
 }
 
+.auth-section,
+.landing-page,
+.admin-panel {
+  .container {
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.admin-panel{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image: url('/bg.png');
+  background-size: cover;
+}
+
 .auth-section{
   min-height: 100vh;
   display: flex;
   align-items: center;
+  background-image: url('/bg.png');
+  background-size: cover;
   
   .container{
     height: 100%;
@@ -399,12 +419,6 @@ p{ margin-bottom: 32px;}
 .landing-page{
   width: 100vw;
 
-  .container {
-    max-width: 1180px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
   .hero {
     background-image: url('/bg.png');
     background-size: cover;
@@ -565,10 +579,10 @@ p{ margin-bottom: 32px;}
 }
 
 .new-project-main{
-  height: 100%;
+  height: 100vh;
 
   .section{
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;

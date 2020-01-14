@@ -20,6 +20,7 @@ import ProjectService from './services/ProjectService';
 import Assets from './components/brandPresets/Assets';
 import TextStyles from './components/brandPresets/TextStyles';
 import NewTextStyle from './components/brandPresets/NewTextStyle';
+import ReadProject from './components/project/ReadProject';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -340,6 +341,18 @@ export default class App extends React.Component {
                 textstyles={textstyles}
                 projectTitle={projectTitle}
                 component={EditProject}
+              />
+
+              <PrivateRoute
+                exact
+                path='/project/:id'
+                user={user}
+                colorPalette={colorPalette}
+                typeset={typeset}
+                assets={assets}
+                textstyles={textstyles}
+                projectTitle={projectTitle}
+                component={ReadProject}
               />
 
               <PrivateRoute
