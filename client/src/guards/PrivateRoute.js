@@ -24,6 +24,7 @@ export default function PrivateRoute({
   addTextStyle,
   projectTitle,
   createProject,
+  shareMessage,
   ...rest
 }) {
   return (
@@ -53,6 +54,7 @@ export default function PrivateRoute({
                 addTextStyle={addTextStyle}
                 projectTitle = {projectTitle}
                 createProject= {createProject}
+                shareMessage={shareMessage}
                 {...props}
               />
             );

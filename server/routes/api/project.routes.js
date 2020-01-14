@@ -10,6 +10,7 @@ const uploader = require('../../configs/cloudinary.config');
 
 var nodemailer = require('nodemailer');
 const creds = require('../../configs/mailCredentials.config');
+const templates = require('../../templates/template');
 
 var transport = {
   host: 'smtp.gmail.com',
@@ -443,16 +444,16 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
 });
 
 router.post('/send-email', (req, res, next) => {
-  var name = req.body.name
-  var email = req.body.email
-  var message = req.body.message
-  var content = `name: ${name} \n email: ${email} \n message: ${message} `
+  var email = req.body.email;
+  var projectId = req.body.projectId;
+  var message = "Hi. Someone shared a BrandLink with you!"
 
   var mail = {
-    from: name,
+    from: "BrandLink",
     to: email,  //Change to email address that you want to receive messages on
     subject: 'New Message from Contact Form',
-    text: content
+    text: message,
+    html: templates.templateNotification(projectId),
   }
 
   console.log(mail)

@@ -9,11 +9,12 @@ class ProjectService {
   }
 
   shareMessage = data  => {
-    const  {email, name, message} = data;
-    console.log(email, name, message)
+    const  {email, projectId} = data;
+    console.log(email, projectId)
     return this.instance
-    .post('/send-email', {email, name, message})
+    .post('/send-email', {email, projectId})
     .then(res => {
+      console.log(res)
       return Promise.resolve(res.data);
     })
     .catch(error => console.error(error));    

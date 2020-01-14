@@ -15,6 +15,8 @@ export default class EditProject extends Component {
       <SideMenu
       toggleMenu={this.props.toggleMenu}
       menuIsOpen={this.props.menuIsOpen}
+      projectId={this.props.loggedInUser.activeProject}
+      shareMessage={this.props.shareMessage}
       >   
         <BrandHeader
           title={this.props.projectTitle}

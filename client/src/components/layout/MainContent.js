@@ -124,8 +124,11 @@ export default class MainContent extends Component {
   }
 
   render() {
-    const path = this.props.user.activeProject;
+    // const path = this.props.user.activeProject;
+    const path = this.props.match.params.id;
     const { colorPalette, typeset, textstyles, permissionToEdit } = this.props;
+
+    console.log(this.state)
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}

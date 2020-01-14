@@ -146,3 +146,4 @@ Escribir aquí modelos actuales y lo que necesito
 **Notas**
 
 - Cerrar diciendo que sigue siendo un wip, y de que los usuarios normalmente no percibimos la complejidad que hay detras de un projecto web cerrado y complejo
+- Ahora mismo tengo todos los elementos dependiendo del user activo. con lo cual, en el enlace de lectura, cuando no hay user se rompe. Puedo hacer una llamada a la base de datos desde mainContent con el id y recuperar todo y guardarlo en el state???
