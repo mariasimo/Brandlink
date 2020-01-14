@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import BrandHeader from '../layout/BrandHeader';
-import SideMenu from '../layout/SideMenu';
-// import ProjectService from "../../services/ProjectService";
 import MainContent from '../layout/MainContent';
 
 export default class EditProject extends Component {
@@ -12,7 +8,6 @@ export default class EditProject extends Component {
     console.log(this.state, this.props)
     return (
       < >
-      hols
       <MainContent 
           {...this.props}
           toggleMenu={this.props.toggleMenu}
@@ -22,8 +17,7 @@ export default class EditProject extends Component {
           user={this.props.loggedInUser}
           assets={assets}
         >
-          
-        </MainContent>
+      </MainContent>
     </ >
     );
   }

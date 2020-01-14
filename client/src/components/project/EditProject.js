@@ -56,6 +56,7 @@ export default class EditProject extends Component {
           typeset={typeset}
           user={this.props.loggedInUser}
           assets={assets}
+          permissionToEdit
         >
           
         </MainContent>

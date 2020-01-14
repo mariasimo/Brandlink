@@ -5,7 +5,7 @@ export class LandingPage extends Component {
   render() {
     return (
       <React.Fragment>
-            <main className="landing-page">
+        <main className="landing-page">
         <section className='section main-content hero'>
         <div className='container columns'>
           <div className='column img'>
@@ -15,7 +15,7 @@ export class LandingPage extends Component {
               <p>
               BrandLink help designers to create and mantain neat, synced and always up-to-date brand guidelines they can share with their clients.  
               </p>
-              <div class="is-grouped">
+              <div className="is-grouped">
               <Link to='/signup' className='button is-rounded is-primary is-inverted is-medium'>
                 Signup
               </Link>
@@ -31,6 +31,7 @@ export class LandingPage extends Component {
           </div>
         </div>
       </section>
+
       <section className="section is-paddingless blocks">
           {/* Block 1 */}
           <div className="columns block block-1">
@@ -125,7 +126,7 @@ export class LandingPage extends Component {
                 alt='BrandLink'
               ></img>
             </Link>
-            <p clasS="small">Created with hope and fear at Ironhack, 2019</p>
+            <p className="small">Created with hope and fear at Ironhack, 2019</p>
         </div>
       </footer>
       </React.Fragment>  

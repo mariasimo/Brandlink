@@ -8,6 +8,18 @@ class ProjectService {
     });
   }
 
+  shareMessage = data  => {
+    const  {email, name, message} = data;
+    console.log(email, name, message)
+    return this.instance
+    .post('/send-email', {email, name, message})
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(error => console.error(error));    
+  }
+
+
   fetchProjects = () => {
     return this.instance
       .get("/")

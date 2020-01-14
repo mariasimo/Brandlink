@@ -30,7 +30,7 @@ export default class App extends React.Component {
     this.state = {
       user: null,
       menuIsOpen: 'show',
-      file: ""
+      file: ''
     };
     this.loadingImg = '';
     this.loadingParent = '';
@@ -52,25 +52,24 @@ export default class App extends React.Component {
       user
     });
 
-    if(this.state.user.activeProject) {
-    this.projectService.displayProject(user.id)
-    .then(project => {
-      this.setState({
-        ...this.state,
-        title:project.title,
-        colorPalette: project.colorPalette,
-        typeset: project.typeset,
-        assets: project.assets,
-        textstyles : project.textstyles,
-      })
+    if (this.state.user.activeProject) {
+      this.projectService.displayProject(user.id).then(project => {
+        this.setState({
+          ...this.state,
+          title: project.title,
+          colorPalette: project.colorPalette,
+          typeset: project.typeset,
+          assets: project.assets,
+          textstyles: project.textstyles
+        });
 
-      this.addFontsLinks(this.state.typeset);
-    })
+        this.addFontsLinks(this.state.typeset);
+      });
     } else {
       this.setState({
         ...this.state,
         user
-      });  
+      });
     }
   };
 
@@ -81,7 +80,7 @@ export default class App extends React.Component {
         .then(user => {
           if (user !== undefined) {
             this.setUser(user);
-            this.displayProject(user.id)
+            this.displayProject(user.id);
           }
         })
         .catch(error => {
@@ -105,25 +104,25 @@ export default class App extends React.Component {
       .setActiveProject({ path, id })
       .then(userHasAnActiveProject => {
         this.setUser(userHasAnActiveProject);
-    });
+      });
   };
 
   addFontsLinks = typeset => {
     typeset.map(type => {
-      const link = document.createElement("link");
+      const link = document.createElement('link');
       link.setAttribute(
-        "href",
+        'href',
         `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
-          " ",
-          "+"
+          ' ',
+          '+'
         )}&display=swap`
       );
-      link.setAttribute("rel", `stylesheet`);
+      link.setAttribute('rel', `stylesheet`);
       return document.head.appendChild(link);
-    })
+    });
   };
 
-  deleteProject = (projectId) => {
+  deleteProject = projectId => {
     this.projectService.deleteProject(projectId).then(
       () => {
         this.setUser(this.state.user);
@@ -133,7 +132,7 @@ export default class App extends React.Component {
         console.error(message);
       }
     );
-  }
+  };
 
   addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
     this.projectService
@@ -192,26 +191,28 @@ export default class App extends React.Component {
     );
   };
 
-  addTextStyle = ({ textstyle, path, styleId, history}) => {
-      this.projectService
+  addTextStyle = ({ textstyle, path, styleId, history }) => {
+    this.projectService
       .addTextStyle({ ...textstyle, path, styleId, history })
       .then(
         () => {
           this.setState({
             ...this.state,
-            name: "",
-            fontFamily: "",
+            name: '',
+            fontFamily: '',
             fontSize: 1,
             fontWeight: null,
             lineHeight: 1,
             letterSpacing: 0,
             uppercase: false
           });
-          history.push(`/project/${this.state.user.activeProject}/edit/textStyles`);
+          history.push(
+            `/project/${this.state.user.activeProject}/edit/textStyles`
+          );
         },
         error => console.error(error)
       );
-  }
+  };
 
   addAsset = ({ uploadData, path }) => {
     this.loadingImg = document.createElement('img');
@@ -245,26 +246,69 @@ export default class App extends React.Component {
     ev.dataTransfer.setData('id', id);
   };
 
-  onDrop = (ev , slotIdx) => {
+  onDrop = (ev, slotIdx) => {
     let fileId = ev.dataTransfer.getData('id');
     this.setState({ ...this.state, file: fileId });
-    
+
     // console.log( fileId, slotIdx)
   };
 
-
-  createProject = ({title, path, history}) => {
-    console.log({title, path, history})
+  createProject = ({ title, path, history }) => {
+    console.log({ title, path, history });
 
     this.projectService.createProject({ title, path }).then(
-      (projectCreated) => {
-        console.log(projectCreated)
+      projectCreated => {
+        console.log(projectCreated);
         this.setState({ ...this.state, title: '', path: '' });
         history.push(`/project/${this.state.user.activeProject}/edit`);
       },
       error => console.error(error)
     );
-  }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    this.projectService
+    .shareMessage({ name, email, message})
+    .then((response)=>{
+      console.log(response)
+      // if (response.data.msg === 'success'){
+      //     alert("Message Sent."); 
+      //     // this.resetForm()
+      // }else if(response.data.msg === 'fail'){
+      //     alert("Message failed to send.")
+      // }
+    })
+  };
+
+
+// handleSubmit(e){
+//   e.preventDefault();
+//   const name = document.getElementById('name').value;
+//   const email = document.getElementById('email').value;
+//   const message = document.getElementById('message').value;
+//   axios({
+//       method: "POST", 
+//       url:"http://localhost:3002/send", 
+//       data: {
+//           name: name,   
+//           email: email,  
+//           messsage: message
+//       }
+//   }).then((response)=>{
+//       if (response.data.msg === 'success'){
+//           alert("Message Sent."); 
+//           this.resetForm()
+//       }else if(response.data.msg === 'fail'){
+//           alert("Message failed to send.")
+//       }
+//   })
+// }
+
 
   componentDidMount() {
     this.fetchUser();
@@ -272,11 +316,45 @@ export default class App extends React.Component {
 
   render() {
     this.fetchUser();
-    const { user, menuIsOpen, colorPalette, typeset, assets, textstyles } = this.state;
-    const projectTitle = this.state.title
+    const {
+      user,
+      menuIsOpen,
+      colorPalette,
+      typeset,
+      assets,
+      textstyles
+    } = this.state;
+    const projectTitle = this.state.title;
 
     return (
       <div className='App'>
+        <form
+          id='contact-form'
+          onSubmit={this.handleSubmit}
+          method='POST'
+        >
+          <div className='form-group'>
+            <label htmlFor='name'>Name</label>
+            <input type='text' className='form-control' id='name' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='exampleInputEmail1'>Email address</label>
+            <input
+              type='email'
+              className='form-control'
+              id='email'
+              aria-describedby='emailHelp'
+            />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='message'>Message</label>
+            <textarea className='form-control' rows='5' id='message'></textarea>
+          </div>
+          <button type='submit' className='btn btn-primary'>
+            Submit
+          </button>
+        </form>
+
         {/* The navbar has to pass the username to the profile menu link */}
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
         <Navbar user={user} logout={this.logout}></Navbar>

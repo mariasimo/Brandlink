@@ -14,7 +14,11 @@
   
     mongodb+srv://mariasimo:vuudU8CyoHlVhOv0@cluster0-irt38.mongodb.net/final-project?retryWrites=true&w=majority
   
-    
+  - Mail para notificaciones: brandlink.notifications@gmail.com / brandlink123
+  
+  
+  
+  
 
 **Iniciar proyecto**
 

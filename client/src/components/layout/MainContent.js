@@ -125,7 +125,7 @@ export default class MainContent extends Component {
 
   render() {
     const path = this.props.user.activeProject;
-    const { colorPalette, typeset, textstyles } = this.props;
+    const { colorPalette, typeset, textstyles, permissionToEdit } = this.props;
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}
@@ -200,7 +200,7 @@ export default class MainContent extends Component {
                                       backgroundColor: color.hexadecimal
                                     }}
                                   >
-                                    <span class='color-name vertical-text'>
+                                    <span className='color-name vertical-text'>
                                       {color.name}
                                     </span>
                                   </div>
@@ -378,34 +378,35 @@ export default class MainContent extends Component {
               </div>
             ))}
 
-          <div className='column is-full layout-btn-container'>
-            <button className='header subtitle is-4 is-primary'>Choose layout</button>
-            <div className='inner'>
-              <div
-                className='layout-btn'
-                onClick={() => this.addNewRow('is-full')}
-              >
-                <img src={`${process.env.REACT_APP_URL}/full.svg`} alt="Row"></img>
-                Full
+            {permissionToEdit && 
+              <div className='column is-full layout-btn-container'>
+              <button className='header subtitle is-4 is-primary'>Choose layout</button>
+              <div className='inner'>
+                <div
+                  className='layout-btn'
+                  onClick={() => this.addNewRow('is-full')}
+                >
+                  <img src={`${process.env.REACT_APP_URL}/full.svg`} alt="Row"></img>
+                  Full
+                </div>
+  
+                <div
+                  className='layout-btn'
+                  onClick={() => this.addNewRow('is-half')}
+                >
+                  <img src={`${process.env.REACT_APP_URL}/half.svg`} alt="Row"></img>
+                  Half
+                </div>
+  
+                <div
+                  className='layout-btn'
+                  onClick={() => this.addNewRow('is-one-third')}
+                >
+                  <img src={`${process.env.REACT_APP_URL}/third.svg`} alt="Row"></img>
+                  Third
+                </div>
               </div>
-
-              <div
-                className='layout-btn'
-                onClick={() => this.addNewRow('is-half')}
-              >
-                <img src={`${process.env.REACT_APP_URL}/half.svg`} alt="Row"></img>
-                Half
-              </div>
-
-              <div
-                className='layout-btn'
-                onClick={() => this.addNewRow('is-one-third')}
-              >
-                <img src={`${process.env.REACT_APP_URL}/third.svg`} alt="Row"></img>
-                Third
-              </div>
-            </div>
-          </div>
+            </div>}          
         </section>
       </div>
     );
