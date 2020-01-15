@@ -83,8 +83,8 @@
   - [ ] Parallax en buble bg
   - [ ] Animación logo, Svg dibujo en bottom banner
 - [ ] Forzar https
-- [ ] URL de edición vs URL de lectura
-  - [ ] Enviar url a usuario??? 
+- [x] URL de edición vs URL de lectura
+  - [x] Enviar url a usuario??? 
 - [ ] Poder cargar diferentes imágenes
 - [ ] Presentar las opciones de contenido de los slots de otra manera, con un select o similar
 - [ ] Hacer que el editor wysiwyq se conserve en bbdd
@@ -109,7 +109,7 @@
 - [ ] Hacer que se pueda editar nombre y contraseña del usuario
 - [ ] Añadir elemento botón o que se deduzca de los estilos de marca
 - [ ] Login social
-- [ ] Recordar como integrar signup con Nodemailer
+- [x] Recordar como integrar signup con Nodemailer
 - [ ] Solo funciona con https
 - [ ] Hacer deploy a Heroku
 - [ ] Parallax Fondo Azul

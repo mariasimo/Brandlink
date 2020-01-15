@@ -88,21 +88,16 @@ export default class MainContent extends Component {
     this.loadingParent = document.querySelector('.file-label');
     this.loadingParent.appendChild(this.loadingImg);
 
-
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
-    const { id } = this.props.match.params;
 
-    console.log(slotIdx)
-
-    this.projectService.addImageAsContent({uploadData, id})
+    this.projectService.addImageAsContent({uploadData})
     .then(imageURl => {
       let image = imageURl; 
       this.projectService.fetchContent(rowId)
       .then(payload => {
         let content = payload;
         content[slotIdx] = {order: slotIdx, image: image, type: type};
-        // this.displayRows();
         this.projectService.insertSlot(content, rowId)
         .then(payload => {
           console.log(payload)
@@ -130,7 +125,10 @@ export default class MainContent extends Component {
   render() {
     // const path = this.props.user.activeProject;
     const path = this.props.match.params.id;
-    const { colorPalette, typeset, textstyles, permissionToEdit } = this.state;
+    const { permissionToEdit } = this.props;
+    const { colorPalette, typeset, textstyles } = this.state;
+
+    console.log(this.state.rows);
 
     return (
       <div
@@ -164,8 +162,7 @@ export default class MainContent extends Component {
                                         <div {...getRootProps()}>
                                           <input {...getInputProps()} />
                                           <p>
-                                            Drag 'n' drop some files here, or
-                                            click to select files
+                                            Click to select files
                                           </p>
                                         </div>
                                       </section>
@@ -173,7 +170,7 @@ export default class MainContent extends Component {
                                   </Dropzone>
                                   )}
                                   {row.content[slotIdx].image && (
-                                    <img src={row.content[slotIdx].image} alt="" srcset=""/>
+                                    <img src={row.content[slotIdx].image} alt=""/>
                                   )}
                                 </div>
                               </React.Fragment>
@@ -375,12 +372,12 @@ export default class MainContent extends Component {
                   </div>
                 ))}
 
-                <button
+                {permissionToEdit && <button
                   className='close'
                   onClick={() => this.deleteRow(row._id)}
                 >
                   Cerrar
-                </button>
+                </button>}
               </div>
             ))}
 

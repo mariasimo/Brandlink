@@ -9,7 +9,6 @@ export default class EditProject extends Component {
 
   render() {
     const { colorPalette, typeset, assets} = this.props;
-    console.log(this.state, this.props)
     return (
       < >
       <SideMenu

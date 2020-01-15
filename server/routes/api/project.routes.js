@@ -282,7 +282,7 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
     layoutDescriptor = {
       layout: 'is-full',
       slots: ['is-full'],
-      content: [{order: 1}, {order: 2}]
+      content: [{order: 1}]
     };
   }
 
@@ -352,7 +352,7 @@ router.put('/rows/:rowId', (req, res, next) => {
 
 
 router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
-  console.log(req.file)
+  console.log(req.file.secure_url)
   const { rowId } = req.params;
 
   if (req.file) {
@@ -381,7 +381,8 @@ router.get(`/content/:rowId`, (req, res) => {
 
 router.put(`/content/:rowId`, (req, res) => {
   const { rowId } = req.params;
-  console.log(req.body, rowId)
+  console.log("req body en content/rowid")
+  console.log(req.body)
 
   Rows.findByIdAndUpdate(
     rowId,
@@ -389,7 +390,6 @@ router.put(`/content/:rowId`, (req, res) => {
     {new: true}
   )
   .then(rowUpdated => {
-    // console.log(rowUpdated)
     res.status(200).json(rowUpdated);
   })
   .catch(err => console.log(err))
@@ -418,7 +418,6 @@ router.put(`/content/:rowId`, (req, res) => {
 // });
 
 router.post('/rows/image', uploader.single('file'), (req, res, next) => { 
-
   if (req.file) {
     Project.findByIdAndUpdate(
       { _id: req.user.activeProject },
@@ -427,17 +426,13 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
           assets: {
             secure_url: req.file.secure_url,
             format: req.file.format,
-            name: req.file.originalname
+            name: req.file.originalname,
+            
           }
         }
       }
     ).then(projectUpdated => {
-      // Projects.findOne({ assets: { $elemMatch: { _id: projectUpdated.assets._id } } })
-      // .then(payload => console.log(payload))
-      // let order = order++;
-      // console.log(projectUpdated.assets)
-      console.log(projectUpdated.assets[0].secure_url)
-      res.status(200).json(projectUpdated.assets[0].secure_url);
+      res.status(200).json(req.file.secure_url);
     });
   } else {
     res.status(500).json({ message: 'Something went wrong' });

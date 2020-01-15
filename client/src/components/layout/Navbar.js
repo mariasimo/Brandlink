@@ -10,7 +10,6 @@ export default class Navbar extends Component {
 
   render() {
     const user = this.props.user;
-    console.log(this.props)
 
     return (
       <nav className='navbar' role='navigation' aria-label='main navigation'>
