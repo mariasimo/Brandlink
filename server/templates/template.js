@@ -385,7 +385,7 @@ ent/public/mail-spot.png" target="_blank"
       <div
          style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:left;color:#616161;"
       ><p>Hi,</p>
-          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/${projectId}">localhost:3000/project/${projectId}</a></p>
+          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/5e1bab4c76fb3f197f0b91cf">localhost:3000/project/5e1bab4c76fb3f197f0b91cf</a></p>
           <p>Best!</p></div>
     
               </td>

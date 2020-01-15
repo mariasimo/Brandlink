@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import MainContent from '../layout/MainContent';
 
-export default class EditProject extends Component {
+export default class ReadProject extends Component {
 
   render() {
     const { colorPalette, typeset, assets} = this.props;
-    console.log(this.state, this.props)
     return (
       < >
       <MainContent 

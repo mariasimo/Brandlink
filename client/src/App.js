@@ -370,18 +370,6 @@ export default class App extends React.Component {
                 component={EditProject}
               />
 
-              <Route
-                exact
-                path='/project/:id'
-                user={user}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                projectTitle={projectTitle}
-                component={ReadProject}
-              />
-
               <PrivateRoute
                 exact
                 path='/project/:id/edit/colorPalette'
@@ -498,6 +486,18 @@ export default class App extends React.Component {
                 render={match => <Signup {...match} setUser={this.setUser} />}
               />
               <Route exact path='/' component={LandingPage} />
+
+              <Route
+                exact
+                path='/project/:id'
+                user={user}
+                colorPalette={colorPalette}
+                typeset={typeset}
+                assets={assets}
+                textstyles={textstyles}
+                projectTitle={projectTitle}
+                component={ReadProject}
+              />
             </Switch>
           )}
         </>

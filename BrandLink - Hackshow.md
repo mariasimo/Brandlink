@@ -104,16 +104,15 @@
 - [ ] Si creo un proyecto con un nombre que ya existe, no hace nada. Mostrar mensaje de validación
 - [ ] Si creo un proyecto nuevo, me redigirge al admin del proyecto anterior  
 - [ ] Si estás logueado, el inicio es el panel de usuario (al clicar en el logo)
-
 - [ ] Añadir mensajes cuando hay errores de login y signup
   - [ ] No devuelve los mensajes de validación de signup: password lenght y username taken
 - [ ] Hacer que se pueda editar nombre y contraseña del usuario
 - [ ] Añadir elemento botón o que se deduzca de los estilos de marca
 - [ ] Login social
 - [ ] Recordar como integrar signup con Nodemailer
-
 - [ ] Solo funciona con https
 - [ ] Hacer deploy a Heroku
+- [ ] Parallax Fondo Azul
 
 
 

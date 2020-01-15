@@ -17,10 +17,14 @@ export default class MainContent extends Component {
   displayRows = () => {
     const { id } = this.props.match.params;
 
-    this.projectService.displayRows(id).then(rows => {
+    this.projectService.displayRows(id).then(projectData => {
+      const {rows, colorPalette, typeset, textstyles} = projectData
       this.setState({
         ...this.state,
-        rows: rows
+        rows: rows,
+        colorPalette: colorPalette,
+        typeset: typeset,
+        textstyles: textstyles
       }, () => {console.log(this.state.rows)})
     });
   };
@@ -126,9 +130,8 @@ export default class MainContent extends Component {
   render() {
     // const path = this.props.user.activeProject;
     const path = this.props.match.params.id;
-    const { colorPalette, typeset, textstyles, permissionToEdit } = this.props;
+    const { colorPalette, typeset, textstyles, permissionToEdit } = this.state;
 
-    console.log(this.state)
     return (
       <div
         className={`main-content section is-paddingless	 ${this.props.menuIsOpen}`}

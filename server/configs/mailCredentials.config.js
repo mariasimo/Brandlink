@@ -1,4 +1,4 @@
 module.exports = {
-    USER: 'holasoymariasimo@gmail.com', 
-    PASS: 'MS*Gmail19'
+    USER: 'brandlink.notifications@gmail.com', 
+    PASS: 'brandlink123'
 }

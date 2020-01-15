@@ -267,7 +267,8 @@ router.get('/rows/:projectId', (req, res, next) => {
       )
       .populate('rows')
       .then(projectRows => {
-        res.status(200).json(projectRows.rows);
+        // console.log(projectRows)
+        res.status(200).json(projectRows);
       })
       .catch(error => {
         res.status(500).json({ message: 'Error retrieving project' });
