@@ -11,11 +11,6 @@ export default class SideMenu extends Component {
     this.props.shareMessage({email, projectId})
   };
 
-  componentDidMount(){
-    const projectId = this.props.match.params.id;
-    console.log(projectId)
-  }
-
     render() {
       const {permissionToShare} = this.props
         return (

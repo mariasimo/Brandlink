@@ -32,7 +32,7 @@ export default class NewProject extends React.Component {
     const { history } = this.props;
     e.preventDefault();
 
-
+    console.log("hola")
     this.props.createProject({ title, path, history })
   };
 
