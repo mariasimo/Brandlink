@@ -302,6 +302,22 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
     };
   }
 
+  if (req.body.layout === 'is-two-thirds-first') {
+    layoutDescriptor = {
+      layout: 'is-two-thirds-first',
+      slots: ['is-two-thirds', 'is-one-third'],
+      content: [{order: 1}, {order: 2}]
+    };
+  }
+
+  if (req.body.layout === 'is-two-thirds-last') {
+    layoutDescriptor = {
+      layout: 'is-two-thirds-last',
+      slots: ['is-one-third', 'is-two-thirds'],
+      content: [{order: 1}, {order: 2}]
+    };
+  }
+
   Rows.create(layoutDescriptor).then(newRow => {
     Project.findOneAndUpdate(
       { _id: req.user.activeProject },
@@ -431,6 +447,34 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
       }
     ).then(projectUpdated => {
       res.status(200).json(req.file.secure_url);
+    });
+  } else {
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
+
+router.post('/rows/download', uploader.single('file'), (req, res, next) => { 
+  console.log(req.file)
+  if (req.file) {
+    Project.findByIdAndUpdate(
+      { _id: req.user.activeProject },
+      {
+        $push: {
+          assets: {
+            secure_url: req.file.secure_url,
+            format: req.file.format,
+            name: req.file.originalname,
+            
+          }
+        }
+      }
+    ).then(projectUpdated => {
+      res.status(200).json({
+        secure_url: req.file.secure_url,
+        format: req.file.format,
+        name: req.file.originalname,
+        
+      });
     });
   } else {
     res.status(500).json({ message: 'Something went wrong' });
