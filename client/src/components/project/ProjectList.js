@@ -29,17 +29,18 @@ export default class ProjectList extends React.Component {
     );
   };
 
-  // deleteProject = (project) => {
-  //   this.projectService.deleteProject(project.id).then(
-  //     () => {
-  //       this.updateProjects()
-  //     },
-  //     error => {
-  //       const { message } = error;
-  //       console.error(message);
-  //     }
-  //   );
-  // }
+  deleteProject = (project) => {
+    console.log(project)
+    this.projectService.deleteProject(project).then(
+      () => {
+        this.updateProjects()
+      },
+      error => {
+        const { message } = error;
+        console.error(message);
+      }
+    );
+  }
 
   render() {
     // const username = this.props.loggedInUser.username;
@@ -64,7 +65,7 @@ export default class ProjectList extends React.Component {
               {projects &&
                 projects.map((project, idx) => (
                   <Project key={idx} project={project} 
-                  deleteProject={(projectId) => this.props.deleteProject(project._id)} 
+                  deleteProject={(projectId) => this.deleteProject(project._id)} 
                   setPath={(path) => this.props.setPath(path)}
                   setActiveProject={(projectId) => this.props.setActiveProject(project._id)}
                   ></Project>

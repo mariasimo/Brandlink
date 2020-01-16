@@ -16,6 +16,7 @@ export default class EditProject extends Component {
       menuIsOpen={this.props.menuIsOpen}
       projectId={this.props.loggedInUser.activeProject}
       shareMessage={this.props.shareMessage}
+      permissionToShare
       >   
         <BrandHeader
           title={this.props.projectTitle}

@@ -260,7 +260,7 @@ export default class App extends React.Component {
       projectCreated => {
         console.log(projectCreated);
         this.setState({ ...this.state, title: '', path: '' });
-        history.push(`/project/${this.state.user.activeProject}/edit`);
+        history.push(`/panel/${this.state.user.username}`);
       },
       error => console.error(error)
     );

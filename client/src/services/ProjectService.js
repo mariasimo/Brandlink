@@ -197,6 +197,15 @@ class ProjectService {
     })
   }
 
+
+  addDownloadAsContent = fileParams => {
+    return this.instance.post(`/rows/download`, fileParams.uploadData)
+    .then(res => {
+      console.log(res.data)
+      return Promise.resolve(res.data)
+    })
+  }
+
   fetchContent =  rowId => {
     console.log(rowId)
     return this.instance.get(`/content/${rowId}`)

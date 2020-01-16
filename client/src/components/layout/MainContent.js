@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ProjectService from '../../services/ProjectService';
+
 // import { Content } from '../project/Content';
 // import Dropdown from '../utils/Dropdown';
 import Dropzone from 'react-dropzone';
 import TextEditor from '../utils/TextEditor';
+import Dropdown from '../utils/Dropdown';
 
 export default class MainContent extends Component {
   constructor(props) {
@@ -16,18 +18,23 @@ export default class MainContent extends Component {
 
   displayRows = () => {
     const { id } = this.props.match.params;
-    console.log(id)
+    console.log(id);
 
     this.projectService.displayRows(id).then(projectData => {
-      console.log(projectData)
-      const {rows, colorPalette, typeset, textstyles} = projectData
-      this.setState({
-        ...this.state,
-        rows: rows,
-        colorPalette: colorPalette,
-        typeset: typeset,
-        textstyles: textstyles
-      }, () => {console.log(this.state.rows)})
+      console.log(projectData);
+      const { rows, colorPalette, typeset, textstyles } = projectData;
+      this.setState(
+        {
+          ...this.state,
+          rows: rows,
+          colorPalette: colorPalette,
+          typeset: typeset,
+          textstyles: textstyles
+        },
+        () => {
+          console.log(this.state.rows);
+        }
+      );
     });
   };
 
@@ -63,17 +70,17 @@ export default class MainContent extends Component {
   };
 
   addContentFront = (rowId, slotIdx, type) => {
-    this.projectService.fetchContent(rowId)
-    .then( payload => {
+    this.projectService.fetchContent(rowId).then(payload => {
       let content = payload;
 
-      content[slotIdx] = {order: slotIdx, type: type};
+      content[slotIdx] = { order: slotIdx, type: type };
 
-      this.projectService.insertSlot(content, rowId)
-      .then(payload => this.displayRows())
-      .catch(err=>console.log(err))
-    })
-  } 
+      this.projectService
+        .insertSlot(content, rowId)
+        .then(payload => this.displayRows())
+        .catch(err => console.log(err));
+    });
+  };
 
   addFontAsContent = (rowId, slotIdx, type) => {
     this.projectService
@@ -84,7 +91,32 @@ export default class MainContent extends Component {
       });
   };
 
-  addImageAsContent = (file, rowId, slotIdx, type ) => {
+  addImageAsContent = (file, rowId, slotIdx, type) => {
+    this.loadingImg = document.createElement('img');
+    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
+    this.loadingParent = document.querySelector('.image-label');
+    this.loadingParent.appendChild(this.loadingImg);
+
+    const uploadData = new FormData();
+    uploadData.append('file', file[0]);
+
+    this.projectService.addImageAsContent({ uploadData }).then(imageURl => {
+      let image = imageURl;
+      this.projectService.fetchContent(rowId).then(payload => {
+        let content = payload;
+        content[slotIdx] = { order: slotIdx, image: image, type: type };
+        this.projectService
+          .insertSlot(content, rowId)
+          .then(payload => {
+            console.log(payload);
+            this.displayRows();
+          })
+          .catch(err => console.log(err));
+      });
+    });
+  };
+
+  addDownloadAsContent = (file, rowId, slotIdx, type) => {
     this.loadingImg = document.createElement('img');
     this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
     this.loadingParent = document.querySelector('.file-label');
@@ -93,21 +125,20 @@ export default class MainContent extends Component {
     const uploadData = new FormData();
     uploadData.append('file', file[0]);
 
-    this.projectService.addImageAsContent({uploadData})
-    .then(imageURl => {
-      let image = imageURl; 
-      this.projectService.fetchContent(rowId)
-      .then(payload => {
+    this.projectService.addDownloadAsContent({ uploadData }).then(assetObject => {
+      console.log(assetObject);
+      this.projectService.fetchContent(rowId).then(payload => {
         let content = payload;
-        content[slotIdx] = {order: slotIdx, image: image, type: type};
-        this.projectService.insertSlot(content, rowId)
-        .then(payload => {
-          console.log(payload)
-          this.displayRows()
-        })
-        .catch(err=>console.log(err))
-      })
-    })
+        content[slotIdx] = { order: slotIdx, asset: assetObject, type: type };
+        this.projectService
+          .insertSlot(content, rowId)
+          .then(payload => {
+            console.log(payload);
+            this.displayRows();
+          })
+          .catch(err => console.log(err));
+      });
+    });
   };
 
   componentDidMount() {
@@ -139,44 +170,35 @@ export default class MainContent extends Component {
                         {row.content[slotIdx].type === 'assets' && (
                           <>
                             {/* {assets && assets.length > 0 && ( */}
-                              <React.Fragment>
-                                <div className='assets-container content-container'>
-                                  {!row.content[slotIdx].image && (
-                                    <Dropzone
-                                    onDrop={(acceptedFiles) =>
-                                      this.addImageAsContent(acceptedFiles, row._id, slotIdx, "assets" )
+                              <div className={`assets-container content-container ${row.content[slotIdx].image ? "has-image" : ""}`}>
+                                {!row.content[slotIdx].image && (
+                                  <Dropzone
+                                    onDrop={acceptedFiles =>
+                                      this.addImageAsContent(
+                                        acceptedFiles,
+                                        row._id,
+                                        slotIdx,
+                                        'assets'
+                                      )
                                     }
                                   >
                                     {({ getRootProps, getInputProps }) => (
-                                      <section class='file-label'>
+                                      <section class='image-label'>
                                         <div {...getRootProps()}>
                                           <input {...getInputProps()} />
-                                          <p>
-                                            Click to select files
-                                          </p>
+                                          <p>Click to select image</p>
                                         </div>
                                       </section>
                                     )}
                                   </Dropzone>
-                                  )}
-                                  {row.content[slotIdx].image && (
-                                    <img src={row.content[slotIdx].image} alt=""/>
-                                  )}
-                                </div>
-                              </React.Fragment>
-                             {/*)}*/}
-
-
-                            {/* {!assets.length && (
-                              <div class='content-container'>
-                                <div class='notification is-info'>
-                                  Add your first asset.{' '}
-                                  <a href={`/project/${path}/edit/assets`}>
-                                    New asset
-                                  </a>
-                                </div>
+                                )}
+                                {row.content[slotIdx].image && (
+                                  <img
+                                    src={row.content[slotIdx].image}
+                                    alt=''
+                                  />
+                                )}
                               </div>
-                            )} */}
                           </>
                         )}
 
@@ -250,8 +272,6 @@ export default class MainContent extends Component {
                                   ))}
                                 </div>
                               )}
-
-                              
                             </div>
 
                             {!typeset.length && (
@@ -267,10 +287,9 @@ export default class MainContent extends Component {
                           </>
                         )}
 
-
                         {row.content[slotIdx].type === 'textedit' && (
-                          <div className="content-container textedit-container">
-                            <TextEditor ></TextEditor>
+                          <div className='content-container textedit-container'>
+                            <TextEditor></TextEditor>
                           </div>
                         )}
 
@@ -282,7 +301,6 @@ export default class MainContent extends Component {
                                   <div
                                     className='type'
                                     key={idx}
-
                                     style={{
                                       fontFamily: style.fontFamily,
                                       fontWeight: style.fontWeight,
@@ -291,7 +309,7 @@ export default class MainContent extends Component {
                                       lineHeight: style.lineHeight
                                     }}
                                   >
-                                      {style.name}
+                                    {style.name}
                                   </div>
                                 ))}
                               </div>
@@ -299,107 +317,196 @@ export default class MainContent extends Component {
                           </>
                         )}
 
+                        {row.content[slotIdx].type === 'downloads' && (
+                          <>
+                            {/* {assets && assets.length > 0 && ( */}
+                              <div className='download-container content-container'>
+                                {!row.content[slotIdx].asset && (
+                                  <Dropzone
+                                    onDrop={acceptedFiles =>
+                                      this.addDownloadAsContent(
+                                        acceptedFiles,
+                                        row._id,
+                                        slotIdx,
+                                        'downloads'
+                                      )
+                                    }
+                                  >
+                                    {({ getRootProps, getInputProps }) => (
+                                      <section class='file-label'>
+                                        <div {...getRootProps()}>
+                                          <input {...getInputProps()} />
+                                          <p>Click to select file</p>
+                                        </div>
+                                      </section>
+                                    )}
+                                  </Dropzone>
+                                )}
+                                {row.content[slotIdx].asset && (
+                                  // row.content[slotIdx].asset
+                                <a className="button" href={row.content[slotIdx].asset.secure_url} target="_blank" download>Download {row.content[slotIdx].asset.name}</a>
+                                )}
+                              </div>
+                          </>
+                        )}
                       </React.Fragment>
                     )}
 
-                    
-                      {!row.content[slotIdx].type && (
-                        <React.Fragment>
+                    {!row.content[slotIdx].type && (
+                      <React.Fragment>
                         <div className='content-container'>
-                          <div className='field has-addons'>
-                            <p className='control'>
+                          <div className='dropdown is-hoverable'>
+                            <div className='dropdown-trigger'>
                               <button
-                                className='button is-small'
-                                onClick = {() => this.addContentFront(row._id, slotIdx, 'colorPalette')}
+                                className='button'
+                                aria-haspopup='true'
+                                aria-controls='dropdown-menu4'
                               >
-                                Color Palette
+                                <span>Add content</span>
+                                <span className='icon is-small'>
+                                  <img
+                                    src={`${process.env.REACT_APP_URL}/chevron-down.svg`}
+                                  ></img>
+                                </span>
                               </button>
-                            </p>
-                            <p className='control'>
-                              <button
-                                className='button is-small'
-                                onClick = {() => this.addContentFront(row._id, slotIdx, 'typeset')}
-
-                              >
-                                Typography
-                              </button>
-                            </p>
-
-                            <p className='control'>
-                              <button
-                                className='button is-small'
-                                onClick = {() => this.addContentFront(row._id, slotIdx, 'assets')}
-
-                              >
-                                Image
-                              </button>
-                            </p>
-
-                            <p className='control'>
-                              <button
-                                className='button is-small'
-                                onClick = {() => this.addContentFront(row._id, slotIdx, 'textedit')}
-
-                              >
-                                TextEditor
-                              </button>
-                            </p>
-
-                            <p className='control'>
-                              <button
-                                className='button is-small'
-                                onClick = {() => this.addContentFront(row._id, slotIdx, 'textstyles')}
-
-                              >
-                                TextStyles
-                              </button>
-                            </p>
+                            </div>
+                            <div
+                              className='dropdown-menu'
+                              id='dropdown-menu4'
+                              role='menu'
+                            >
+                              <div className='dropdown-content'>
+                                <div className='dropdown-item'>
+                                  <div>
+                                    <button
+                                    onClick = {() => this.addContentFront(row._id, slotIdx, 'textedit')}
+                                    className='button'
+                                    >
+                                      Text editor
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      onClick = {() => this.addContentFront(row._id, slotIdx, 'colorPalette')}
+                                      className='button'
+                                    >
+                                      Color Palette
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      onClick = {() => this.addContentFront(row._id, slotIdx, 'assets')}
+                                      className='button'
+                                    >
+                                      Image
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      onClick = {() => this.addContentFront(row._id, slotIdx, 'typeset')}
+                                      className='button'
+                                    >
+                                      Typography
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      onClick = {() => this.addContentFront(row._id, slotIdx, 'textstyles')}
+                                      className='button'
+                                    >
+                                      TextStyles
+                                    </button>
+                                  </div>
+                                  <div>
+                                    <button
+                                      onClick = {() => this.addContentFront(row._id, slotIdx, 'downloads')}
+                                      className='button'
+                                    >
+                                      Asset
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </React.Fragment>
-                      )}
-                    
+                    )}
                   </div>
                 ))}
 
-                {permissionToEdit && <button
-                  className='close'
-                  onClick={() => this.deleteRow(row._id)}
-                >
-                  Cerrar
-                </button>}
+                {permissionToEdit && (
+                  <button
+                    className='close'
+                    onClick={() => this.deleteRow(row._id)}
+                  >
+                    Cerrar
+                  </button>
+                )}
               </div>
             ))}
 
-            {permissionToEdit && 
-              <div className='column is-full layout-btn-container'>
-              <button className='header subtitle is-4 is-primary'>Choose layout</button>
+          {permissionToEdit && (
+            <div className='column is-full layout-btn-container'>
+              <p className='header subtitle is-4 is-primary'>Choose layout</p>
               <div className='inner'>
                 <div
                   className='layout-btn'
                   onClick={() => this.addNewRow('is-full')}
                 >
-                  <img src={`${process.env.REACT_APP_URL}/full.svg`} alt="Row"></img>
+                  <img
+                    src={`${process.env.REACT_APP_URL}/full.svg`}
+                    alt='Row'
+                  ></img>
                   Full
                 </div>
-  
+
                 <div
                   className='layout-btn'
                   onClick={() => this.addNewRow('is-half')}
                 >
-                  <img src={`${process.env.REACT_APP_URL}/half.svg`} alt="Row"></img>
+                  <img
+                    src={`${process.env.REACT_APP_URL}/half.svg`}
+                    alt='Row'
+                  ></img>
                   Half
                 </div>
-  
+
                 <div
                   className='layout-btn'
                   onClick={() => this.addNewRow('is-one-third')}
                 >
-                  <img src={`${process.env.REACT_APP_URL}/third.svg`} alt="Row"></img>
+                  <img
+                    src={`${process.env.REACT_APP_URL}/third.svg`}
+                    alt='Row'
+                  ></img>
                   Third
                 </div>
+
+                <div
+                  className='layout-btn'
+                  onClick={() => this.addNewRow('is-two-thirds-first')}
+                >
+                  <img
+                    src={`${process.env.REACT_APP_URL}/two-thirds-first.svg`}
+                    alt='Row'
+                  ></img>
+                  Two Thirds
+                </div>
+
+                <div
+                  className='layout-btn'
+                  onClick={() => this.addNewRow('is-two-thirds-last')}
+                >
+                  <img
+                    src={`${process.env.REACT_APP_URL}/two-thirds-last.svg`}
+                    alt='Row'
+                  ></img>
+                  Two Thirds
+                </div>
               </div>
-            </div>}          
+            </div>
+          )}
         </section>
       </div>
     );

@@ -338,6 +338,22 @@ body {
     &.row{
       position: relative;
       padding: 0;
+
+      &.is-two-thirds-first {
+        max-width: 33.3333333%;
+
+        &:first-of-type() {
+          max-width: 66.6666666%;
+        }
+      }
+
+      &.is-two-thirds-last {
+        max-width: 66.666666%;
+
+        &:first-of-type() {
+          max-width: 33.333333%;
+        }
+      }
     }
   }
 
@@ -619,6 +635,10 @@ p{ margin-bottom: 32px;}
     }
   }
 
+  .assets-container.has-image {
+    padding: 0;
+  }
+
   .color-container{
     padding: 1rem;
     height: 100%;
@@ -651,4 +671,16 @@ p{ margin-bottom: 32px;}
 
 .draft-editor-wrapper {
   border: 1px solid #ccc;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+  z-index: 99999;
+  background-color: rgba(60,90,195, 0.2) !important;
+}
+
+.close-modal{
+  position: absolute;
+  top: 6%; 
+  right: 3%;
+  padding: 1em;
 }

@@ -19,16 +19,16 @@ export default class NewTextStyle extends Component {
 
   componentDidMount() {
     this.getTextStyleData();
+    console.log(this.props);
+
   }
 
   getTextStyleData = () => {
     const { styleId } = this.props.match.params;
-    console.log(styleId)
 
     if (styleId !== undefined) {
       this.projectService.getTextStyleData(styleId)
       .then(textstyleData => {
-          console.log(textstyleData)
           let textStyle = textstyleData.textstyles.filter(
             style => style._id === styleId
           );

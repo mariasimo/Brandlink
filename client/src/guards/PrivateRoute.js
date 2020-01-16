@@ -59,7 +59,7 @@ export default function PrivateRoute({
               />
             );
           } else {
-            return <Redirect to={{ pathname: redirectPath }} />;
+            return <Redirect to="/"/>;
           }
       }}
     />

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import MyModal from "../utils/MyModal";
 
 export default class SideMenu extends Component {
 
@@ -14,9 +15,7 @@ export default class SideMenu extends Component {
 
 
     render() {
-
-      const projectId = this.props.projectId;
-      // const {user} = this.props
+      const {permissionToShare} = this.props
         return (
       <section className={`section side-menu ${this.props.menuIsOpen}`}>
    
@@ -34,12 +33,9 @@ export default class SideMenu extends Component {
 
             {this.props.children}
             
-            <form id='contact-form' onSubmit={this.handleSubmit} method='POST'>
-              <label htmlFor='exampleInputEmail1'>Email address</label>
-              <input type='email' id='email' aria-describedby='emailHelp'/>
-              <input type="hidden" name="projectid" id="projectid" value={projectId}/>
-              <button type='submit' className='button is-rounded is-danger is-outlined'>Share </button>
-            </form>
+            {permissionToShare && 
+              <MyModal sendMessage={this.handleSubmit}></MyModal>
+            }
       </section>
     );
   }

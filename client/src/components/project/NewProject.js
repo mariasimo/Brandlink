@@ -29,12 +29,16 @@ export default class NewProject extends React.Component {
 
   handleSubmit = e => {
     const { title, path } = this.state;
-    // const user = this.props.loggedInUser;
     const { history } = this.props;
     e.preventDefault();
 
-    this.props.createProject({ title, path, history });
+
+    this.props.createProject({ title, path, history })
   };
+
+  componentDidMount() {
+    console.log(this.props)
+  }
 
   render() {
     const { title, path } = this.state;
