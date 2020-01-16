@@ -107,6 +107,8 @@ export default class Assets extends Component {
           typeset={typeset}
           assets={assets}
           onDragStart={this.props.onDragStart}
+          permissionToEdit
+
           
         ></MainContent>
       </React.Fragment>

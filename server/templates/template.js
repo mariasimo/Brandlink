@@ -112,12 +112,13 @@ module.exports = {
         
             <tr>
               <td
-                 align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;"
+                 align="left" style="font-size:0px;padding:10px 25px;word-break:break-word; width: 150px"
               >
                 
-      <div
-         style="font-family:Roboto, Helvetica, sans-serif;font-size:10px;font-weight:300;line-height:24px;text-align:left;color:#616161;"
-      >Brandlink</div>
+              <img
+              height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;max-width:200px;font-size:13px;" width="200"
+             src="http://localhost:3000/logo.png"
+              />
     
               </td>
             </tr>
@@ -146,11 +147,7 @@ module.exports = {
               <td
                  align="right" style="font-size:0px;padding:10px 25px;word-break:break-word;"
               >
-                
-      <div
-         style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:right;color:#616161;"
-      >[[PERMALINK]]</div>
-    
+               
               </td>
             </tr>
           
@@ -226,16 +223,13 @@ module.exports = {
           <tr>
             <td  style="width:550px;">
               
-        <a
-           href="/Users/mariasimo/Ironhack/1019/project-3/cli
-ent/public/mail-spot.png" target="_blank"
-        >
+
           
       <img
          height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550"
-      />
+        src="http://localhost:3000/mail-spot.png"
+         />
     
-        </a>
       
             </td>
           </tr>
@@ -297,29 +291,6 @@ ent/public/mail-spot.png" target="_blank"
             >
           <![endif]-->
             
-      <div
-         class="mj-column-per-100 outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;"
-      >
-        
-      <table
-         border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%"
-      >
-        
-            <tr>
-              <td
-                 align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;"
-              >
-                
-      <div
-         style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:center;color:#616161;"
-      >Brandlink</div>
-    
-              </td>
-            </tr>
-          
-      </table>
-    
-      </div>
     
           <!--[if mso | IE]>
             </td>
@@ -383,9 +354,9 @@ ent/public/mail-spot.png" target="_blank"
               >
                 
       <div
-         style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:left;color:#616161;"
+         style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:left;color:#4a4a4a;"
       ><p>Hi,</p>
-          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/5e1bab4c76fb3f197f0b91cf">localhost:3000/project/5e1bab4c76fb3f197f0b91cf</a></p>
+          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/${projectId}">Go to my project now</a></p>
           <p>Best!</p></div>
     
               </td>
@@ -550,12 +521,13 @@ ent/public/mail-spot.png" target="_blank"
             <td  style="width:150px;">
               
         <a
-           href="https://recast.ai?ref=newsletter" target="_blank"
+           href="#" target="_blank"
         >
           
-      <img
-         height="auto" src="https://cdn.recast.ai/newsletter/recast-ai-01.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150"
-      />
+        <img
+        height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550"
+       src="http://localhost:3000/logo.png"
+        />
     
         </a>
       

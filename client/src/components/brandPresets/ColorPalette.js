@@ -90,6 +90,8 @@ export default class ColorPalette extends Component {
           user={this.props.loggedInUser}
           typeset={typeset}
           assets={assets}
+          permissionToEdit
+
         >
           
         </MainContent>

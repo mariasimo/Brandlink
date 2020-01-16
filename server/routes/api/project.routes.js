@@ -261,13 +261,13 @@ router.get('/textstyle/:styleId?', (req, res, next) => {
 
 router.get('/rows/:projectId', (req, res, next) => {
   const { projectId } = req.params;
-  
+  console.log(projectId)
     Project.findById(
       { _id: projectId },
       )
       .populate('rows')
       .then(projectRows => {
-        // console.log(projectRows)
+        console.log(projectRows)
         res.status(200).json(projectRows);
       })
       .catch(error => {
@@ -381,8 +381,6 @@ router.get(`/content/:rowId`, (req, res) => {
 
 router.put(`/content/:rowId`, (req, res) => {
   const { rowId } = req.params;
-  console.log("req body en content/rowid")
-  console.log(req.body)
 
   Rows.findByIdAndUpdate(
     rowId,
@@ -447,7 +445,7 @@ router.post('/send-email', (req, res, next) => {
   var mail = {
     from: "BrandLink",
     to: email,  //Change to email address that you want to receive messages on
-    subject: 'New Message from Contact Form',
+    subject: 'Someone shared a Brandlink with you ',
     text: message,
     html: templates.templateNotification(projectId),
   }
@@ -467,7 +465,9 @@ router.post('/send-email', (req, res, next) => {
   })
 });
 
-
+router.post('/save-editor-content', (req, res, next) => {
+  console.log(req.body)
+});
 
 
 module.exports = router;

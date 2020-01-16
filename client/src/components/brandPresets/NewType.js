@@ -64,6 +64,7 @@ export default class NewType extends Component {
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}
+          permissionToEdit
         >
           
         </MainContent>

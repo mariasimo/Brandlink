@@ -74,7 +74,7 @@
 
 - [x] Crear landing page para vender la papeleta
   - [x] Mi presentación es la landing page
-- [ ] Los projectos nos se borrar inmediatamente
+- [ ] Los projectos nos se borrar inmediatamente de la lista de proyectos
 - [x] Cambiar ilustraciones por las que mandé por whatsapp
 - [ ] Preparar proyectos bonitos
   - [ ] User CoponStudio
@@ -82,34 +82,28 @@
   - [ ] Revisar estilos responsive rápidamente
   - [ ] Parallax en buble bg
   - [ ] Animación logo, Svg dibujo en bottom banner
-- [ ] Forzar https
 - [x] URL de edición vs URL de lectura
   - [x] Enviar url a usuario??? 
-- [ ] Poder cargar diferentes imágenes
+- [x] Poder cargar diferentes imágenes
+- [x] Hacer que el editor wysiwyq se conserve en bbdd
+  - [ ] Hecho de manera regular con localStorage 
+  - [ ] eliminar opciones de edición en la versión de lectura
+  - [ ] Añadir headings
+- [x] Recordar como integrar signup con Nodemailer
 - [ ] Presentar las opciones de contenido de los slots de otra manera, con un select o similar
-- [ ] Hacer que el editor wysiwyq se conserve en bbdd
 - [ ] Descargar recursos al clicar en botón
-
 - [ ] Implementar dragula para reordenar rows:  el modelo debe incluir un campo de orden o algo así
-
 - [ ] Añadir color picker a new color
 
-
-
-- [ ] Añadir campo de porcentaje de uso en colorpalette para presentar gráficos
 - [ ] Upload picture / Edit profile
   - [ ] Añadir imagen al nabvar
   - [ ] Añadir loader
-- [ ] Borrar slots dentro de rows. Poder contar los slots que quedan para redimensionar
 - [ ] Si creo un proyecto con un nombre que ya existe, no hace nada. Mostrar mensaje de validación
 - [ ] Si creo un proyecto nuevo, me redigirge al admin del proyecto anterior  
 - [ ] Si estás logueado, el inicio es el panel de usuario (al clicar en el logo)
 - [ ] Añadir mensajes cuando hay errores de login y signup
   - [ ] No devuelve los mensajes de validación de signup: password lenght y username taken
 - [ ] Hacer que se pueda editar nombre y contraseña del usuario
-- [ ] Añadir elemento botón o que se deduzca de los estilos de marca
-- [ ] Login social
-- [x] Recordar como integrar signup con Nodemailer
 - [ ] Solo funciona con https
 - [ ] Hacer deploy a Heroku
 - [ ] Parallax Fondo Azul

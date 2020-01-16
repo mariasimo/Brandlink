@@ -7,7 +7,7 @@ export default class ColorPicker extends React.Component {
   };
 
   handleChangeComplete = (color) => {
-    this.setState({ background: color.hex });
+    this.setState({ background: color.hex }, () => console.log(this.state));
   };
 
   render() {

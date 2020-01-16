@@ -85,6 +85,8 @@ export default class TypeSet extends Component {
           typeset={typeset}
           user={this.props.loggedInUser}
           assets={assets}
+          permissionToEdit
+
         >
           
         </MainContent>

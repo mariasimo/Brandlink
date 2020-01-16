@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import ProjectService from "../../services/ProjectService";
-import BrandHeader from "../layout/BrandHeader";
-import SideMenu from "../layout/SideMenu";
-import MainContent from "../layout/MainContent";
+import React, { Component } from 'react';
+import ProjectService from '../../services/ProjectService';
+import BrandHeader from '../layout/BrandHeader';
+import SideMenu from '../layout/SideMenu';
+import MainContent from '../layout/MainContent';
+import { TwitterPicker } from 'react-color';
 
 export default class NewColor extends Component {
   constructor(props) {
@@ -10,9 +11,9 @@ export default class NewColor extends Component {
     this.projectService = new ProjectService();
 
     this.state = {
-      name: "",
-      hexadecimal: "",
-      colorPalette: ""
+      name: '',
+      hexadecimal: '',
+      colorPalette: ''
     };
   }
 
@@ -48,16 +49,20 @@ export default class NewColor extends Component {
     this.setState({ ...this.state, [name]: value });
   };
 
+  handleChangeComplete = (color) => {
+    console.log(color)
+    console.log(this.state)
+    this.setState({ hexadecimal: color.hex });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
-
     const { name, hexadecimal } = this.state;
     const { id, colorId } = this.props.match.params;
     const { history } = this.props;
-    this.props.addColorToPalette({name, hexadecimal, id, colorId, history})
+    this.props.addColorToPalette({ name, hexadecimal, id, colorId, history });
   };
- 
+  
 
   render() {
     const { name, hexadecimal } = this.state;
@@ -65,52 +70,52 @@ export default class NewColor extends Component {
     const { colorPalette, typeset, assets } = this.props;
 
     return (
-      < >
-      <SideMenu
-        toggleMenu={this.props.toggleMenu}
-        menuIsOpen={this.props.menuIsOpen}
-      >
-        {colorId && (
-          <BrandHeader
-            title="Edit color"
-            subtitle="Color Palette"
-            {...this.props}
-            url={`/project/${id}/edit/colorPalette`}
-          ></BrandHeader>
-        )}
-        {!colorId && (
-          <BrandHeader
-            title="New color"
-            subtitle="Color Palette"
-            {...this.props}
-            url={`/project/${id}/edit/colorPalette`}
-          ></BrandHeader>
-        )}
+      <>
+        <SideMenu
+          toggleMenu={this.props.toggleMenu}
+          menuIsOpen={this.props.menuIsOpen}
+        >
+          {colorId && (
+            <BrandHeader
+              title='Edit color'
+              subtitle='Color Palette'
+              {...this.props}
+              url={`/project/${id}/edit/colorPalette`}
+            ></BrandHeader>
+          )}
+          {!colorId && (
+            <BrandHeader
+              title='New color'
+              subtitle='Color Palette'
+              {...this.props}
+              url={`/project/${id}/edit/colorPalette`}
+            ></BrandHeader>
+          )}
 
-        <form onSubmit={this.handleSubmit}>
-          <div className="field">
-            <label htmlFor="title" className="label">
-              Name:
-            </label>
-            <div className="control">
-              <input
-                type="text"
-                name="name"
-                className="input"
-                value={name}
-                placeholder="Introduce the title for your project"
-                onChange={this.handleChange}
-                required
-              />
+          <form onSubmit={this.handleSubmit}>
+            <div className='field'>
+              <label htmlFor='title' className='label'>
+                Name:
+              </label>
+              <div className='control'>
+                <input
+                  type='text'
+                  name='name'
+                  className='input'
+                  value={name}
+                  placeholder='Introduce a name for your color'
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="field">
-            <label htmlFor="path" className="label">
-              Hexadecimal:
-            </label>
-            <div className="control">
-              <input
+            <div className='field'>
+              <label htmlFor='path' className='label'>
+                Hexadecimal:
+              </label>
+              <div className='control'>
+                {/* <input
                 type="text"
                 name="hexadecimal"
                 className="input"
@@ -118,41 +123,44 @@ export default class NewColor extends Component {
                 placeholder="Introduce the url for your project"
                 onChange={this.handleChange}
                 required
-              />
+              /> */}
+                <TwitterPicker
+                  color={this.state.background}
+                  onChangeComplete={this.handleChangeComplete}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="control">
-            {!colorId && (
-              <input
-                type="submit"
-                className="button is-link"
-                value="Save Color"
-              ></input>
-            )}
+            <div className='control'>
+              {!colorId && (
+                <input
+                  type='submit'
+                  className='button is-link'
+                  value='Save Color'
+                ></input>
+              )}
 
-            {colorId && (
-              <input
-                type="submit"
-                className="button is-link"
-                value="Edit Color"
-              ></input>
-            )}
-          </div>
-        </form>
-      </SideMenu>
-      <MainContent
-      {...this.props}
+              {colorId && (
+                <input
+                  type='submit'
+                  className='button is-link'
+                  value='Edit Color'
+                ></input>
+              )}
+            </div>
+          </form>
+        </SideMenu>
+        <MainContent
+          {...this.props}
           toggleMenu={this.props.toggleMenu}
           menuIsOpen={this.props.menuIsOpen}
           user={this.props.loggedInUser}
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}
-      >
-          
-      </MainContent>
-      </ >
+          permissionToEdit
+        ></MainContent>
+      </>
     );
   }
 }

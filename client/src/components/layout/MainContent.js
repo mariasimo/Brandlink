@@ -16,8 +16,10 @@ export default class MainContent extends Component {
 
   displayRows = () => {
     const { id } = this.props.match.params;
+    console.log(id)
 
     this.projectService.displayRows(id).then(projectData => {
+      console.log(projectData)
       const {rows, colorPalette, typeset, textstyles} = projectData
       this.setState({
         ...this.state,
@@ -108,16 +110,6 @@ export default class MainContent extends Component {
     })
   };
 
-
-  // handleUpload = file => {
-  //   const uploadData = new FormData();
-  //   uploadData.append('file', file[0]);
-  //   const { path } = this.props.match.params;
-
-  //   this.props.addAsset({ uploadData, path });
-  // };
-
-
   componentDidMount() {
     this.displayRows();
   }
@@ -127,8 +119,6 @@ export default class MainContent extends Component {
     const path = this.props.match.params.id;
     const { permissionToEdit } = this.props;
     const { colorPalette, typeset, textstyles } = this.state;
-
-    console.log(this.state.rows);
 
     return (
       <div
@@ -280,7 +270,7 @@ export default class MainContent extends Component {
 
                         {row.content[slotIdx].type === 'textedit' && (
                           <div className="content-container textedit-container">
-                            <TextEditor></TextEditor>
+                            <TextEditor ></TextEditor>
                           </div>
                         )}
 

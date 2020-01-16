@@ -247,6 +247,8 @@ export default class NewTextStyle extends Component {
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}
+          permissionToEdit
+
         >
           
         </MainContent>

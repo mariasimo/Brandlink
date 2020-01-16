@@ -80,6 +80,8 @@ export default class TextStyles extends Component {
           colorPalette={colorPalette}
           typeset={typeset}
           assets={assets}
+          permissionToEdit
+
         >
           
         </MainContent>
