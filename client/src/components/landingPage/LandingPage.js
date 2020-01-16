@@ -6,7 +6,7 @@ export class LandingPage extends Component {
     return (
       <React.Fragment>
         <main className="landing-page">
-        <section className='section main-content hero'>
+        <section className='section main-content hero parallax'>
         <div className='container columns'>
           <div className='column img'>
             {/* todo Here goes another component for the left para of the screen */}
@@ -67,6 +67,7 @@ export class LandingPage extends Component {
           </div>
 
       </section>
+      <section className="parallax bg-image">
       <section className="section features">
         <div className="container">
           <h2 className="title is-3">Learn about Brandlink features and values</h2>
@@ -115,6 +116,7 @@ export class LandingPage extends Component {
             </Link>
          </div>
         </div>
+      </section>
       </section>
       </main>
       <footer className="landing-page-footer">

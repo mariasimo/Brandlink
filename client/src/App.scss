@@ -524,7 +524,6 @@ p{ margin-bottom: 32px;}
   .features {
     height: 100%;
     min-height: 70vh;
-    background-image: url('/bg-features.png');
     background-size: cover;
 
     display:flex;
@@ -683,4 +682,21 @@ p{ margin-bottom: 32px;}
   top: 6%; 
   right: 3%;
   padding: 1em;
+}
+
+.parallax {
+  /* The image used */
+
+  /* Set a specific height */
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parallax.bg-image {
+  background-image: url('/bg-features.png');
 }
