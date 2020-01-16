@@ -227,7 +227,7 @@ module.exports = {
           
       <img
          height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550"
-        src="http://localhost:3000/mail-spot.png"
+        src="https://mcusercontent.com/df2c379d34940c7517aebd723/images/846e6ac4-60f4-4015-a77d-674e32a37b9b.png"
          />
     
       
@@ -356,7 +356,7 @@ module.exports = {
       <div
          style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:left;color:#4a4a4a;"
       ><p>Hi,</p>
-          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/${projectId}">Go to my project now</a></p>
+          <p>Someone has shared with you a brandlink! Nice. Check it out here: <br></br><a href="http://localhost:3000/project/${projectId}">localhost:3000/project/${projectId}</a></p>
           <p>Best!</p></div>
     
               </td>
@@ -526,7 +526,7 @@ module.exports = {
           
         <img
         height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550"
-       src="http://localhost:3000/logo.png"
+       src="https://mcusercontent.com/df2c379d34940c7517aebd723/images/b87d1139-48ef-4b0f-9bb7-4405349509a2.png"
         />
     
         </a>

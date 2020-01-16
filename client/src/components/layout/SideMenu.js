@@ -7,12 +7,14 @@ export default class SideMenu extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const email = document.getElementById('email').value;
-    const projectId = document.getElementById('projectid').value;
-
-    console.log(email, projectId)
+    const projectId = this.props.match.params.id;
     this.props.shareMessage({email, projectId})
   };
 
+  componentDidMount(){
+    const projectId = this.props.match.params.id;
+    console.log(projectId)
+  }
 
     render() {
       const {permissionToShare} = this.props

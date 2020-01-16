@@ -123,7 +123,6 @@ router.get('/project/:userId', (req, res, next) => {
 router.put('/color/:projectId/:id?', (req, res, next) => {
   const { projectId, id } = req.params;
 
-  console.log(req.params)
 
   if (id === 'undefined') {
     Project.findByIdAndUpdate(
@@ -232,13 +231,11 @@ router.delete('/assets/:assetId', (req, res, next) => {
 // Updated project (add brand preset)
 router.put('/textStyle/:path/:styleId?', (req, res, next) => {
   const { path, styleId } = req.params;
-  console.log(req.body)
   Project.findOneAndUpdate(
     { textstyles: { $elemMatch: { _id: styleId } } },
     { 'textstyles.$': req.body },
     { new: true }
   ).then(projectUpdated => {
-    console.log(projectUpdated)
     res.status(200).json(projectUpdated);
   });
 });
@@ -246,12 +243,9 @@ router.put('/textStyle/:path/:styleId?', (req, res, next) => {
 router.get('/textstyle/:styleId?', (req, res, next) => {
   const styleId = req.params.styleId;
 
-  console.log(styleId)
-
   Project.findOne({ textstyles: { $elemMatch: { _id: styleId } } })
     // .select({ textstyles: 1, typeset: 1 })
     .then(textstylesData => {
-      console.log(textstylesData)
       res.status(200).json(textstylesData);
     })
     .catch(error => {
@@ -261,13 +255,11 @@ router.get('/textstyle/:styleId?', (req, res, next) => {
 
 router.get('/rows/:projectId', (req, res, next) => {
   const { projectId } = req.params;
-  console.log(projectId)
     Project.findById(
       { _id: projectId },
       )
       .populate('rows')
       .then(projectRows => {
-        console.log(projectRows)
         res.status(200).json(projectRows);
       })
       .catch(error => {
@@ -325,11 +317,9 @@ router.post(`/newRow/:projectId`, (req, res, next) => {
       { new: true }
     )
       .then(() => {
-        console.log(req.user.activeProject)
         Project.findById({_id: req.user.activeProject})
         .populate('rows')
         .then(projectUpdated => {
-          console.log(projectUpdated)
           res.status(200).json(projectUpdated);
         });
       })
@@ -368,7 +358,6 @@ router.put('/rows/:rowId', (req, res, next) => {
 
 
 router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
-  console.log(req.file.secure_url)
   const { rowId } = req.params;
 
   if (req.file) {
@@ -377,7 +366,6 @@ router.post('/rows/image/:rowId', uploader.single('file'), (req, res) => {
       { $push: { content: { type: "assets", image: req.file.secure_url } } },
       { returnNewDocument: true, new: true, strict: false }
     ).then(slotUpdated => {
-      console.log(slotUpdated)
       res.status(200).json(slotUpdated);
     });
   } else {
@@ -454,7 +442,6 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
 });
 
 router.post('/rows/download', uploader.single('file'), (req, res, next) => { 
-  console.log(req.file)
   if (req.file) {
     Project.findByIdAndUpdate(
       { _id: req.user.activeProject },
@@ -484,6 +471,7 @@ router.post('/rows/download', uploader.single('file'), (req, res, next) => {
 router.post('/send-email', (req, res, next) => {
   var email = req.body.email;
   var projectId = req.body.projectId;
+  console.log(req.body.projectId)
   var message = "Hi. Someone shared a BrandLink with you!"
 
   var mail = {
@@ -493,8 +481,6 @@ router.post('/send-email', (req, res, next) => {
     text: message,
     html: templates.templateNotification(projectId),
   }
-
-  console.log(mail)
   
   transporter.sendMail(mail, (err, data) => {
     if (err) {
@@ -507,10 +493,6 @@ router.post('/send-email', (req, res, next) => {
       })
     }
   })
-});
-
-router.post('/save-editor-content', (req, res, next) => {
-  console.log(req.body)
 });
 
 

@@ -12,6 +12,8 @@ export default class EditProject extends Component {
     return (
       < >
       <SideMenu
+                {...this.props}
+
       toggleMenu={this.props.toggleMenu}
       menuIsOpen={this.props.menuIsOpen}
       projectId={this.props.loggedInUser.activeProject}
