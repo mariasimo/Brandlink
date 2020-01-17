@@ -118,7 +118,7 @@ export default class MainContent extends Component {
 
   addDownloadAsContent = (file, rowId, slotIdx, type) => {
     this.loadingImg = document.createElement('img');
-    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
+    this.loadingImg.setAttribute('src', '/loading.svg');
     this.loadingParent = document.querySelector('.file-label');
     this.loadingParent.appendChild(this.loadingImg);
 
