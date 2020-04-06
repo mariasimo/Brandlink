@@ -21,6 +21,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "hbs": "^4.0.1",
+    "kind-of": "^6.0.3",
     "minimist": "^1.2.5",
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
