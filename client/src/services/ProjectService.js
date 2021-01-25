@@ -17,7 +17,7 @@ class ProjectService {
       console.log(res)
       return Promise.resolve(res.data);
     })
-    .catch(error => console.error(error));    
+    .catch(error => console.error(error));
   }
 
 
@@ -40,7 +40,7 @@ class ProjectService {
     })
     .catch(error => console.error(error));
   }
-  
+
   displayProject = userId => {
     return this.instance.get(`/project/${userId}`)
     .then(res =>  {
@@ -128,7 +128,6 @@ class ProjectService {
   }
 
   uploadAsset = (fileParams) => {
-    console.log(fileParams)
     return this.instance.post(`/uploadAsset/${fileParams.path}`, fileParams.uploadData)
     .then(res => {
       return Promise.resolve(res.data)
@@ -157,7 +156,6 @@ class ProjectService {
   getTextStyleData  = (styleId) => {
     return this.instance.get(`/textstyle/${styleId}?`)
     .then(res => {
-      console.log(res)
       return Promise.resolve(res.data);
     })
     .catch(error => console.error(error));
@@ -192,7 +190,6 @@ class ProjectService {
   addImageAsContent = fileParams => {
     return this.instance.post(`/rows/image`, fileParams.uploadData)
     .then(res => {
-      console.log(res.data)
       return Promise.resolve(res.data)
     })
   }
@@ -201,23 +198,21 @@ class ProjectService {
   addDownloadAsContent = fileParams => {
     return this.instance.post(`/rows/download`, fileParams.uploadData)
     .then(res => {
-      console.log(res.data)
       return Promise.resolve(res.data)
     })
   }
 
   fetchContent =  rowId => {
-    console.log(rowId)
     return this.instance.get(`/content/${rowId}`)
     .then(res =>  {
-      return Promise.resolve(res.data)  
+      return Promise.resolve(res.data)
     })
   }
 
   insertSlot = (content,rowId) => {
     return this.instance.put(`/content/${rowId}`, content)
     .then(res =>  {
-      return Promise.resolve(res.data)  
+      return Promise.resolve(res.data)
     })
   }
 

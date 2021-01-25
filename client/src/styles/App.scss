@@ -15,12 +15,11 @@ $is-primary: $blue;
 $has-text-primary: $blue;
 $grey-lightest: #ddd;
 $yellow: #ffc400;
-// $green: hsl(171, 100%, 41%);
+$green: hsl(171, 100%, 41%);
 $orange: #ff8d01;
 $info: hsl(171, 100%, 41%);
 
-// Import only what you need from Bulma
-@import "../node_modules/bulma/bulma.sass";
+@import "./bulma.sass";
 
 #root,
 .App,
@@ -35,8 +34,16 @@ html {
 }
 
 body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 18px
+
 }
+
 
 .navbar-brand {
   h1 {
@@ -58,7 +65,7 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url('/bg.png');
+  background-image: url('../images/bg.png');
   background-size: cover;
 }
 
@@ -66,9 +73,9 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url('/bg.png');
+  background-image: url('../images/bg.png');
   background-size: cover;
-  
+
   .container{
     height: 100%;
     min-height: 100%;
@@ -89,7 +96,7 @@ body {
   flex-direction: column;
   width: 100%;
   max-height: 400px;
-  
+
   h3{
     font-weight: 100;
   }
@@ -137,7 +144,7 @@ body {
 .project-presets-list{
   margin: 2rem 0;
   li{
-    margin-bottom: 1em 
+    margin-bottom: 1em
   }
 }
 
@@ -152,14 +159,14 @@ body {
 
 
 .color-palette, .type-set {
-  margin: 3rem 0 4rem; 
+  margin: 3rem 0 4rem;
 
   .box{
     margin-bottom: 0.5rem;
     display: flex;
-    justify-content: space-between;  
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;    
+    margin-bottom: 0.5rem;
 
     span{
       text-transform: capitalize;
@@ -177,7 +184,7 @@ body {
   margin-right: 0.5rem;
   height: 56px;
   width: 56px
-}  
+}
 
 .preview-text{
   margin: 1.5rem 0;
@@ -316,7 +323,7 @@ body {
       visibility: hidden;
       transition: opacity ease-in-out 0.3s;
     }
-  
+
     &:hover{
       .close{
         visibility: visible;
@@ -363,7 +370,7 @@ body {
 
     .header {
       margin-bottom: 3rem;
-    }    
+    }
 
     .inner{
       width: 100%;
@@ -406,7 +413,7 @@ body {
       // opacity: 0;
       transition: opacity ease-in-out 0.3s;
       text-transform: uppercase;
-    }  
+    }
         // &:hover .color-name{
         //   opacity: 1;
         // }
@@ -426,7 +433,7 @@ body {
   font-family: 'Merriweather';
   letter-spacing: 0.005em;
   line-height: 1.2;
-}     
+}
 
 p{ margin-bottom: 32px;}
 
@@ -436,7 +443,7 @@ p{ margin-bottom: 32px;}
   width: 100vw;
 
   .hero {
-    background-image: url('/bg.png');
+    background-image: url('../images/bg.png');
     background-size: cover;
     min-height: 92vh;
 
@@ -448,7 +455,7 @@ p{ margin-bottom: 32px;}
     }
 
     p{ margin-bottom: 32px;}
-  
+
     .is-grouped{
       .button:first-child{
         margin-right: 16px
@@ -475,46 +482,46 @@ p{ margin-bottom: 32px;}
         display: flex;
         align-items: center;
         justify-content: center;
-      } 
+      }
 
       &.block-1 {
         .text{
           background-color: $blue;
-          background-image: url('/blue-buble.png');
+          background-image: url('/images/blue-buble.png');
           background-size: cover;
-      
+
           color: white;
-  
+
           .title {color:white}
         }
 
         .img{
           background-color: $pink;
-        } 
+        }
       }
 
       &.block-2 {
         .text{
           background-color: $red;
-          background-image: url('/red-buble.png');
+          background-image: url('/images/red-buble.png');
           background-size: cover;
           color: $black;
-  
+
           .title {color:$black}
         }
 
         .img{
           background-color: $cream;
-        } 
+        }
       }
 
       &.block-3 {
         .text{
           background-color: $green;
-          background-image: url('/green-buble.png');
+          background-image: url('/images/green-buble.png');
           background-size: cover;
           color: $black;
-  
+
           .title {color:$black}
         }
       }
@@ -530,7 +537,7 @@ p{ margin-bottom: 32px;}
     align-items: center;
     justify-content: center;
 
-    padding: 6em 0 3em; 
+    padding: 6em 0 3em;
 
     .title {
       margin-bottom: 2em;
@@ -559,7 +566,7 @@ p{ margin-bottom: 32px;}
     padding-bottom: 4em;
 
     .banner-content {
-      background-image: url('/banner-bg.png');
+      background-image: url('/images/banner-bg.png');
       background-size: cover;
       background-color: $blue;
       display: flex;
@@ -604,7 +611,7 @@ p{ margin-bottom: 32px;}
 
     img{
       max-height: 500px;
-    } 
+    }
   }
 }
 
@@ -619,17 +626,17 @@ p{ margin-bottom: 32px;}
   font-family: 'Merriweather';
   letter-spacing: 0.005em;
   line-height: 1.2;
-  
+
 }
 
 .row{
   .content-container{
     padding: 5rem 3rem;
-  
+
     .notification{
       margin: 0 auto;
       text-align: center;
-  
+
       a{color: $blue !important; text-decoration: none !important}
     }
   }
@@ -679,7 +686,7 @@ p{ margin-bottom: 32px;}
 
 .close-modal{
   position: absolute;
-  top: 6%; 
+  top: 6%;
   right: 3%;
   padding: 1em;
 }
@@ -698,5 +705,5 @@ p{ margin-bottom: 32px;}
 }
 
 .parallax.bg-image {
-  background-image: url('/bg-features.png');
+  background-image: url('/images/bg-features.png');
 }

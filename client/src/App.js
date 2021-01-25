@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.scss';
 
 import { Switch, Route } from 'react-router-dom';
 import AuthService from './services/AuthService';
@@ -254,7 +253,6 @@ export default class App extends React.Component {
   };
 
   createProject = ({ title, path, history }) => {
-    console.log({ title, path, history });
 
     this.projectService.createProject({ title, path }).then(
       projectCreated => {
@@ -272,7 +270,7 @@ export default class App extends React.Component {
     .then((response)=>{
       console.log(response)
       if (response.msg === 'success'){
-          alert("Message Sent."); 
+          alert("Message Sent.");
           this.resetForm()
       }else if(response.msg === 'fail'){
           alert("Message failed to send.")
@@ -302,7 +300,7 @@ export default class App extends React.Component {
 
     return (
       <div className='App'>
-        
+
         {/* The navbar has to pass the username to the profile menu link */}
         {/* I need to pass match (the props) so I cant redirect to home after logout*/}
         <Navbar user={user} logout={this.logout}></Navbar>
