@@ -1,16 +1,19 @@
 import React from 'react';
-import AuthService from '../../../services/AuthService';
-import Hero from '../../layout/Hero';
+import AuthService from '../../services/AuthService';
+import Hero from '../layout/Hero';
+// import { Link } from 'react-router-dom';
 
-export default class Signup extends React.Component {
+
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.authService = new AuthService();
-
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      picture: '',
+      projects: []
     };
+    this.authService = new AuthService();
   }
 
   handleChange = e => {
@@ -18,14 +21,18 @@ export default class Signup extends React.Component {
     this.setState({ ...this.state, [name]: value });
   };
 
-  handleFormSubmit = e => {
+  handleLogin = e => {
     e.preventDefault();
+
     const { history, setUser } = this.props;
-    this.authService.signup(this.state).then(
+    this.authService.login(this.state).then(
       user => {
-        setUser(user);
-        // todo This should redirect me to the admin panel
-        history.push(`/panel/${user.username}`);
+        if (user !== undefined) {
+          setUser(user);
+
+          // todo This should redirect me to the admin panel
+          history.push(`/panel/${user.username}`);
+        }
       },
       error => {
         console.error(error);
@@ -38,13 +45,14 @@ export default class Signup extends React.Component {
     return (
       <section className='section auth-section landing'>
         <div className='container columns'>
-          <div className='column is-one-third'>
-            <Hero></Hero>
-          </div>
+        <div className='column is-one-third'>
+          <Hero></Hero>
+        </div>
+
 
           <div className='column is-two-third form-container'>
-            <h3 className='title'>Signup</h3>
-            <form onSubmit={this.handleFormSubmit}>
+            <h3 className='title'>Login</h3>
+            <form onSubmit={this.handleLogin}>
               <div className='field'>
                 <label className='label' htmlFor='username'>
                   Username:
@@ -58,7 +66,6 @@ export default class Signup extends React.Component {
                     value={username}
                     onChange={this.handleChange}
                     placeholder="Username"
-                    required
                   />
                 </div>
               </div>
@@ -72,10 +79,9 @@ export default class Signup extends React.Component {
                     type='password'
                     name='password'
                     id='password'
+                    placeholder="Password"
                     value={password}
                     onChange={this.handleChange}
-                    placeholder="Password"
-                    required
                   />
                 </div>
               </div>
@@ -83,9 +89,9 @@ export default class Signup extends React.Component {
               <div className='control'>
                 <input
                   type='submit'
-                  className='button is-link'
-                  value='Create account'
-                />
+                  className='button is-link is-rounded'
+                  value='Log in'
+                ></input>
               </div>
             </form>
           </div>

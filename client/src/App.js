@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 import AuthService from './services/AuthService';
-import Signup from './components/auth/Signup/Signup';
+
+import Signup from './components/auth/Signup';
+import Profile from './components/auth/Profile';
+import Login from './components/auth/Login';
+
 import ProjectList from './components/project/ProjectList';
 import PrivateRoute from './guards/PrivateRoute';
 import { LandingPage } from './components/landingPage/LandingPage';
 import Navbar from './components/layout/Navbar';
-import Login from './components/auth/Login/Login';
-import Profile from './components/auth/profile/Profile';
 import NewProject from './components/project/NewProject';
 import EditProject from './components/project/EditProject';
 import ColorPalette from './components/brandPresets/ColorPalette';

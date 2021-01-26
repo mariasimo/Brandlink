@@ -3,59 +3,66 @@ import { Route, Redirect } from 'react-router-dom';
 
 export default function PrivateRoute({
   component: Component,
-  user,
-  activeProject,
-  colorPalette,
-  typeset,
-  toggleMenu,
-  menuIsOpen,
-  addFontLinks,
-  redirectPath,
-  addColorToPalette,
-  saveType,
-  deleteColor,
-  deleteType,
-  assets,
-  addAsset,
-  onDragStart,
-  onDrop,
-  deleteAsset,
-  setActiveProject,
-  textstyles,
-  addTextStyle,
-  projectTitle,
-  createProject,
-  shareMessage,
+  // user,
+  // activeProject,
+  // colorPalette,
+  // typeset,
+  // toggleMenu,
+  // menuIsOpen,
+  // addFontLinks,
+  // redirectPath,
+  // addColorToPalette,
+  // saveType,
+  // deleteColor,
+  // deleteType,
+  // assets,
+  // addAsset,
+  // onDragStart,
+  // onDrop,
+  // deleteAsset,
+  // setActiveProject,
+  // textstyles,
+  // addTextStyle,
+  // projectTitle,
+  // createProject,
+  // shareMessage,
   ...rest
 }) {
+
+  console.log(rest)
   return (
     <Route
       {...rest}
       render={props => {
-          if (user) {
+        console.log(props)
+          if (
+            //user
+            true
+            ) {
             return (
               <Component
-                loggedInUser={user}
-                activeProject={activeProject}
-                toggleMenu={toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                addColorToPalette={addColorToPalette}
-                deleteColor={deleteColor}
-                deleteType={deleteType}
-                saveType={saveType}
-                assets={assets}
-                addAsset={addAsset}
-                deleteAsset={deleteAsset}
-                onDragStart={onDragStart}
-                onDrop={onDrop}
-                setActiveProject={setActiveProject}
-                textstyles={textstyles}
-                addTextStyle={addTextStyle}
-                projectTitle = {projectTitle}
-                createProject= {createProject}
-                shareMessage={shareMessage}
+                // loggedInUser={user}
+                // activeProject={activeProject}
+                // toggleMenu={toggleMenu}
+                // menuIsOpen={menuIsOpen}
+                // colorPalette={colorPalette}
+                // typeset={typeset}
+                // addColorToPalette={addColorToPalette}
+                // deleteColor={deleteColor}
+                // deleteType={deleteType}
+                // saveType={saveType}
+                // assets={assets}
+                // addAsset={addAsset}
+                // deleteAsset={deleteAsset}
+                // onDragStart={onDragStart}
+                // onDrop={onDrop}
+                // setActiveProject={setActiveProject}
+                // textstyles={textstyles}
+                // addTextStyle={addTextStyle}
+                // projectTitle = {projectTitle}
+                // createProject= {createProject}
+                // shareMessage={shareMessage}
+                {...rest}
                 {...props}
               />
             );

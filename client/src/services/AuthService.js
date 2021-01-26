@@ -4,7 +4,7 @@ class AuthService {
   constructor() {
     this.instance = axios.create({
       baseURL: `${process.env.REACT_APP_API_URL}`,
-      withCredentials: true    
+      withCredentials: true
     })
   }
 
@@ -30,9 +30,10 @@ class AuthService {
   }
 
 
-  edit = (id, userData) => {
-    return this.instance.put(`/edit/${id}`, userData)
+  edit = ({id, ...userData}) => {
+     return this.instance.put(`/edit/${id}`, userData)
     .then(res => {
+      console.log(res)
       return Promise.resolve(res.data)
     })
     .catch(error => console.error(error))
@@ -53,7 +54,7 @@ class AuthService {
 
   setActiveProject = (projectData) => {
     const {path, id} = projectData;
-    
+
     return this.instance.put(`/edit/${id}`, {path})
     .then(res => {
       return Promise.resolve(res.data)
