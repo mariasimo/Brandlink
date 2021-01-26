@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 import AuthService from './services/AuthService';
@@ -21,92 +21,70 @@ import TextStyles from './components/brandPresets/TextStyles';
 import NewTextStyle from './components/brandPresets/NewTextStyle';
 import ReadProject from './components/project/ReadProject';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.authService = new AuthService();
-    this.projectService = new ProjectService();
-    this.state = {
-      user: null,
-      menuIsOpen: 'show',
-      file: ''
-    };
-    this.loadingImg = '';
-    this.loadingParent = '';
+
+
+const App = () => {
+  const authService = new AuthService();
+  const projectService = new ProjectService();
+
+  const [user, setUser] = useState(null)
+  const [menuIsOpen, setMenuIsOpen] = useState('show')
+  const [file, setFile] = useState('')
+  // const [loadingImg, setLoadingImg] = useState('')
+  // const [loadingParent, setLoadingParent] = useState('')
+
+
+  // esto no estaba
+  const [project, setProject] = useState({
+    colorPalette: []
+  })
+
+  const toggleMenu = () => (
+    setMenuIsOpen(menuIsOpen === 'show' ? 'hide' : 'show')
+  )
+
+  const setLoggedUser = (user) => {
+    if(user === undefined || !user.hasOwnProperty('id')) return
+    setUser(user)
+
+    if(user.activeProject) {
+      projectService.displayProject(user.id)
+      .then( projectData => {
+        console.log(projectData)
+        setProject({
+          title: projectData.title,
+          colorPalette: projectData.colorPalette || [],
+          typeset: projectData.typeset,
+          assets: projectData.assets,
+          textstyles: projectData.textstyles
+        })
+        addFontsLinks(projectData.typeset)
+      })
+    }
   }
 
-  toggleMenu = () => {
-    let toggleClass = this.state.menuIsOpen === 'show' ? 'hide' : 'show';
-    this.setState({
-      ...this.state,
-      menuIsOpen: toggleClass
-    });
-  };
-
-  setUser = user => {
-    if (user === undefined || !user.hasOwnProperty('id')) return;
-
-    this.setState({
-      ...this.state,
-      user
-    });
-
-    if (this.state.user.activeProject) {
-      this.projectService.displayProject(user.id).then(project => {
-        this.setState({
-          ...this.state,
-          title: project.title,
-          colorPalette: project.colorPalette,
-          typeset: project.typeset,
-          assets: project.assets,
-          textstyles: project.textstyles
-        });
-
-        this.addFontsLinks(this.state.typeset);
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        user
-      });
-    }
-  };
-
-  fetchUser = () => {
-    if (this.state.user === null) {
-      this.authService
-        .loggedInUser()
-        .then(user => {
-          if (user !== undefined) {
-            this.setUser(user);
-            this.displayProject(user.id);
-          }
-        })
-        .catch(error => {
-          this.setUser(false);
-        });
-    }
-  };
-
-  logout = () => {
-    this.authService
-      .logout()
+  const logout = () => {
+    authService.logout()
       .then(payload => {
-        this.setState({ ...this.state, user: null });
+        console.log('logout payload:')
+        console.log(payload)
+        setUser(null);
       })
       .catch(err => console.log(err));
   };
 
-  setActiveProject = path => {
-    const { id } = this.state.user;
-    this.authService
-      .setActiveProject({ path, id })
-      .then(userHasAnActiveProject => {
-        this.setUser(userHasAnActiveProject);
-      });
-  };
+  const setActiveProject  = path => {
+    const {id} = user
+    authService.setActiveProject({path, id})
+    .then( activeProject => (
+      console.log(activeProject)
+      // dont know what is this
+      // setUser(activeProject)
+    ))
+  }
 
-  addFontsLinks = typeset => {
+
+  const addFontsLinks = typeset => {
     typeset.map(type => {
       const link = document.createElement('link');
       link.setAttribute(
@@ -121,29 +99,39 @@ export default class App extends React.Component {
     });
   };
 
-  deleteProject = projectId => {
-    this.projectService.deleteProject(projectId).then(
-      () => {
-        this.setUser(this.state.user);
+
+  const deleteProject = projectId => {
+    projectService.deleteProject(projectId)
+    .then(response=> {
+      console.log("proyecto borrado ok")
+      console.log(response)
+      //Esto aqui pa què
+        // setUser(user);
       },
       error => {
-        const { message } = error;
-        console.error(message);
+        console.error(error.message);
       }
     );
   };
 
-  addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
-    this.projectService
+  const addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
+    projectService
       .addColorToPalette({ name, hexadecimal, id, colorId })
       .then(
         updatedProject => {
-          this.setState({
-            ...this.state,
-            name: '',
-            hexadecimal: '',
-            colorPalette: updatedProject.colorPalette
-          });
+
+          // aquí parece que se guardan los datos de la paleta en el estado, pero no tiene que ver con el active project
+          console.log(updatedProject)
+
+          setProject(
+           { ...project, colorPalette: updatedProject.colorPalette}
+          )
+          // setState({
+          //   ...this.state,
+          //   name: '',
+          //   hexadecimal: '',
+          //   colorPalette: updatedProject.colorPalette
+          // });
           history.push(`/project/${id}/edit/colorPalette`, {
             state: this.state.colorPalette
           });
@@ -152,59 +140,60 @@ export default class App extends React.Component {
       );
   };
 
-  deleteColor = colorId => {
-    this.projectService.deleteColor(colorId).then(
+  const deleteColor = colorId => {
+    projectService.deleteColor(colorId).then(
       project => {
-        this.setUser(this.state.user);
+        console.log(project)
+        // otra vez setear el usuario pa qué
+        // this.setUser(this.state.user);
       },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
+      error => console.error(error.message))
   };
 
-  saveType = ({ fontFamily, type, path, history }) => {
-    this.projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
-      updatedProject => {
-        this.setState({
-          ...this.state,
-          fontFamily: '',
-          typeset: updatedProject.typeset
-        });
+  const saveType = ({ fontFamily, type, path, history }) => {
+    projectService.addTypeToTypeSet({ fontFamily, type, path })
+    .then(updatedProject => {
+        // setea la nueva tipografia
+
+        console.log(updatedProject)
+        // setState({
+        //   ...this.state,
+        //   fontFamily: '',
+        //   typeset: updatedProject.typeset
+        // });
         history.push(`/project/${this.state.user.activeProject}/edit/typeSet`);
       },
       error => console.error(error)
     );
   };
 
-  deleteType = typeId => {
-    this.projectService.deleteType(typeId).then(
-      project => {
-        this.setUser(this.state.user);
+  const deleteType = typeId => {
+    projectService.deleteType(typeId)
+    .then( project => {
+        // this.setUser(this.state.user);
       },
-      error => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
+      error => console.log(error.message)
+    )
   };
 
-  addTextStyle = ({ textstyle, path, styleId, history }) => {
-    this.projectService
+  const addTextStyle = ({ textstyle, path, styleId, history }) => {
+    projectService
       .addTextStyle({ ...textstyle, path, styleId, history })
       .then(
         () => {
-          this.setState({
-            ...this.state,
-            name: '',
-            fontFamily: '',
-            fontSize: 1,
-            fontWeight: null,
-            lineHeight: 1,
-            letterSpacing: 0,
-            uppercase: false
-          });
+
+          // tampoco tengo ni idea de cómo se articula esta parte del estado
+
+          // this.setState({
+          //   ...this.state,
+          //   name: '',
+          //   fontFamily: '',
+          //   fontSize: 1,
+          //   fontWeight: null,
+          //   lineHeight: 1,
+          //   letterSpacing: 0,
+          //   uppercase: false
+          // });
           history.push(
             `/project/${this.state.user.activeProject}/edit/textStyles`
           );
@@ -213,25 +202,28 @@ export default class App extends React.Component {
       );
   };
 
-  addAsset = ({ uploadData, path }) => {
-    this.loadingImg = document.createElement('img');
-    this.loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
-    this.loadingParent = document.querySelector('.file-label');
-    this.loadingParent.appendChild(this.loadingImg);
+  const addAsset = ({ uploadData, path }) => {
 
-    this.projectService
+    // Esto puede suceder en el scope local y sacarlo del estado???
+    const loadingImg = document.createElement('img');
+    loadingImg.setAttribute('src', 'http://localhost:3000/loading.svg');
+    const loadingParent = document.querySelector('.file-label');
+    loadingParent.appendChild(this.loadingImg);
+
+    projectService
       .uploadAsset({ uploadData, path })
       .then(() => {
-        this.setUser(this.state.user);
-        this.loadingParent.removeChild(this.loadingImg);
+        // this.setUser(this.state.user);
+        loadingParent.removeChild(loadingImg);
       })
       .catch(error => console.log(error));
   };
 
-  deleteAsset = assetId => {
-    this.projectService.deleteAsset(assetId).then(
-      project => {
-        this.setUser(this.state.user);
+
+  const deleteAsset = assetId => {
+    projectService.deleteAsset(assetId)
+    .then(project => {
+        // this.setUser(this.state.user);
       },
       error => {
         const { message } = error;
@@ -240,35 +232,32 @@ export default class App extends React.Component {
     );
   };
 
-  onDragStart = (ev, id) => {
+  const onDragStart = (ev, id) => {
     console.log('dragstart:', id);
     ev.dataTransfer.setData('id', id);
   };
 
-  onDrop = (ev, slotIdx) => {
+  const onDrop = (ev, slotIdx) => {
     let fileId = ev.dataTransfer.getData('id');
-    this.setState({ ...this.state, file: fileId });
-
-    // console.log( fileId, slotIdx)
+    setFile(fileId);
   };
 
-  createProject = ({ title, path, history }) => {
+  const createProject = ({ title, path, history }) => {
+    projectService.createProject({ title, path })
+    .then(projectCreated => {
+        // esto es para limpiar algo??
+        // this.setState({ ...this.state, title: '', path: '' });
 
-    this.projectService.createProject({ title, path }).then(
-      projectCreated => {
-        console.log(projectCreated);
-        this.setState({ ...this.state, title: '', path: '' });
         history.push(`/panel/${this.state.user.username}`);
       },
       error => console.error(error)
     );
   };
 
-  shareMessage = ({email, projectId}) =>{
-    this.projectService
+  const shareMessage = ({email, projectId}) =>{
+    projectService
     .shareMessage({ email, projectId})
     .then((response)=>{
-      console.log(response)
       if (response.msg === 'success'){
           alert("Message Sent.");
           this.resetForm()
@@ -278,228 +267,229 @@ export default class App extends React.Component {
     })
   }
 
-  resetForm(){
-    document.getElementById('contact-form').reset();
-  }
+  const resetForm = () => document.getElementById('contact-form').reset();
 
-  componentDidMount() {
-    this.fetchUser();
-  }
 
-  render() {
-    this.fetchUser();
-    const {
-      user,
-      menuIsOpen,
-      colorPalette,
-      typeset,
-      assets,
-      textstyles
-    } = this.state;
-    const projectTitle = this.state.title;
+  useEffect(()=>{
 
-    return (
-      <div className='App'>
+    const fetchUser = () => {
+      if (!user) {
+        authService.loggedInUser()
+          .then(user => {
+              setLoggedUser(user);
+              // displayProject(user.id);
+          })
+          .catch(error => {
+            throw new Error(error)
+          });
+      }
+    };
 
-        {/* The navbar has to pass the username to the profile menu link */}
-        {/* I need to pass match (the props) so I cant redirect to home after logout*/}
-        <Navbar user={user} logout={this.logout}></Navbar>
-        <>
-          {user && (
-            <Switch>
-              <Route
-                exact
-                path='/login'
-                render={match => <Login {...match} setUser={this.setUser} />}
-              />
-              <Route
-                exact
-                path='/signup'
-                render={match => <Signup {...match} setUser={this.setUser} />}
-              />
-              <Route exact path='/' component={LandingPage} />
+    fetchUser()
 
-              {/* This is a private route, as you have to be loggedin to access your admin panel */}
-              <PrivateRoute
-                exact
-                path='/profile/:id'
-                user={user}
-                redirectPath='/login'
-                component={Profile}
-              />
+  },[])
 
-              {/* <PrivateRoute exact path="/panel/:username" user={user}  component={ProjectList}/> */}
-              <Route
-                exact
-                path='/panel/:username'
-                render={match => (
-                  <ProjectList
-                    {...match}
-                    setPath={this.setPath}
-                    setActiveProject={this.setActiveProject}
-                    deleteProject={this.deleteProject}
-                    setUser={this.setUser}
-                  />
-                )}
-              />
+const {colorPalette, typeset, assets, textstyles, title: projectTitle} = project
 
-              <PrivateRoute
-                exact
-                path='/project/new'
-                user={user}
-                component={NewProject}
-                toggleMenu={this.toggleMenu}
-                createProject={this.createProject}
-                menuIsOpen={menuIsOpen}
-              />
+  return (
+    <div className='App'>
+    <Navbar user={user} logout={logout}></Navbar>
+<>
+  {user && (
+    <Switch>
+      <Route
+        exact
+        path='/login'
+        render={match => <Login {...match} setUser={setLoggedUser} />}
+      />
+      <Route
+        exact
+        path='/signup'
+        render={match => <Signup {...match} setUser={setLoggedUser} />}
+      />
+      <Route exact path='/' component={LandingPage} />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                projectTitle={projectTitle}
-                shareMessage={this.shareMessage}
-                component={EditProject}
-              />
+      <PrivateRoute
+        exact
+        path='/profile/:id'
+        user={user}
+        redirectPath='/login'
+        component={Profile}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/colorPalette'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                deleteColor={this.deleteColor}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                component={ColorPalette}
-              />
+      <Route
+        exact
+        path='/panel/:username'
+        render={match => (
+          <ProjectList
+            {...match}
+            // necesito encontrar esto
+            // setPath={setPath}
+            setActiveProject={setActiveProject}
+            deleteProject={deleteProject}
+            setUser={setLoggedUser}
+          />
+        )}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/colorPalette/new/:colorId?'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                addColorToPalette={this.addColorToPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                component={NewColor}
-              />
+      <PrivateRoute
+        exact
+        path='/project/new'
+        user={user}
+        component={NewProject}
+        toggleMenu={toggleMenu}
+        createProject={createProject}
+        menuIsOpen={menuIsOpen}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/typeset'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                deleteType={this.deleteType}
-                assets={assets}
-                typeset={typeset}
-                textstyles={textstyles}
-                component={TypeSet}
-              />
+      <PrivateRoute
+        exact
+        path='/project/:id/edit'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        projectTitle={projectTitle}
+        shareMessage={shareMessage}
+        component={EditProject}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/typeset/new/:source?'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                colorPalette={colorPalette}
-                menuIsOpen={menuIsOpen}
-                typeset={typeset}
-                saveType={this.saveType}
-                assets={assets}
-                textstyles={textstyles}
-                component={NewType}
-              />
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/colorPalette'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        deleteColor={deleteColor}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        component={ColorPalette}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/assets'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                addAsset={this.addAsset}
-                deleteAsset={this.deleteAsset}
-                onDragStart={this.onDragStart}
-                onDrop={this.onDrop}
-                file={this.state.file}
-                textstyles={textstyles}
-                component={Assets}
-              />
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/colorPalette/new/:colorId?'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        addColorToPalette={addColorToPalette}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        component={NewColor}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/textStyles'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                component={TextStyles}
-              />
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/typeset'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        deleteType={deleteType}
+        assets={assets}
+        typeset={typeset}
+        textstyles={textstyles}
+        component={TypeSet}
+      />
 
-              <PrivateRoute
-                exact
-                path='/project/:id/edit/textStyles/new/:styleId?'
-                user={user}
-                toggleMenu={this.toggleMenu}
-                menuIsOpen={menuIsOpen}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                addTextStyle={this.addTextStyle}
-                component={NewTextStyle}
-              />
-            </Switch>
-          )}
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/typeset/new/:source?'
+        user={user}
+        toggleMenu={toggleMenu}
+        colorPalette={colorPalette}
+        menuIsOpen={menuIsOpen}
+        typeset={typeset}
+        saveType={saveType}
+        assets={assets}
+        textstyles={textstyles}
+        component={NewType}
+      />
 
-          {!user && (
-            <Switch>
-              <Route
-                exact
-                path='/login'
-                render={match => <Login {...match} setUser={this.setUser} />}
-              />
-              <Route
-                exact
-                path='/signup'
-                render={match => <Signup {...match} setUser={this.setUser} />}
-              />
-              <Route exact path='/' component={LandingPage} />
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/assets'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        assets={assets}
+        addAsset={addAsset}
+        deleteAsset={deleteAsset}
+        onDragStart={onDragStart}
+        onDrop={onDrop}
+        file={file}
+        textstyles={textstyles}
+        component={Assets}
+      />
 
-              <Route
-                exact
-                path='/project/:id'
-                user={user}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                projectTitle={projectTitle}
-                component={ReadProject}
-              />
-            </Switch>
-          )}
-        </>
-      </div>
-    );
-  }
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/textStyles'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        component={TextStyles}
+      />
+
+      <PrivateRoute
+        exact
+        path='/project/:id/edit/textStyles/new/:styleId?'
+        user={user}
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        addTextStyle={addTextStyle}
+        component={NewTextStyle}
+      />
+    </Switch>
+  )}
+
+  {!user && (
+    <Switch>
+      <Route
+        exact
+        path='/login'
+        render={match => <Login {...match} setUser={setLoggedUser} />}
+      />
+      <Route
+        exact
+        path='/signup'
+        render={match => <Signup {...match} setUser={setLoggedUser} />}
+      />
+      <Route exact path='/' component={LandingPage} />
+
+      <Route
+        exact
+        path='/project/:id'
+        user={user}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        assets={assets}
+        textstyles={textstyles}
+        projectTitle={projectTitle}
+        component={ReadProject}
+      />
+    </Switch>
+  )}
+</>
+</div>
+  )
 }
+
+export default App
