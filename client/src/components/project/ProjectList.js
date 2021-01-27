@@ -8,7 +8,7 @@ export default class ProjectList extends React.Component {
     super(props);
     this.projectService = new ProjectService();
     this.state = {
-      projects: null
+      projects: null,
     };
   }
 
@@ -18,11 +18,10 @@ export default class ProjectList extends React.Component {
 
   updateProjects = () => {
     this.projectService.fetchProjects().then(
-      projects => {
-        console.log(projects)
+      (projects) => {
         this.setState({ ...this.state, projects });
       },
-      error => {
+      (error) => {
         const { message } = error;
         console.error(message);
       }
@@ -30,54 +29,57 @@ export default class ProjectList extends React.Component {
   };
 
   deleteProject = (project) => {
-    console.log(project)
     this.projectService.deleteProject(project).then(
       () => {
-        this.updateProjects()
+        this.updateProjects();
       },
-      error => {
+      (error) => {
         const { message } = error;
         console.error(message);
       }
     );
-  }
+  };
 
   render() {
     // const username = this.props.loggedInUser.username;
-    const { projects } = this.state;  
+    const { projects } = this.state;
 
     return (
       <div>
         <section className="section admin-panel">
           <div className="container">
-          <div className="columns">
-            <div className="column is-one-third">
-            <div className='hero'>
-              <h2 className='title is-1'>Welcome to your panel</h2>
-              <p class=''>
-                Here you can admin your projects or create new ones.
-              </p>
-      
-            </div>
-            </div>
-            <div className="column is-two-thirds projects-wrapper">
+            <div className="columns">
+              <div className="column is-one-third">
+                <div className="hero">
+                  <h2 className="title is-1">Welcome to your panel</h2>
+                  <p class="">
+                    Here you can admin your projects or create new ones.
+                  </p>
+                </div>
+              </div>
+              <div className="column is-two-thirds projects-wrapper">
+                {projects &&
+                  projects.map((project, idx) => (
+                    <Project
+                      key={idx}
+                      project={project}
+                      deleteProject={(projectId) =>
+                        this.deleteProject(project._id)
+                      }
+                      setPath={(path) => this.props.setPath(path)}
+                      setActiveProject={(projectId) =>
+                        this.props.setActiveProject(project._id)
+                      }
+                    ></Project>
+                  ))}
 
-              {projects &&
-                projects.map((project, idx) => (
-                  <Project key={idx} project={project} 
-                  deleteProject={(projectId) => this.deleteProject(project._id)} 
-                  setPath={(path) => this.props.setPath(path)}
-                  setActiveProject={(projectId) => this.props.setActiveProject(project._id)}
-                  ></Project>
-                ))}
+                {!projects && <div>You dont have any projects yet</div>}
 
-              {!projects && (
-                <div>You dont have any projects yet</div>
-              )}
-
-              <Link to="/project/new" className="project-card">Create new project</Link>
+                <Link to="/project/new" className="project-card">
+                  Create new project
+                </Link>
+              </div>
             </div>
-          </div>
           </div>
         </section>
       </div>

@@ -26,7 +26,6 @@ class AuthService {
     return this.instance
       .post("/logout")
       .then((res) => {
-        console.log(res);
         Promise.resolve(res.data);
       })
       .catch((error) => console.error(error));
@@ -45,7 +44,6 @@ class AuthService {
     return this.instance
       .put(`/edit/${id}`, userData)
       .then((res) => {
-        console.log(res);
         return Promise.resolve(res.data);
       })
       .catch((error) => console.error(error));

@@ -49,6 +49,7 @@ a {
   nav ul {
     list-style-type: none;
     display: flex;
+    align-items: center;
     li {
       padding-right: 1rem;
 
@@ -56,6 +57,30 @@ a {
         padding: 0;
       }
     }
+  }
+}
+
+.projects-link {
+  color: var(--blue);
+  img {
+    width: 20px;
+    margin-right: 8px;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    margin-right: 8px;
   }
 }
 
@@ -72,14 +97,6 @@ a {
   &:hover {
     background-color: var(--blue);
     color: var(--white);
-  }
-}
-
-.projects-link {
-  color: var(--blue);
-  img {
-    width: 20px;
-    margin-right: 8px;
   }
 }
 

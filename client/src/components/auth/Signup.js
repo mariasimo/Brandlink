@@ -22,7 +22,7 @@ const Signup = ({ history }) => {
     authService.signup(credentials).then(
       (user) => {
         setAuthUser(user);
-        // history.push(`/panel/${user.username}`);
+        history.push(`/panel/${user.username}`);
       },
       (error) => {
         console.error(error);

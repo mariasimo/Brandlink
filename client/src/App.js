@@ -87,8 +87,6 @@ const App = () => {
   const deleteProject = (projectId) => {
     projectService.deleteProject(projectId).then(
       (response) => {
-        console.log("proyecto borrado ok");
-        console.log(response);
         //Esto aqui pa què
         // setUser(user);
       },
@@ -102,7 +100,6 @@ const App = () => {
     projectService.addColorToPalette({ name, hexadecimal, id, colorId }).then(
       (updatedProject) => {
         // aquí parece que se guardan los datos de la paleta en el estado, pero no tiene que ver con el active project
-        console.log(updatedProject);
 
         setProject({ ...project, colorPalette: updatedProject.colorPalette });
         // setState({
@@ -122,7 +119,6 @@ const App = () => {
   const deleteColor = (colorId) => {
     projectService.deleteColor(colorId).then(
       (project) => {
-        console.log(project);
         // otra vez setear el usuario pa qué
         // this.setUser(this.state.user);
       },
@@ -135,7 +131,6 @@ const App = () => {
       (updatedProject) => {
         // setea la nueva tipografia
 
-        console.log(updatedProject);
         // setState({
         //   ...this.state,
         //   fontFamily: '',

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import ProjectService from '../../services/ProjectService';
-import BrandHeader from '../layout/BrandHeader';
-import SideMenu from '../layout/SideMenu';
-import MainContent from '../layout/MainContent';
-import { TwitterPicker } from 'react-color';
+import React, { Component } from "react";
+import ProjectService from "../../services/ProjectService";
+import BrandHeader from "../layout/BrandHeader";
+import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
+import { TwitterPicker } from "react-color";
 
 export default class NewColor extends Component {
   constructor(props) {
@@ -11,9 +11,9 @@ export default class NewColor extends Component {
     this.projectService = new ProjectService();
 
     this.state = {
-      name: '',
-      hexadecimal: '',
-      colorPalette: ''
+      name: "",
+      hexadecimal: "",
+      colorPalette: "",
     };
   }
 
@@ -26,17 +26,17 @@ export default class NewColor extends Component {
 
     if (colorId !== undefined) {
       this.projectService.getColorData(colorId).then(
-        colorData => {
+        (colorData) => {
           let color = colorData.colorPalette.filter(
-            color => color._id === colorId
+            (color) => color._id === colorId
           );
           this.setState({
             ...this.state,
             name: color[0].name,
-            hexadecimal: color[0].hexadecimal
+            hexadecimal: color[0].hexadecimal,
           });
         },
-        error => {
+        (error) => {
           const { message } = error;
           console.error(message);
         }
@@ -44,25 +44,22 @@ export default class NewColor extends Component {
     }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
   };
 
   handleChangeComplete = (color) => {
-    console.log(color)
-    console.log(this.state)
     this.setState({ hexadecimal: color.hex });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { name, hexadecimal } = this.state;
     const { id, colorId } = this.props.match.params;
     const { history } = this.props;
     this.props.addColorToPalette({ name, hexadecimal, id, colorId, history });
   };
-  
 
   render() {
     const { name, hexadecimal } = this.state;
@@ -77,44 +74,44 @@ export default class NewColor extends Component {
         >
           {colorId && (
             <BrandHeader
-              title='Edit color'
-              subtitle='Color Palette'
+              title="Edit color"
+              subtitle="Color Palette"
               {...this.props}
               url={`/project/${id}/edit/colorPalette`}
             ></BrandHeader>
           )}
           {!colorId && (
             <BrandHeader
-              title='New color'
-              subtitle='Color Palette'
+              title="New color"
+              subtitle="Color Palette"
               {...this.props}
               url={`/project/${id}/edit/colorPalette`}
             ></BrandHeader>
           )}
 
           <form onSubmit={this.handleSubmit}>
-            <div className='field'>
-              <label htmlFor='title' className='label'>
+            <div className="field">
+              <label htmlFor="title" className="label">
                 Name:
               </label>
-              <div className='control'>
+              <div className="control">
                 <input
-                  type='text'
-                  name='name'
-                  className='input'
+                  type="text"
+                  name="name"
+                  className="input"
                   value={name}
-                  placeholder='Introduce a name for your color'
+                  placeholder="Introduce a name for your color"
                   onChange={this.handleChange}
                   required
                 />
               </div>
             </div>
 
-            <div className='field'>
-              <label htmlFor='path' className='label'>
+            <div className="field">
+              <label htmlFor="path" className="label">
                 Hexadecimal:
               </label>
-              <div className='control'>
+              <div className="control">
                 {/* <input
                 type="text"
                 name="hexadecimal"
@@ -131,20 +128,20 @@ export default class NewColor extends Component {
               </div>
             </div>
 
-            <div className='control'>
+            <div className="control">
               {!colorId && (
                 <input
-                  type='submit'
-                  className='button is-link'
-                  value='Save Color'
+                  type="submit"
+                  className="button is-link"
+                  value="Save Color"
                 ></input>
               )}
 
               {colorId && (
                 <input
-                  type='submit'
-                  className='button is-link'
-                  value='Edit Color'
+                  type="submit"
+                  className="button is-link"
+                  value="Edit Color"
                 ></input>
               )}
             </div>

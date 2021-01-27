@@ -7,6 +7,7 @@ const authService = new AuthService();
 
 const Navbar = () => {
   const { user } = useAuthContext();
+  console.log(user);
 
   return (
     <header className="header">
@@ -54,6 +55,7 @@ const LoggedOutNav = ({ username }) => {
 
 const LoggedInNav = ({ id, username, picture }) => {
   const { logoutUser } = useAuthContext();
+  const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";
 
   const logout = () => {
     authService
@@ -69,8 +71,11 @@ const LoggedInNav = ({ id, username, picture }) => {
       </li>
 
       <li>
-        <Link to={`/profile/${id}`}>
-          <div style={{ backgroundImage: `url(${picture})` }}></div>
+        <Link to={`/profile/${id}`} className="profile">
+          <div
+            style={{ backgroundImage: `url(${picture || fallbackPicture})` }}
+            className="avatar"
+          ></div>
           Hi, {username}
         </Link>
       </li>
