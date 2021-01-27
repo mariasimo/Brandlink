@@ -263,201 +263,160 @@ const App = () => {
   return (
     <div className="App">
       <Navbar />
-      <>
-        {user?.id && (
-          <Switch>
-            <Route
-              exact
-              path="/login"
-              render={(match) => <Login {...match} />}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={(match) => <Signup {...match} />}
-            />
-            <Route exact path="/" component={LandingPage} />
+      <Switch>
+        <Route exact path="/login" render={(match) => <Login {...match} />} />
+        <Route exact path="/signup" render={(match) => <Signup {...match} />} />
+        <Route exact path="/" component={LandingPage} />
 
-            <PrivateRoute
-              exact
-              path="/profile/:id"
-              user={user}
-              redirectPath="/login"
-              component={Profile}
-            />
+        <PrivateRoute
+          exact
+          path="/profile/:id"
+          user={user}
+          redirectPath="/login"
+          component={Profile}
+        />
 
-            <Route
-              exact
-              path="/panel/:username"
-              render={(match) => (
-                <ProjectList
-                  {...match}
-                  // necesito encontrar esto
-                  // setPath={setPath}
-                  setActiveProject={setActiveProject}
-                  deleteProject={deleteProject}
-                />
-              )}
-            />
+        <PrivateRoute
+          exact
+          path="/panel/:username"
+          component={ProjectList}
+          // render={(match) => (
+          //   <ProjectList
+          //     {...match}
+          //     // necesito encontrar esto
+          //     // setPath={setPath}
+          //     setActiveProject={setActiveProject}
+          //     deleteProject={deleteProject}
+          //   />
+          // )}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/new"
-              user={user}
-              component={NewProject}
-              toggleMenu={toggleMenu}
-              createProject={createProject}
-              menuIsOpen={menuIsOpen}
-            />
+        <PrivateRoute
+          exact
+          path="/project/new"
+          user={user}
+          component={NewProject}
+          toggleMenu={toggleMenu}
+          createProject={createProject}
+          menuIsOpen={menuIsOpen}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              typeset={typeset}
-              assets={assets}
-              textstyles={textstyles}
-              projectTitle={projectTitle}
-              shareMessage={shareMessage}
-              component={EditProject}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          typeset={typeset}
+          assets={assets}
+          textstyles={textstyles}
+          projectTitle={projectTitle}
+          shareMessage={shareMessage}
+          component={EditProject}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/colorPalette"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              deleteColor={deleteColor}
-              typeset={typeset}
-              assets={assets}
-              textstyles={textstyles}
-              component={ColorPalette}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/colorPalette"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          deleteColor={deleteColor}
+          typeset={typeset}
+          assets={assets}
+          textstyles={textstyles}
+          component={ColorPalette}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/colorPalette/new/:colorId?"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              addColorToPalette={addColorToPalette}
-              typeset={typeset}
-              assets={assets}
-              textstyles={textstyles}
-              component={NewColor}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/colorPalette/new/:colorId?"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          addColorToPalette={addColorToPalette}
+          typeset={typeset}
+          assets={assets}
+          textstyles={textstyles}
+          component={NewColor}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/typeset"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              deleteType={deleteType}
-              assets={assets}
-              typeset={typeset}
-              textstyles={textstyles}
-              component={TypeSet}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/typeset"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          deleteType={deleteType}
+          assets={assets}
+          typeset={typeset}
+          textstyles={textstyles}
+          component={TypeSet}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/typeset/new/:source?"
-              user={user}
-              toggleMenu={toggleMenu}
-              colorPalette={colorPalette}
-              menuIsOpen={menuIsOpen}
-              typeset={typeset}
-              saveType={saveType}
-              assets={assets}
-              textstyles={textstyles}
-              component={NewType}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/typeset/new/:source?"
+          user={user}
+          toggleMenu={toggleMenu}
+          colorPalette={colorPalette}
+          menuIsOpen={menuIsOpen}
+          typeset={typeset}
+          saveType={saveType}
+          assets={assets}
+          textstyles={textstyles}
+          component={NewType}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/assets"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              typeset={typeset}
-              assets={assets}
-              addAsset={addAsset}
-              deleteAsset={deleteAsset}
-              onDragStart={onDragStart}
-              onDrop={onDrop}
-              file={file}
-              textstyles={textstyles}
-              component={Assets}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/assets"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          typeset={typeset}
+          assets={assets}
+          addAsset={addAsset}
+          deleteAsset={deleteAsset}
+          onDragStart={onDragStart}
+          onDrop={onDrop}
+          file={file}
+          textstyles={textstyles}
+          component={Assets}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/textStyles"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              typeset={typeset}
-              assets={assets}
-              textstyles={textstyles}
-              component={TextStyles}
-            />
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/textStyles"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          typeset={typeset}
+          assets={assets}
+          textstyles={textstyles}
+          component={TextStyles}
+        />
 
-            <PrivateRoute
-              exact
-              path="/project/:id/edit/textStyles/new/:styleId?"
-              user={user}
-              toggleMenu={toggleMenu}
-              menuIsOpen={menuIsOpen}
-              colorPalette={colorPalette}
-              typeset={typeset}
-              assets={assets}
-              textstyles={textstyles}
-              addTextStyle={addTextStyle}
-              component={NewTextStyle}
-            />
-          </Switch>
-        )}
-
-        {!user?.id && (
-          <>
-            <Switch>
-              <Route
-                exact
-                path="/login"
-                render={(match) => <Login {...match} />}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={(match) => <Signup {...match} />}
-              />
-              <Route exact path="/" component={LandingPage} />
-
-              <Route
-                exact
-                path="/project/:id"
-                user={user}
-                colorPalette={colorPalette}
-                typeset={typeset}
-                assets={assets}
-                textstyles={textstyles}
-                projectTitle={projectTitle}
-                component={ReadProject}
-              />
-            </Switch>
-          </>
-        )}
-      </>
+        <PrivateRoute
+          exact
+          path="/project/:id/edit/textStyles/new/:styleId?"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          colorPalette={colorPalette}
+          typeset={typeset}
+          assets={assets}
+          textstyles={textstyles}
+          addTextStyle={addTextStyle}
+          component={NewTextStyle}
+        />
+      </Switch>
     </div>
   );
 };

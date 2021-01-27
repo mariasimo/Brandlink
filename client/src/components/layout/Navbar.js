@@ -7,7 +7,6 @@ const authService = new AuthService();
 
 const Navbar = () => {
   const { user } = useAuthContext();
-  console.log(user);
 
   return (
     <header className="header">
@@ -30,15 +29,6 @@ const Navbar = () => {
 const LoggedOutNav = ({ username }) => {
   return (
     <ul>
-      <li>
-        <Link to={`/panel/${username}`} className="projects-link">
-          <img
-            src={`${process.env.REACT_APP_URL}/back.svg`}
-            alt="go back"
-          ></img>
-          <span>Back to projects</span>
-        </Link>
-      </li>
       <li>
         <Link to="/signup" className="btn">
           Signup
