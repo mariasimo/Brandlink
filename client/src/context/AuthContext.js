@@ -9,14 +9,20 @@ const AuthContext = createContext();
 
 const initialState = {};
 const reducer = (state = {}, action) => {
+  console.log(action);
+
   if (action.type === "SET_USER") {
     return { ...state, ...action.payload };
+  }
+  if (action.type === "LOGOUT_USER") {
+    return {};
   }
   return state;
 };
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}
@@ -35,8 +41,14 @@ const useAuthContext = () => {
     },
     [dispatch]
   );
+  const logoutUser = useCallback(
+    (user) => {
+      dispatch({ type: "LOGOUT_USER" });
+    },
+    [dispatch]
+  );
 
-  return { state, setAuthUser };
+  return { user: state, setAuthUser, logoutUser };
 };
 
 export { AuthProvider, useAuthContext };

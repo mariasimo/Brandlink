@@ -16,7 +16,6 @@ const Signup = ({ history }) => {
   const { setAuthUser } = useAuthContext();
 
   const handleSubmit = (e) => {
-    // const { setLoggedUser } = useAuthContextDispatch()
     e.preventDefault();
     clear();
 
