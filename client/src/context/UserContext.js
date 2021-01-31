@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 
-import axios from "axios";
+import useAuthService from "../services/AuthService";
 
 const UserState = createContext();
 const UserDispatch = createContext();
@@ -46,7 +46,6 @@ const reducer = (state = initState, action) => {
     };
   }
   if (action.type === LOGOUT_USER) {
-    localStorage.removeItem("sessionUser");
     return initState;
   }
   return state;
@@ -71,6 +70,7 @@ const useAsyncReducer = (reducer, initState) => {
 
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useAsyncReducer(reducer, initState);
+  const asyncMiddlewares = useAuthService(dispatch);
   const { user } = state;
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserState.Provider value={{ state }}>
-      <UserDispatch.Provider value={{ dispatch }}>
+      <UserDispatch.Provider value={{ dispatch, ...asyncMiddlewares }}>
         {children}
       </UserDispatch.Provider>
     </UserState.Provider>
@@ -91,104 +91,32 @@ const UserProvider = ({ children }) => {
 const useUserState = () => {
   const { state } = useContext(UserState);
   if (!state) throw new Error(`seems your using this hook out of context`);
-
   return state;
 };
+
 const useUserActions = () => {
-  const { dispatch } = useContext(UserDispatch);
+  const {
+    dispatch,
+    logInMiddleware,
+    signUpMiddleware,
+    logOutMiddleware,
+  } = useContext(UserDispatch);
+
   if (!dispatch) throw new Error(`seems your using this hook out of context`);
 
-  const registerUser = useCallback(
-    async (credentials) => {
-      dispatch({ type: "LOADING" });
-
-      try {
-        const response = await axios
-          .create({
-            baseURL: `${process.env.REACT_APP_API_URL}`,
-            withCredentials: true,
-          })
-          .post("/signup", credentials);
-        dispatch({
-          type: "SET_USER",
-          payload: { user: response.data },
-        });
-      } catch (err) {
-        dispatch({
-          type: "ERROR",
-          payload: { error: err.response.data.message },
-        });
-      }
-    },
-    [dispatch]
-  );
-
-  const fetchUser = useCallback(
-    async (credentials) => {
-      dispatch({ type: "LOADING" });
-
-      try {
-        const response = await axios
-          .create({
-            baseURL: `${process.env.REACT_APP_API_URL}`,
-            withCredentials: true,
-          })
-          .post("/login", credentials);
-        dispatch({
-          type: "SET_USER",
-          payload: { user: response.data },
-        });
-      } catch (err) {
-        dispatch({
-          type: "ERROR",
-          payload: { error: err.response.data.message },
-        });
-      }
-    },
-    [dispatch]
-  );
-
   const signUpUser = useCallback(
-    (credentials) => dispatch(() => registerUser(credentials)),
-    [dispatch, registerUser]
+    (credentials) => dispatch(() => signUpMiddleware(credentials)),
+    [dispatch, signUpMiddleware]
   );
 
   const logInUser = useCallback(
-    (credentials) => dispatch(() => fetchUser(credentials)),
-    [dispatch, fetchUser]
+    (credentials) => dispatch(() => logInMiddleware(credentials)),
+    [dispatch, logInMiddleware]
   );
 
-  const logOutUser = useCallback(
-    (_) => {
-      dispatch({ type: LOGOUT_USER });
-    },
-    [dispatch]
-  );
-
-  // const setLoggedUser = (user) => {
-  //   if (user === undefined || !user.hasOwnProperty("id")) return;
-  //   setAuthUser(user);
-
-  //   if (user.activeProject) {
-  //     projectService.displayProject(user.id).then((projectData) => {
-  //       // setProject({
-  //       //   title: projectData.title,
-  //       //   colorPalette: projectData.colorPalette || [],
-  //       //   typeset: projectData.typeset,
-  //       //   assets: projectData.assets,
-  //       //   textstyles: projectData.textstyles,
-  //       // });
-  //       // addFontsLinks(projectData.typeset);
-  //     });
-  //   }
-  // };
-
-  // const setCurrentProject = useCallback(
-  //   (projectId) => {
-  //     dispatch({ type: "SET_ACTIVE_PROJECT", payload: projectId });
-  //   },
-  //   [dispatch]
-  // );
+  const logOutUser = useCallback(() => {
+    dispatch(logOutMiddleware);
+  }, [dispatch, logOutMiddleware]);
 
   return { logInUser, signUpUser, logOutUser };
 };

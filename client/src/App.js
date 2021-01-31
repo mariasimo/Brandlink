@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { Switch, Route } from "react-router-dom";
-import AuthService from "./services/AuthService";
 
 import Signup from "./components/auth/Signup";
 import Profile from "./components/auth/Profile";
@@ -51,20 +50,18 @@ const App = (props) => {
           redirectPath="/login"
           component={Profile}
         />
+        <PrivateRoute
+          exact
+          path="/project/new"
+          component={NewProject}
+          username={user?.username}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+        />
       </Switch>
 
       {user?.id && (
         <Switch>
-          <PrivateRoute
-            exact
-            path="/project/new"
-            component={NewProject}
-            // user={user}
-            // toggleMenu={toggleMenu}
-            // createProject={createProject}
-            // menuIsOpen={menuIsOpen}
-          />
-
           <PrivateRoute
             exact
             path="/project/:id/edit"

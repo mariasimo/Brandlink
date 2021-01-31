@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import ProjectService from '../../services/ProjectService';
-import BrandHeader from '../layout/BrandHeader';
-import SideMenu from '../layout/SideMenu';
-import MainContent from '../layout/MainContent';
-import AuthService from "../../services/AuthService";
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import ProjectService from "../../services/ProjectService";
+import BrandHeader from "../layout/BrandHeader";
+import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
 
 export default class ColorPalette extends Component {
   constructor(props) {
     super(props);
-    this.authService = new AuthService();
+    // this.authService = new AuthService();
     this.projectService = new ProjectService();
     this.state = {
-      path: '',
-      title: '',
-      colorPalette: null
+      path: "",
+      title: "",
+      colorPalette: null,
     };
   }
 
   render() {
     const { id } = this.props.match.params;
     const { colorPalette, typeset, assets } = this.props;
-    
+
     return (
       <>
         <SideMenu
@@ -30,33 +28,33 @@ export default class ColorPalette extends Component {
           menuIsOpen={this.props.menuIsOpen}
         >
           <BrandHeader
-            title='Color Palette'
+            title="Color Palette"
             {...this.props}
             url={`/project/${id}/edit`}
           ></BrandHeader>
 
-          <div className='content'>
-            <div className='color-palette columns is-multiline'>
+          <div className="content">
+            <div className="color-palette columns is-multiline">
               {colorPalette &&
-                colorPalette.map(color => (
-                  <div className='column is-full box' key={color._id}>
-                    <div className='color'>
+                colorPalette.map((color) => (
+                  <div className="column is-full box" key={color._id}>
+                    <div className="color">
                       <div
-                        className='circle-color'
+                        className="circle-color"
                         style={{ backgroundColor: color.hexadecimal }}
                       ></div>
                       <span>{color.name}</span>
                     </div>
-                    <div className='is-grouped'>
+                    <div className="is-grouped">
                       <Link
                         to={`/project/${id}/edit/colorPalette/new/${color._id}`}
-                        className='button is-rounded is-small is-success is-outlined'
+                        className="button is-rounded is-small is-success is-outlined"
                       >
                         Edit
                       </Link>
                       <button
                         onClick={() => this.props.deleteColor(color._id)}
-                        className='button is-rounded is-small is-danger is-outlined'
+                        className="button is-rounded is-small is-danger is-outlined"
                       >
                         Delete
                       </button>
@@ -72,10 +70,10 @@ export default class ColorPalette extends Component {
                 ))}
             </div>
 
-            <div className='control'>
+            <div className="control">
               <Link
                 to={`/project/${id}/edit/colorPalette/new`}
-                className='button is-link'
+                className="button is-link"
               >
                 Add new color
               </Link>
@@ -91,10 +89,7 @@ export default class ColorPalette extends Component {
           typeset={typeset}
           assets={assets}
           permissionToEdit
-
-        >
-          
-        </MainContent>
+        ></MainContent>
       </>
     );
   }

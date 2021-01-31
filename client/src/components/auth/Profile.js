@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useUserActions, useUserState } from "../../context/UserContext";
-import AuthService from "../../services/AuthService";
-
-const authService = new AuthService();
 
 const Profile = () => {
   const { user } = useUserState();
@@ -13,9 +10,9 @@ const Profile = () => {
   useEffect(() => {
     const updateUser = () => {
       if (uploadedPicture) {
-        authService
-          .edit({ id: user.id, picture: uploadedPicture })
-          .then((updateUser) => setAuthUser(updateUser));
+        // authService
+        //   .edit({ id: user.id, picture: uploadedPicture })
+        //   .then((updateUser) => setAuthUser(updateUser));
       }
     };
     updateUser();
@@ -24,10 +21,10 @@ const Profile = () => {
   const handleUpload = (e) => {
     const uploadData = new FormData();
     uploadData.append("picture", e.target.files[0]);
-    authService.upload(uploadData).then(
-      (data) => setUploadedPicture(data.secure_url),
-      (error) => console.error(error)
-    );
+    // authService.upload(uploadData).then(
+    //   (data) => setUploadedPicture(data.secure_url),
+    //   (error) => console.error(error)
+    // );
   };
 
   return (

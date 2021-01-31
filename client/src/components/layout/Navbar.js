@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useUserActions, useUserState } from "../../context/UserContext";
-import AuthService from "../../services/AuthService";
-
-const authService = new AuthService();
 
 const Navbar = () => {
   const { user } = useUserState();
@@ -47,13 +44,6 @@ const LoggedInNav = ({ id, username, picture }) => {
   const { logOutUser } = useUserActions();
   const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";
 
-  const logout = () => {
-    authService
-      .logout()
-      .then((_) => logOutUser())
-      .catch((err) => console.log(err));
-  };
-
   return (
     <ul>
       <li>
@@ -71,7 +61,7 @@ const LoggedInNav = ({ id, username, picture }) => {
       </li>
 
       <li>
-        <Link to="/" onClick={logout} className="btn">
+        <Link to="/" onClick={logOutUser} className="btn">
           Logout
         </Link>
       </li>

@@ -48,20 +48,12 @@ class ProjectService {
       .catch((error) => console.error(error));
   };
 
-  // displayColorPalette = userId => {
-  //   return this.instance.get(`/colorPalette/${userId}`)
-  //   .then(res =>  {
-  //     return Promise.resolve(res.data)
-  //   })
-  //   .catch(error => console.error(error));
-  // }
-
-  createProject = (project) => {
-    return this.instance
-      .post("/new", project)
-      .then((res) => Promise.resolve(res.data))
-      .catch((error) => console.error(error));
-  };
+  // createProject = (project) => {
+  //   return this.instance
+  //     .post("/new", project)
+  //     .then((res) => Promise.resolve(res.data))
+  //     .catch((error) => console.error(error));
+  // };
 
   deleteProject = (projectId) => {
     return this.instance
