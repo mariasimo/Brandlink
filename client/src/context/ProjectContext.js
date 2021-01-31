@@ -22,7 +22,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  console.log(state, action);
   if (action.type === LOADING) {
     return {
       ...state,
@@ -60,7 +59,6 @@ const reducer = (state = initialState, action) => {
 const useAsyncReducer = (reducer, initState) => {
   const [state, dispatch] = useReducer(reducer, initState);
 
-  console.log(state);
   const asyncDispatch = useCallback(
     (action) => {
       if (typeof action === "function") {
@@ -95,7 +93,12 @@ const useProjectsState = () => {
 };
 
 const useProjectsActions = () => {
-  const { dispatch, fetchProjectsMiddleware } = useContext(ProjectDispatch);
+  const {
+    dispatch,
+    fetchProjectsMiddleware,
+    deleteProjectMiddleware,
+  } = useContext(ProjectDispatch);
+
   if (!dispatch) throw new Error(`seems your using this hook out of context`);
 
   const fetchCurrentProject = useCallback(
@@ -105,12 +108,17 @@ const useProjectsActions = () => {
     [dispatch]
   );
 
+  const deleteProject = useCallback(
+    (projectId) => dispatch(() => deleteProjectMiddleware(projectId)),
+    [dispatch, deleteProjectMiddleware]
+  );
+
   const fetchProjects = useCallback(() => dispatch(fetchProjectsMiddleware), [
     dispatch,
     fetchProjectsMiddleware,
   ]);
 
-  return { fetchCurrentProject, fetchProjects };
+  return { fetchCurrentProject, fetchProjects, deleteProject };
 };
 
 export { ProjectProvider, useProjectsState, useProjectsActions };

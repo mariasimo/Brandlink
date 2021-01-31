@@ -1,32 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-export default class Project extends Component {
-  render() {
-    const { project } = this.props;
+const Project = ({ path, title, id, deleteProject, username }) => {
+  return (
+    <div className="project-card card">
+      <Link to={`/project/${path}`}>
+        <h2 className="title is-4 has-text-primary">{title}</h2>
+      </Link>
+      <Link
+        to={`/${username}/project/${id}/edit`}
+        className="button is-small is-rounded"
+        onClick={() => {
+          // setActiveProject(id);
+        }}
+      >
+        Edit
+      </Link>
+      <button
+        className="button is-small is-rounded"
+        onClick={() => deleteProject(id)}
+      >
+        Delete
+      </button>
+    </div>
+  );
+};
 
-    return (
-      <div className="project-card card">
-        <Link to={`/project/${project.path}`}>
-          <h2 className="title is-4 has-text-primary">{project.title}</h2>
-        </Link>
-        <Link
-          to={`/project/${project._id}/edit`}
-          className="button is-small is-rounded"
-          onClick={() => {
-            this.props.setActiveProject(project._id);
-          }}
-        >
-          Edit
-        </Link>
-        <button
-          className="button is-small is-rounded"
-          onClick={() => this.props.deleteProject(project)}
-        >
-          Delete
-        </button>
-        {/* <button className="button is-small is-rounded" onClick={() => this.props.setPath(project.path)}>SetPath to {project.path}</button> */}
-      </div>
-    );
-  }
-}
+export default Project;

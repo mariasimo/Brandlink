@@ -23,7 +23,35 @@ const useProjectsService = (state, dispatch) => {
     }
   }, [dispatch]);
 
-  return { fetchProjectsMiddleware };
+  const deleteProjectMiddleware = useCallback(
+    async (projectId) => {
+      dispatch({ type: "LOADING" });
+      try {
+        const response = await instance.delete(`/${projectId}`);
+        dispatch({
+          type: "FETCH_ALL_USER_PROJECTS",
+          payload: { projects: response.data },
+        });
+      } catch (err) {
+        dispatch({
+          type: "ERROR",
+          payload: { error: err.response.data.message },
+        });
+      }
+    },
+    [dispatch]
+  );
+
+  //   deleteProject = (projectId) => {
+  // return this.instance
+  //   .delete(`/${projectId}`)
+  //   .then((res) => {
+  //     return Promise.resolve(res.data);
+  //   })
+  //   .catch((error) => console.error(error));
+  //   };
+
+  return { fetchProjectsMiddleware, deleteProjectMiddleware };
 };
 
 export default useProjectsService;

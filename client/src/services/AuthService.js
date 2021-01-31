@@ -55,7 +55,6 @@ const useAuthService = (state, dispatch) => {
         type: "LOGOUT_USER",
       });
     } catch (err) {
-      console.log(err);
       dispatch({
         type: "ERROR",
         payload: { error: err.response.data.message },

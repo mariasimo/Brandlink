@@ -5,10 +5,14 @@ import {
   useProjectsActions,
   useProjectsState,
 } from "../../context/ProjectContext";
+import { useUserState } from "../../context/UserContext";
 
 const ProjectList = () => {
-  const { fetchProjects } = useProjectsActions();
+  const { fetchProjects, deleteProject } = useProjectsActions();
   const { projects, loading, error } = useProjectsState();
+  const {
+    user: { username },
+  } = useUserState();
 
   useEffect(() => {
     fetchProjects();
@@ -34,7 +38,12 @@ const ProjectList = () => {
             {!loading && projects && (
               <div className="column projects-wrapper">
                 {projects.map((project, idx) => (
-                  <Project key={idx} project={project} />
+                  <Project
+                    key={idx}
+                    {...project}
+                    username={username}
+                    deleteProject={deleteProject}
+                  />
                 ))}
 
                 <Link to="/project/new" className="project-card">
