@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import ProjectService from "../../services/ProjectService";
 import { Link } from "react-router-dom";
 import Project from "./Project";
+import { useUserState } from "../../context/UserContext";
 
 const projectService = new ProjectService();
 
 const ProjectList = () => {
   const [projects, setProjects] = useState(null);
-
+  const { user } = useUserState();
   useEffect(() => {
     async function fetchProjects() {
       const projects = await projectService.fetchProjects();
+      console.log(projects);
       setProjects(projects);
     }
 
     fetchProjects();
-  }, []);
+  }, [user.projects]);
 
   return (
     <div>

@@ -26,7 +26,7 @@ const initState = {
 const reducer = (state = initState, action) => {
   if (action.type === LOADING) {
     return {
-      user: null,
+      user: state.user,
       loading: true,
       error: null,
     };
@@ -40,13 +40,17 @@ const reducer = (state = initState, action) => {
   }
   if (action.type === ERROR) {
     return {
-      user: null,
+      user: state.user,
       loading: false,
       error: action.payload.error,
     };
   }
   if (action.type === LOGOUT_USER) {
-    return initState;
+    return {
+      user: null,
+      loading: false,
+      error: null,
+    };
   }
   return state;
 };
@@ -70,8 +74,10 @@ const useAsyncReducer = (reducer, initState) => {
 
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useAsyncReducer(reducer, initState);
-  const asyncMiddlewares = useAuthService(dispatch);
+  const asyncMiddlewares = useAuthService(state, dispatch);
   const { user } = state;
+
+  console.log(state);
 
   useEffect(() => {
     if (user?.id) {
@@ -100,6 +106,7 @@ const useUserActions = () => {
     logInMiddleware,
     signUpMiddleware,
     logOutMiddleware,
+    addNewProjectMiddleware,
   } = useContext(UserDispatch);
 
   if (!dispatch) throw new Error(`seems your using this hook out of context`);
@@ -118,7 +125,12 @@ const useUserActions = () => {
     dispatch(logOutMiddleware);
   }, [dispatch, logOutMiddleware]);
 
-  return { logInUser, signUpUser, logOutUser };
+  const addNewProjectToUser = useCallback(
+    (project) => dispatch(() => addNewProjectMiddleware(project)),
+    [dispatch, addNewProjectMiddleware]
+  );
+
+  return { logInUser, signUpUser, logOutUser, addNewProjectToUser };
 };
 
 export { UserProvider, useUserState, useUserActions };

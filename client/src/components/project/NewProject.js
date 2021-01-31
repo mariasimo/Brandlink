@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideMenu from "../layout/SideMenu";
 import BrandHeader from "../layout/BrandHeader";
 import useSetState from "../../hooks/useSetState";
+import { useUserActions, useUserState } from "../../context/UserContext";
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   title: "",
@@ -10,6 +12,22 @@ const initialState = {
 
 const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
   const [newProject, setNewProject] = useSetState(initialState);
+  const { addNewProjectToUser } = useUserActions();
+  const {
+    user: { projects },
+    loading,
+    error,
+  } = useUserState();
+  const [numberOfProjects, setNumberOfProjects] = useState();
+  const history = useHistory();
+
+  useEffect(() => setNumberOfProjects(projects.length), []);
+  useEffect(() => {
+    console.log(projects.length, numberOfProjects, error);
+    if (projects.length > numberOfProjects && !error) {
+      history.push(`/panel/${username}`);
+    }
+  }, [numberOfProjects, projects.length, error, history, username]);
 
   const handleBlur = (e) => {
     let pathSuggestion = e.target.value.toLowerCase().replace(/ /g, "-");
@@ -22,9 +40,8 @@ const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
   };
 
   const handleSubmit = (e) => {
-    const { title, path } = newProject;
     e.preventDefault();
-    console.log(title, path);
+    addNewProjectToUser(newProject);
   };
 
   const { title, path } = newProject;
@@ -75,6 +92,8 @@ const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
               value="Start project"
             ></input>
           </div>
+          {error && error}
+          {loading && "loading"}
         </form>
       </SideMenu>
 
@@ -90,105 +109,3 @@ const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
 };
 
 export default NewProject;
-
-// export default class NewProject extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.projectService = new ProjectService();
-
-//     this.state = {
-//       //todo: add remaining fields
-//       title: "",
-//       path: "",
-//       colorPalette: null,
-//     };
-//   }
-
-//   handleBlur = (e) => {
-//     let pathSuggestion = e.target.value.toLowerCase().replace(/ /g, "-");
-//     this.setState({ ...this.setState, path: pathSuggestion });
-//   };
-
-//   handleChange = (e) => {
-//     const { name, value } = e.target;
-//     this.setState({ ...this.state, [name]: value });
-//   };
-
-//   handleSubmit = (e) => {
-//     const { title, path } = this.state;
-//     const { history } = this.props;
-//     e.preventDefault();
-
-//     createProject({ title, path, history });
-//   };
-
-//   render() {
-//     const { title, path } = this.state;
-
-//     return (
-//       <div class="new-project-section">
-//         <SideMenu
-//           toggleMenu={toggleMenu}
-//           menuIsOpen={menuIsOpen}
-//         >
-//           <BrandHeader
-//             title="New Project"
-//             {...this.props}
-//             url={`/panel/${user.username}`}
-//           ></BrandHeader>
-
-//           <form onSubmit={this.handleSubmit}>
-//             <div className="field">
-//               <label htmlFor="title" className="label">
-//                 Title:
-//               </label>
-//               <div className="control">
-//                 <input
-//                   type="text"
-//                   name="title"
-//                   className="input"
-//                   value={title}
-//                   placeholder="Introduce the title for your project"
-//                   onChange={this.handleChange}
-//                   onBlur={this.handleBlur}
-//                 />
-//               </div>
-//             </div>
-
-//             <div className="field">
-//               <label htmlFor="path" className="label">
-//                 Path:
-//               </label>
-//               <div className="control">
-//                 <input
-//                   type="text"
-//                   name="path"
-//                   className="input"
-//                   value={path}
-//                   placeholder="Introduce the url for your project"
-//                   onChange={this.handleChange}
-//                 />
-//               </div>
-//             </div>
-
-//             <div className="control">
-//               <input
-//                 type="submit"
-//                 className="button is-link is-rounded"
-//                 value="Start project"
-//               ></input>
-//             </div>
-//           </form>
-//         </SideMenu>
-
-//         <div
-//           className={`main-content section ${menuIsOpen} new-project-main is-paddingless`}
-//         >
-//           <section className="section rows-container is-paddingless	">
-//             <img src="/new-project.png" alt="New Project" />
-//           </section>
-//         </div>
-//       </div>
-//     );
-//   }
-// }

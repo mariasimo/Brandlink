@@ -6,7 +6,7 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-const useAuthService = (dispatch) => {
+const useAuthService = (state, dispatch) => {
   const signUpMiddleware = useCallback(
     async (credentials) => {
       dispatch({ type: "LOADING" });
@@ -51,11 +51,11 @@ const useAuthService = (dispatch) => {
     try {
       const response = await instance.post("/logout");
       if (response) localStorage.removeItem("sessionUser");
-
       dispatch({
         type: "LOGOUT_USER",
       });
     } catch (err) {
+      console.log(err);
       dispatch({
         type: "ERROR",
         payload: { error: err.response.data.message },
@@ -63,7 +63,38 @@ const useAuthService = (dispatch) => {
     }
   }, [dispatch]);
 
-  return { signUpMiddleware, logInMiddleware, logOutMiddleware };
+  const addNewProjectMiddleware = useCallback(
+    async (credentials) => {
+      dispatch({ type: "LOADING" });
+
+      try {
+        const response = await instance.post("/new-project", credentials);
+
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            user: {
+              ...state.user,
+              projects: [...state.user.projects, response.data],
+            },
+          },
+        });
+      } catch (err) {
+        dispatch({
+          type: "ERROR",
+          payload: { error: err.response.data.message },
+        });
+      }
+    },
+    [dispatch, state.user]
+  );
+
+  return {
+    signUpMiddleware,
+    logInMiddleware,
+    logOutMiddleware,
+    addNewProjectMiddleware,
+  };
 };
 
 export default useAuthService;
