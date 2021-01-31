@@ -15,10 +15,6 @@ const ProjectList = ({ setActiveProject }) => {
     }
 
     fetchProjects();
-    // projectService
-    //   .fetchProjects()
-    //   .then((projects) => setProjects(projects))
-    //   .catch((err) => console.log(err.message));
   }, []);
 
   return (

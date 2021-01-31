@@ -21,39 +21,32 @@ import ProjectService from "./services/ProjectService";
 import Assets from "./components/brandPresets/Assets";
 import TextStyles from "./components/brandPresets/TextStyles";
 import NewTextStyle from "./components/brandPresets/NewTextStyle";
-import { useUserActions, useUserState } from "./context/UserContext";
-
-const authService = new AuthService();
-const projectService = new ProjectService();
+import { useUserState } from "./context/UserContext";
 
 const App = (props) => {
-  const user = useUserState();
-  const { setAuthUser, setCurrentProject } = useUserActions();
+  const { user } = useUserState();
 
   // move this into a UIContext??
   const [menuIsOpen, setMenuIsOpen] = useState("show");
   const toggleMenu = () =>
     setMenuIsOpen(menuIsOpen === "show" ? "hide" : "show");
 
-  const setActiveProject = (path) => {
-    const { id } = user;
-    authService.setActiveProject({ path, id }).then((activeProject) => {
-      console.log(activeProject);
-      // dont know what is this
-      setCurrentProject(activeProject);
-    });
-  };
-
   return (
     <div className="App">
       <Navbar />
-
       <Switch>
         <Route exact path="/login" render={(match) => <Login {...match} />} />
         <Route exact path="/signup" render={(match) => <Signup {...match} />} />
         <Route exact path="/" component={LandingPage} />
+        <PrivateRoute
+          exact
+          path="/panel/:username"
+          redirectPath="/login"
+          component={ProjectList}
+        />
       </Switch>
-      {user.id && (
+
+      {user?.id && (
         <Switch>
           <PrivateRoute
             exact
@@ -61,14 +54,6 @@ const App = (props) => {
             user={user}
             redirectPath="/login"
             component={Profile}
-          />
-
-          <PrivateRoute
-            exact
-            path="/panel/:username"
-            redirectPath="/login"
-            component={ProjectList}
-            // setActiveProject={setActiveProject}
           />
 
           <PrivateRoute

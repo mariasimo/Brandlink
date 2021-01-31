@@ -5,7 +5,7 @@ import AuthService from "../../services/AuthService";
 const authService = new AuthService();
 
 const Profile = () => {
-  const user = useUserState();
+  const { user } = useUserState();
   const { setAuthUser } = useUserActions();
   const [uploadedPicture, setUploadedPicture] = useState();
   const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";

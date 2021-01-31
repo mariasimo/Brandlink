@@ -3,11 +3,11 @@ import { Route, Redirect } from "react-router-dom";
 import { useUserState } from "../context/UserContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const user = useUserState();
+  const { user } = useUserState();
   return (
     <Route
       render={(props) =>
-        user.id ? (
+        user?.id ? (
           <Component {...props} {...rest} />
         ) : (
           <Redirect to={rest.redirectPath} />

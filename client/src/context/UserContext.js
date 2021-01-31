@@ -3,8 +3,9 @@ import React, {
   useContext,
   useReducer,
   useCallback,
+  useEffect,
 } from "react";
-import AuthService from "../services/AuthService";
+
 import axios from "axios";
 
 const UserState = createContext();
@@ -13,13 +14,16 @@ const UserDispatch = createContext();
 const LOADING = "LOADING";
 const SET_USER = "SET_USER";
 const ERROR = "ERROR";
+const LOGOUT_USER = "LOGOUT_USER";
 
+const storedUser = JSON.parse(localStorage.getItem("sessionUser"));
 const initState = {
-  user: null,
+  user: storedUser || null,
   loading: false,
   error: null,
 };
-const reducer = (state, action) => {
+
+const reducer = (state = initState, action) => {
   if (action.type === LOADING) {
     return {
       user: null,
@@ -41,8 +45,11 @@ const reducer = (state, action) => {
       error: action.payload.error,
     };
   }
-
-  throw new Error(`Unhandled action type: ${action.type}`);
+  if (action.type === LOGOUT_USER) {
+    localStorage.removeItem("sessionUser");
+    return initState;
+  }
+  return state;
 };
 
 const useAsyncReducer = (reducer, initState) => {
@@ -64,9 +71,16 @@ const useAsyncReducer = (reducer, initState) => {
 
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useAsyncReducer(reducer, initState);
+  const { user } = state;
+
+  useEffect(() => {
+    if (user?.id) {
+      localStorage.setItem("sessionUser", JSON.stringify(user));
+    }
+  }, [user]);
 
   return (
-    <UserState.Provider value={{ user: state }}>
+    <UserState.Provider value={{ state }}>
       <UserDispatch.Provider value={{ dispatch }}>
         {children}
       </UserDispatch.Provider>
@@ -75,27 +89,17 @@ const UserProvider = ({ children }) => {
 };
 
 const useUserState = () => {
-  const { user } = useContext(UserState);
-  if (!user) throw new Error(`seems your using this hook out of context`);
+  const { state } = useContext(UserState);
+  if (!state) throw new Error(`seems your using this hook out of context`);
 
-  return user;
+  return state;
 };
-
-const authService = new AuthService();
 const useUserActions = () => {
   const { dispatch } = useContext(UserDispatch);
   if (!dispatch) throw new Error(`seems your using this hook out of context`);
 
-  // const setAuthUser = useCallback(
-  //   (user) => {
-  //     dispatch({ type: SET_USER, payload: user });
-  //   },
-  //   [dispatch]
-  // );
-
-  const fetchUser = useCallback(
+  const registerUser = useCallback(
     async (credentials) => {
-      console.log(credentials);
       dispatch({ type: "LOADING" });
 
       try {
@@ -110,7 +114,6 @@ const useUserActions = () => {
           payload: { user: response.data },
         });
       } catch (err) {
-        console.log(err.response.data.message);
         dispatch({
           type: "ERROR",
           payload: { error: err.response.data.message },
@@ -120,9 +123,46 @@ const useUserActions = () => {
     [dispatch]
   );
 
-  const setAuthUser = useCallback(
+  const fetchUser = useCallback(
+    async (credentials) => {
+      dispatch({ type: "LOADING" });
+
+      try {
+        const response = await axios
+          .create({
+            baseURL: `${process.env.REACT_APP_API_URL}`,
+            withCredentials: true,
+          })
+          .post("/login", credentials);
+        dispatch({
+          type: "SET_USER",
+          payload: { user: response.data },
+        });
+      } catch (err) {
+        dispatch({
+          type: "ERROR",
+          payload: { error: err.response.data.message },
+        });
+      }
+    },
+    [dispatch]
+  );
+
+  const signUpUser = useCallback(
+    (credentials) => dispatch(() => registerUser(credentials)),
+    [dispatch, registerUser]
+  );
+
+  const logInUser = useCallback(
     (credentials) => dispatch(() => fetchUser(credentials)),
     [dispatch, fetchUser]
+  );
+
+  const logOutUser = useCallback(
+    (_) => {
+      dispatch({ type: LOGOUT_USER });
+    },
+    [dispatch]
   );
 
   // const setLoggedUser = (user) => {
@@ -143,12 +183,6 @@ const useUserActions = () => {
   //   }
   // };
 
-  // const logoutUser = useCallback(
-  //   (_) => {
-  //     dispatch({ type: "LOGOUT_USER" });
-  //   },
-  //   [dispatch]
-  // );
   // const setCurrentProject = useCallback(
   //   (projectId) => {
   //     dispatch({ type: "SET_ACTIVE_PROJECT", payload: projectId });
@@ -156,7 +190,7 @@ const useUserActions = () => {
   //   [dispatch]
   // );
 
-  return { dispatch, fetchUser, setAuthUser };
+  return { logInUser, signUpUser, logOutUser };
 };
 
 export { UserProvider, useUserState, useUserActions };

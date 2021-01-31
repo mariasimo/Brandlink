@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useUserActions, useUserState } from "../../context/UserContext";
 import useSetState from "../../hooks/useSetState";
-import AuthService from "../../services/AuthService";
 import Hero from "../layout/Hero";
 import { useHistory } from "react-router-dom";
 
@@ -9,14 +8,13 @@ const initialState = {
   username: "",
   password: "",
 };
+
 const Signup = () => {
   const [credentials, setCredentials] = useSetState(initialState);
   const { username, password } = credentials;
   const { user, loading, error } = useUserState();
-  const { setAuthUser } = useUserActions();
+  const { signUpUser } = useUserActions();
   const history = useHistory();
-
-  console.log(user, loading, error);
 
   useEffect(() => {
     if (user?.username) history.push(`/panel/${user.username}`);
@@ -25,7 +23,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     clear();
-    setAuthUser(credentials);
+    signUpUser(credentials);
   };
 
   const handleChange = (e) => {

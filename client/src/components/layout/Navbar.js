@@ -6,7 +6,7 @@ import AuthService from "../../services/AuthService";
 const authService = new AuthService();
 
 const Navbar = () => {
-  const user = useUserState();
+  const { user } = useUserState();
 
   return (
     <header className="header">
@@ -19,8 +19,8 @@ const Navbar = () => {
       </Link>
 
       <nav className="menu" role="navigation" aria-label="main navigation">
-        {!user.id && <LoggedOutNav {...user} />}
-        {user.id && <LoggedInNav {...user} />}
+        {!user?.id && <LoggedOutNav {...user} />}
+        {user?.id && <LoggedInNav {...user} />}
       </nav>
     </header>
   );
@@ -44,13 +44,13 @@ const LoggedOutNav = ({ username }) => {
 };
 
 const LoggedInNav = ({ id, username, picture }) => {
-  const { logoutUser } = useUserActions();
+  const { logOutUser } = useUserActions();
   const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";
 
   const logout = () => {
     authService
       .logout()
-      .then((_) => logoutUser())
+      .then((_) => logOutUser())
       .catch((err) => console.log(err));
   };
 
