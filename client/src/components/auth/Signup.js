@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuthContext } from "../../context/AuthContext";
+import { useUserActions } from "../../context/UserContext";
 import useSetState from "../../hooks/useSetState";
 import AuthService from "../../services/AuthService";
 import Hero from "../layout/Hero";
@@ -13,7 +13,7 @@ const initialState = {
 const Signup = ({ history }) => {
   const [credentials, setCredentials] = useSetState(initialState);
   const { username, password } = credentials;
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useUserActions();
 
   const handleSubmit = (e) => {
     e.preventDefault();

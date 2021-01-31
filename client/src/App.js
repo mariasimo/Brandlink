@@ -21,13 +21,13 @@ import ProjectService from "./services/ProjectService";
 import Assets from "./components/brandPresets/Assets";
 import TextStyles from "./components/brandPresets/TextStyles";
 import NewTextStyle from "./components/brandPresets/NewTextStyle";
-import ReadProject from "./components/project/ReadProject";
-import { useAuthContext } from "./context/AuthContext";
+import { useUserActions, useUserState } from "./context/UserContext";
 
-const App = () => {
+const App = (props) => {
   const authService = new AuthService();
   const projectService = new ProjectService();
-  const { user, setAuthUser } = useAuthContext();
+  const user = useUserState();
+  const { setAuthUser, setCurrentProject } = useUserActions();
 
   const [menuIsOpen, setMenuIsOpen] = useState("show");
   const [file, setFile] = useState("");
@@ -48,25 +48,25 @@ const App = () => {
 
     if (user.activeProject) {
       projectService.displayProject(user.id).then((projectData) => {
-        setProject({
-          title: projectData.title,
-          colorPalette: projectData.colorPalette || [],
-          typeset: projectData.typeset,
-          assets: projectData.assets,
-          textstyles: projectData.textstyles,
-        });
-        addFontsLinks(projectData.typeset);
+        // setProject({
+        //   title: projectData.title,
+        //   colorPalette: projectData.colorPalette || [],
+        //   typeset: projectData.typeset,
+        //   assets: projectData.assets,
+        //   textstyles: projectData.textstyles,
+        // });
+        // addFontsLinks(projectData.typeset);
       });
     }
   };
 
   const setActiveProject = (path) => {
     const { id } = user;
-    authService.setActiveProject({ path, id }).then(
-      (activeProject) => console.log(activeProject)
+    authService.setActiveProject({ path, id }).then((activeProject) => {
+      console.log(activeProject);
       // dont know what is this
-      // setUser(activeProject)
-    );
+      setCurrentProject(activeProject);
+    });
   };
 
   const addFontsLinks = (typeset) => {
@@ -120,7 +120,7 @@ const App = () => {
     projectService.deleteColor(colorId).then(
       (project) => {
         // otra vez setear el usuario pa qué
-        // this.setUser(this.state.user);
+        // this.setUser(user);
       },
       (error) => console.error(error.message)
     );
@@ -136,7 +136,7 @@ const App = () => {
         //   fontFamily: '',
         //   typeset: updatedProject.typeset
         // });
-        history.push(`/project/${this.state.user.activeProject}/edit/typeSet`);
+        history.push(`/project/${user.activeProject}/edit/typeSet`);
       },
       (error) => console.error(error)
     );
@@ -145,7 +145,7 @@ const App = () => {
   const deleteType = (typeId) => {
     projectService.deleteType(typeId).then(
       (project) => {
-        // this.setUser(this.state.user);
+        // this.setUser(user);
       },
       (error) => console.log(error.message)
     );
@@ -166,9 +166,7 @@ const App = () => {
         //   letterSpacing: 0,
         //   uppercase: false
         // });
-        history.push(
-          `/project/${this.state.user.activeProject}/edit/textStyles`
-        );
+        history.push(`/project/${user.activeProject}/edit/textStyles`);
       },
       (error) => console.error(error)
     );
@@ -184,7 +182,7 @@ const App = () => {
     projectService
       .uploadAsset({ uploadData, path })
       .then(() => {
-        // this.setUser(this.state.user);
+        // this.setUser(user);
         loadingParent.removeChild(loadingImg);
       })
       .catch((error) => console.log(error));
@@ -193,7 +191,7 @@ const App = () => {
   const deleteAsset = (assetId) => {
     projectService.deleteAsset(assetId).then(
       (project) => {
-        // this.setUser(this.state.user);
+        // this.setUser(user);
       },
       (error) => {
         const { message } = error;
@@ -218,7 +216,7 @@ const App = () => {
         // esto es para limpiar algo??
         // this.setState({ ...this.state, title: '', path: '' });
 
-        history.push(`/panel/${this.state.user.username}`);
+        history.push(`/panel/${user.username}`);
       },
       (error) => console.error(error)
     );
@@ -263,16 +261,13 @@ const App = () => {
   return (
     <div className="App">
       <Navbar />
+      <Switch>
+        <Route exact path="/login" render={(match) => <Login {...match} />} />
+        <Route exact path="/signup" render={(match) => <Signup {...match} />} />
+        <Route exact path="/" component={LandingPage} />
+      </Switch>
       {user.id && (
         <Switch>
-          <Route exact path="/login" render={(match) => <Login {...match} />} />
-          <Route
-            exact
-            path="/signup"
-            render={(match) => <Signup {...match} />}
-          />
-          <Route exact path="/" component={LandingPage} />
-
           <PrivateRoute
             exact
             path="/profile/:id"
@@ -286,6 +281,7 @@ const App = () => {
             path="/panel/:username"
             redirectPath="/login"
             component={ProjectList}
+            setActiveProject={setActiveProject}
           />
 
           <PrivateRoute
@@ -310,6 +306,7 @@ const App = () => {
             textstyles={textstyles}
             projectTitle={projectTitle}
             shareMessage={shareMessage}
+            {...props}
             component={EditProject}
           />
 
@@ -317,6 +314,7 @@ const App = () => {
             exact
             path="/project/:id/edit/colorPalette"
             user={user}
+            activeProject={user.activeProject}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
             colorPalette={colorPalette}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
+import { useUserActions, useUserState } from "../../context/UserContext";
 import AuthService from "../../services/AuthService";
 
 const authService = new AuthService();
 
 const Profile = () => {
-  const { user, setAuthUser } = useAuthContext();
+  const user = useUserState();
+  const { setAuthUser } = useUserActions();
   const [uploadedPicture, setUploadedPicture] = useState();
   const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuthContext } from "../../context/AuthContext";
+import { useUserActions } from "../../context/UserContext";
 import AuthService from "../../services/AuthService";
 import useSetState from "../../hooks/useSetState";
 import Hero from "../layout/Hero";
@@ -14,7 +14,7 @@ const initialState = {
 const Login = ({ history }) => {
   const [credentials, setCredentials] = useSetState(initialState);
   const { username, password } = credentials;
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useUserActions();
 
   const handleLogin = (e) => {
     e.preventDefault();

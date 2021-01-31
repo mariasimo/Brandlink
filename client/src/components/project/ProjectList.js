@@ -5,7 +5,7 @@ import Project from "./Project";
 
 const projectService = new ProjectService();
 
-const ProjectList = () => {
+const ProjectList = ({ setActiveProject }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -44,9 +44,7 @@ const ProjectList = () => {
                     //   this.deleteProject(project._id)
                     // }
                     // setPath={(path) => this.props.setPath(path)}
-                    // setActiveProject={(projectId) =>
-                    //   this.props.setActiveProject(project._id)
-                    // }
+                    setActiveProject={() => setActiveProject(project._id)}
                   />
                 ))
               ) : (

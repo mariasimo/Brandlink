@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
+import { useUserActions, useUserState } from "../../context/UserContext";
 import AuthService from "../../services/AuthService";
 
 const authService = new AuthService();
 
 const Navbar = () => {
-  const { user } = useAuthContext();
+  const user = useUserState();
 
   return (
     <header className="header">
@@ -44,7 +44,7 @@ const LoggedOutNav = ({ username }) => {
 };
 
 const LoggedInNav = ({ id, username, picture }) => {
-  const { logoutUser } = useAuthContext();
+  const { logoutUser } = useUserActions();
   const fallbackPicture = "https://i.stack.imgur.com/l60Hf.png";
 
   const logout = () => {
