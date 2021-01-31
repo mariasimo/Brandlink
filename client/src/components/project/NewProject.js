@@ -4,6 +4,7 @@ import BrandHeader from "../layout/BrandHeader";
 import useSetState from "../../hooks/useSetState";
 import { useUserActions, useUserState } from "../../context/UserContext";
 import { useHistory } from "react-router-dom";
+import { hyphenString } from "../../utils";
 
 const initialState = {
   title: "",
@@ -29,7 +30,7 @@ const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
   }, [numberOfProjects, projects.length, error, history, username]);
 
   const handleBlur = (e) => {
-    let pathSuggestion = e.target.value.toLowerCase().replace(/ /g, "-");
+    let pathSuggestion = hyphenString(e.target.value);
     setNewProject({ ...setNewProject, path: pathSuggestion });
   };
 

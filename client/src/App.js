@@ -58,26 +58,24 @@ const App = (props) => {
           toggleMenu={toggleMenu}
           menuIsOpen={menuIsOpen}
         />
+        <PrivateRoute
+          exact
+          path="/:id/project/:projectPath/"
+          user={user}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+          component={EditProject}
+          // colorPalette={colorPalette}
+          // typeset={typeset}
+          // assets={assets}
+          // textstyles={textstyles}
+          // projectTitle={projectTitle}
+          // shareMessage={shareMessage}
+        />
       </Switch>
 
-      {user?.id && (
+      {/* {user?.id && (
         <Switch>
-          <PrivateRoute
-            exact
-            path="/project/:id/edit"
-            user={user}
-            toggleMenu={toggleMenu}
-            menuIsOpen={menuIsOpen}
-            // colorPalette={colorPalette}
-            // typeset={typeset}
-            // assets={assets}
-            // textstyles={textstyles}
-            // projectTitle={projectTitle}
-            // shareMessage={shareMessage}
-            {...props}
-            component={EditProject}
-          />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/colorPalette"
@@ -92,7 +90,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={ColorPalette}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/colorPalette/new/:colorId?"
@@ -106,7 +103,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={NewColor}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/typeset"
@@ -120,7 +116,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={TypeSet}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/typeset/new/:source?"
@@ -134,7 +129,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={NewType}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/assets"
@@ -152,7 +146,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={Assets}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/textStyles"
@@ -165,7 +158,6 @@ const App = (props) => {
             // textstyles={textstyles}
             component={TextStyles}
           />
-
           <PrivateRoute
             exact
             path="/project/:id/edit/textStyles/new/:styleId?"
@@ -178,9 +170,8 @@ const App = (props) => {
             // textstyles={textstyles}
             // addTextStyle={addTextStyle}
             component={NewTextStyle}
-          />
         </Switch>
-      )}
+          /> */}
     </div>
   );
 };

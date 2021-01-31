@@ -3,20 +3,23 @@ import React, {
   useContext,
   useReducer,
   useCallback,
+  useEffect,
 } from "react";
 import useProjectsService from "../services/ProjectService";
 
 const ProjectState = createContext();
 const ProjectDispatch = createContext();
 
-const FETCH_CURRENT_PROJECT = "FETCH_CURRENT_PROJECT";
+const SET_CURRENT_PROJECT = "SET_CURRENT_PROJECT";
 const FETCH_ALL_USER_PROJECTS = "FETCH_ALL_USER_PROJECTS";
 const LOADING = "LOADING";
 const ERROR = "ERROR";
 
+const storedCurrentProject = JSON.parse(localStorage.getItem("currentProject"));
+
 const initialState = {
   projects: [],
-  currentProject: null,
+  currentProject: storedCurrentProject || null,
   error: null,
   loading: false,
 };
@@ -44,10 +47,13 @@ const reducer = (state = initialState, action) => {
       error: null,
     };
   }
-  if (action.type === FETCH_ALL_USER_PROJECTS) {
+  if (action.type === SET_CURRENT_PROJECT) {
+    const currentProject = state.projects.find(
+      (el) => el.id === action.payload
+    );
     return {
       ...state,
-      projects: action.payload.projects,
+      currentProject,
       loading: false,
       error: null,
     };
@@ -77,6 +83,14 @@ const ProjectProvider = ({ children }) => {
   const [state, dispatch] = useAsyncReducer(reducer, initialState);
   const asyncMiddlewares = useProjectsService(state, dispatch);
 
+  const { currentProject } = state;
+
+  useEffect(() => {
+    if (currentProject?.id) {
+      localStorage.setItem("currentProject", JSON.stringify(currentProject));
+    }
+  }, [currentProject]);
+
   return (
     <ProjectState.Provider value={{ state }}>
       <ProjectDispatch.Provider value={{ dispatch, ...asyncMiddlewares }}>
@@ -101,9 +115,9 @@ const useProjectsActions = () => {
 
   if (!dispatch) throw new Error(`seems your using this hook out of context`);
 
-  const fetchCurrentProject = useCallback(
+  const setCurrentProject = useCallback(
     (projectId) => {
-      dispatch({ type: FETCH_CURRENT_PROJECT, payload: projectId });
+      dispatch({ type: SET_CURRENT_PROJECT, payload: projectId });
     },
     [dispatch]
   );
@@ -118,7 +132,11 @@ const useProjectsActions = () => {
     fetchProjectsMiddleware,
   ]);
 
-  return { fetchCurrentProject, fetchProjects, deleteProject };
+  return {
+    fetchProjects,
+    deleteProject,
+    setCurrentProject,
+  };
 };
 
 export { ProjectProvider, useProjectsState, useProjectsActions };

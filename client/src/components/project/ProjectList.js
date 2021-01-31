@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Project from "./Project";
 import {
   useProjectsActions,
   useProjectsState,
 } from "../../context/ProjectContext";
 import { useUserState } from "../../context/UserContext";
+import { hyphenString } from "../../utils";
 
 const ProjectList = () => {
-  const { fetchProjects, deleteProject } = useProjectsActions();
+  const {
+    fetchProjects,
+    deleteProject,
+    setCurrentProject,
+  } = useProjectsActions();
+  const history = useHistory();
   const { projects, loading, error } = useProjectsState();
   const {
     user: { username },
@@ -17,6 +23,11 @@ const ProjectList = () => {
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  const loadProject = (id, path) => {
+    history.push(`/${hyphenString(username)}/project/${path}`);
+    setCurrentProject(id);
+  };
 
   return (
     <div>
@@ -41,8 +52,8 @@ const ProjectList = () => {
                   <Project
                     key={idx}
                     {...project}
-                    username={username}
                     deleteProject={deleteProject}
+                    loadProject={loadProject}
                   />
                 ))}
 

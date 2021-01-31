@@ -42,16 +42,10 @@ const useProjectsService = (state, dispatch) => {
     [dispatch]
   );
 
-  //   deleteProject = (projectId) => {
-  // return this.instance
-  //   .delete(`/${projectId}`)
-  //   .then((res) => {
-  //     return Promise.resolve(res.data);
-  //   })
-  //   .catch((error) => console.error(error));
-  //   };
-
-  return { fetchProjectsMiddleware, deleteProjectMiddleware };
+  return {
+    fetchProjectsMiddleware,
+    deleteProjectMiddleware,
+  };
 };
 
 export default useProjectsService;

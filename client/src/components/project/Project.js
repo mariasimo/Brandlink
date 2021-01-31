@@ -1,18 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Project = ({ path, title, id, deleteProject, username }) => {
+const Project = ({ title, id, path, deleteProject, loadProject }) => {
   return (
     <div className="project-card card">
-      <Link to={`/project/${path}`}>
-        <h2 className="title is-4 has-text-primary">{title}</h2>
-      </Link>
+      <h2 className="title is-4 has-text-primary">{title}</h2>
       <Link
-        to={`/${username}/project/${id}/edit`}
         className="button is-small is-rounded"
-        onClick={() => {
-          // setActiveProject(id);
-        }}
+        onClick={() => loadProject(id, path)}
       >
         Edit
       </Link>
