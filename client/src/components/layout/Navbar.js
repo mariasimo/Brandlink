@@ -61,7 +61,7 @@ const LoggedInNav = ({ id, username, picture }) => {
       </li>
 
       <li>
-        <Link to={`/profile/${id}`} className="profile">
+        <Link to={`/profile/${username}`} className="profile">
           <div
             style={{ backgroundImage: `url(${picture || fallbackPicture})` }}
             className="avatar"

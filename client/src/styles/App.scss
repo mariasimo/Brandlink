@@ -113,7 +113,7 @@ a {
 .admin-panel {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  padding-top: 5rem;
   background-image: url("../images/bg.png");
   background-size: cover;
 }
@@ -170,7 +170,7 @@ a {
 }
 
 .project-card {
-  width: 45%;
+  width: 30%;
   min-width: 10rem;
   min-height: 10rem;
   border: 1px solid var(--grey-light);

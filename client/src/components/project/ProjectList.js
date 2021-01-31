@@ -5,8 +5,8 @@ import Project from "./Project";
 
 const projectService = new ProjectService();
 
-const ProjectList = ({ setActiveProject }) => {
-  const [projects, setProjects] = useState([]);
+const ProjectList = () => {
+  const [projects, setProjects] = useState(null);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -21,33 +21,22 @@ const ProjectList = ({ setActiveProject }) => {
     <div>
       <section className="section admin-panel">
         <div className="container">
-          <div className="columns">
-            <div className="column is-one-third">
+          <div className="columns is-flex-direction-column">
+            <div className="column">
               <div className="hero">
                 <h2 className="title is-1">Welcome to your panel</h2>
                 <p class="">
                   Here you can admin your projects or create new ones.
+                  <br />
+                  {!projects && <strong>You dont have any projects yet</strong>}
                 </p>
               </div>
             </div>
-            <div className="column is-two-thirds projects-wrapper">
-              {projects.length ? (
+            <div className="column projects-wrapper">
+              {projects &&
                 projects.map((project, idx) => (
-                  <Project
-                    key={idx}
-                    project={project}
-                    // deleteProject={(projectId) =>
-                    //   this.deleteProject(project._id)
-                    // }
-                    // setPath={(path) => this.props.setPath(path)}
-                    setActiveProject={() => setActiveProject(project._id)}
-                  />
-                ))
-              ) : (
-                <div className="column is-two-thirds">
-                  You dont have any projects yet
-                </div>
-              )}
+                  <Project key={idx} project={project} />
+                ))}
 
               <Link to="/project/new" className="project-card">
                 Create new project

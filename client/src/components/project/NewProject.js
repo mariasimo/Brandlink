@@ -2,7 +2,6 @@ import React from "react";
 import ProjectService from "../../services/ProjectService";
 import SideMenu from "../layout/SideMenu";
 import BrandHeader from "../layout/BrandHeader";
-// import MainContent from '../layout/MainContent';
 
 export default class NewProject extends React.Component {
   constructor(props) {

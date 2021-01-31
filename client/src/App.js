@@ -44,18 +44,17 @@ const App = (props) => {
           redirectPath="/login"
           component={ProjectList}
         />
+        <PrivateRoute
+          exact
+          path="/profile/:username"
+          user={user}
+          redirectPath="/login"
+          component={Profile}
+        />
       </Switch>
 
       {user?.id && (
         <Switch>
-          <PrivateRoute
-            exact
-            path="/profile/:id"
-            user={user}
-            redirectPath="/login"
-            component={Profile}
-          />
-
           <PrivateRoute
             exact
             path="/project/new"
