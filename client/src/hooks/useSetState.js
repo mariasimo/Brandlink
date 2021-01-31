@@ -5,7 +5,7 @@ const reducer = (initialState = {}, updateState = {}) => {
 };
 
 const useSetState = (initialState) => {
-  const [state, dispatch] = useReducer(reducer, (initialState = {}));
+  const [state, dispatch] = useReducer(reducer, initialState);
   const setState = (updateState) => dispatch(updateState);
 
   return [state, setState];
