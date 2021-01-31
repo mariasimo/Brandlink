@@ -1,33 +1,31 @@
-import React from "react";
-import { useUserActions } from "../../context/UserContext";
+import React, { useEffect } from "react";
+import { useUserActions, useUserState } from "../../context/UserContext";
 import useSetState from "../../hooks/useSetState";
 import AuthService from "../../services/AuthService";
 import Hero from "../layout/Hero";
-
-const authService = new AuthService();
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   username: "",
   password: "",
 };
-const Signup = ({ history }) => {
+const Signup = () => {
   const [credentials, setCredentials] = useSetState(initialState);
   const { username, password } = credentials;
+  const { user, loading, error } = useUserState();
   const { setAuthUser } = useUserActions();
+  const history = useHistory();
+
+  console.log(user, loading, error);
+
+  useEffect(() => {
+    if (user?.username) history.push(`/panel/${user.username}`);
+  }, [user, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     clear();
-
-    authService.signup(credentials).then(
-      (user) => {
-        setAuthUser(user);
-        history.push(`/panel/${user.username}`);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    setAuthUser(credentials);
   };
 
   const handleChange = (e) => {
@@ -90,6 +88,9 @@ const Signup = ({ history }) => {
                 value="Create account"
               />
             </div>
+            {error && error}
+            {loading && "loading"}
+            {user && user.username}
           </form>
         </div>
       </div>

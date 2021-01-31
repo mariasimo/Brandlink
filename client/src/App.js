@@ -23,42 +23,17 @@ import TextStyles from "./components/brandPresets/TextStyles";
 import NewTextStyle from "./components/brandPresets/NewTextStyle";
 import { useUserActions, useUserState } from "./context/UserContext";
 
+const authService = new AuthService();
+const projectService = new ProjectService();
+
 const App = (props) => {
-  const authService = new AuthService();
-  const projectService = new ProjectService();
   const user = useUserState();
   const { setAuthUser, setCurrentProject } = useUserActions();
 
+  // move this into a UIContext??
   const [menuIsOpen, setMenuIsOpen] = useState("show");
-  const [file, setFile] = useState("");
-  // const [loadingImg, setLoadingImg] = useState('')
-  // const [loadingParent, setLoadingParent] = useState('')
-
-  // esto no estaba
-  const [project, setProject] = useState({
-    colorPalette: [],
-  });
-
   const toggleMenu = () =>
     setMenuIsOpen(menuIsOpen === "show" ? "hide" : "show");
-
-  const setLoggedUser = (user) => {
-    if (user === undefined || !user.hasOwnProperty("id")) return;
-    setAuthUser(user);
-
-    if (user.activeProject) {
-      projectService.displayProject(user.id).then((projectData) => {
-        // setProject({
-        //   title: projectData.title,
-        //   colorPalette: projectData.colorPalette || [],
-        //   typeset: projectData.typeset,
-        //   assets: projectData.assets,
-        //   textstyles: projectData.textstyles,
-        // });
-        // addFontsLinks(projectData.typeset);
-      });
-    }
-  };
 
   const setActiveProject = (path) => {
     const { id } = user;
@@ -69,198 +44,10 @@ const App = (props) => {
     });
   };
 
-  const addFontsLinks = (typeset) => {
-    typeset.map((type) => {
-      const link = document.createElement("link");
-      link.setAttribute(
-        "href",
-        `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
-          " ",
-          "+"
-        )}&display=swap`
-      );
-      link.setAttribute("rel", `stylesheet`);
-      return document.head.appendChild(link);
-    });
-  };
-
-  const deleteProject = (projectId) => {
-    projectService.deleteProject(projectId).then(
-      (response) => {
-        //Esto aqui pa què
-        // setUser(user);
-      },
-      (error) => {
-        console.error(error.message);
-      }
-    );
-  };
-
-  const addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
-    projectService.addColorToPalette({ name, hexadecimal, id, colorId }).then(
-      (updatedProject) => {
-        // aquí parece que se guardan los datos de la paleta en el estado, pero no tiene que ver con el active project
-
-        setProject({ ...project, colorPalette: updatedProject.colorPalette });
-        // setState({
-        //   ...this.state,
-        //   name: '',
-        //   hexadecimal: '',
-        //   colorPalette: updatedProject.colorPalette
-        // });
-        history.push(`/project/${id}/edit/colorPalette`, {
-          state: this.state.colorPalette,
-        });
-      },
-      (error) => console.error(error)
-    );
-  };
-
-  const deleteColor = (colorId) => {
-    projectService.deleteColor(colorId).then(
-      (project) => {
-        // otra vez setear el usuario pa qué
-        // this.setUser(user);
-      },
-      (error) => console.error(error.message)
-    );
-  };
-
-  const saveType = ({ fontFamily, type, path, history }) => {
-    projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
-      (updatedProject) => {
-        // setea la nueva tipografia
-
-        // setState({
-        //   ...this.state,
-        //   fontFamily: '',
-        //   typeset: updatedProject.typeset
-        // });
-        history.push(`/project/${user.activeProject}/edit/typeSet`);
-      },
-      (error) => console.error(error)
-    );
-  };
-
-  const deleteType = (typeId) => {
-    projectService.deleteType(typeId).then(
-      (project) => {
-        // this.setUser(user);
-      },
-      (error) => console.log(error.message)
-    );
-  };
-
-  const addTextStyle = ({ textstyle, path, styleId, history }) => {
-    projectService.addTextStyle({ ...textstyle, path, styleId, history }).then(
-      () => {
-        // tampoco tengo ni idea de cómo se articula esta parte del estado
-
-        // this.setState({
-        //   ...this.state,
-        //   name: '',
-        //   fontFamily: '',
-        //   fontSize: 1,
-        //   fontWeight: null,
-        //   lineHeight: 1,
-        //   letterSpacing: 0,
-        //   uppercase: false
-        // });
-        history.push(`/project/${user.activeProject}/edit/textStyles`);
-      },
-      (error) => console.error(error)
-    );
-  };
-
-  const addAsset = ({ uploadData, path }) => {
-    // Esto puede suceder en el scope local y sacarlo del estado???
-    const loadingImg = document.createElement("img");
-    loadingImg.setAttribute("src", "http://localhost:3000/loading.svg");
-    const loadingParent = document.querySelector(".file-label");
-    loadingParent.appendChild(this.loadingImg);
-
-    projectService
-      .uploadAsset({ uploadData, path })
-      .then(() => {
-        // this.setUser(user);
-        loadingParent.removeChild(loadingImg);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const deleteAsset = (assetId) => {
-    projectService.deleteAsset(assetId).then(
-      (project) => {
-        // this.setUser(user);
-      },
-      (error) => {
-        const { message } = error;
-        console.error(message);
-      }
-    );
-  };
-
-  const onDragStart = (ev, id) => {
-    console.log("dragstart:", id);
-    ev.dataTransfer.setData("id", id);
-  };
-
-  const onDrop = (ev, slotIdx) => {
-    let fileId = ev.dataTransfer.getData("id");
-    setFile(fileId);
-  };
-
-  const createProject = ({ title, path, history }) => {
-    projectService.createProject({ title, path }).then(
-      (projectCreated) => {
-        // esto es para limpiar algo??
-        // this.setState({ ...this.state, title: '', path: '' });
-
-        history.push(`/panel/${user.username}`);
-      },
-      (error) => console.error(error)
-    );
-  };
-
-  const shareMessage = ({ email, projectId }) => {
-    projectService.shareMessage({ email, projectId }).then((response) => {
-      if (response.msg === "success") {
-        alert("Message Sent.");
-        this.resetForm();
-      } else if (response.msg === "fail") {
-        alert("Message failed to send.");
-      }
-    });
-  };
-
-  const resetForm = () => document.getElementById("contact-form").reset();
-
-  useEffect(() => {
-    const fetchUser = () => {
-      authService
-        .loggedInUser()
-        .then((user) => {
-          setLoggedUser(user);
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
-    };
-
-    fetchUser();
-  }, []);
-
-  const {
-    colorPalette,
-    typeset,
-    assets,
-    textstyles,
-    title: projectTitle,
-  } = project;
-
   return (
     <div className="App">
       <Navbar />
+
       <Switch>
         <Route exact path="/login" render={(match) => <Login {...match} />} />
         <Route exact path="/signup" render={(match) => <Signup {...match} />} />
@@ -281,7 +68,7 @@ const App = (props) => {
             path="/panel/:username"
             redirectPath="/login"
             component={ProjectList}
-            setActiveProject={setActiveProject}
+            // setActiveProject={setActiveProject}
           />
 
           <PrivateRoute
@@ -300,12 +87,12 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            typeset={typeset}
-            assets={assets}
-            textstyles={textstyles}
-            projectTitle={projectTitle}
-            shareMessage={shareMessage}
+            // colorPalette={colorPalette}
+            // typeset={typeset}
+            // assets={assets}
+            // textstyles={textstyles}
+            // projectTitle={projectTitle}
+            // shareMessage={shareMessage}
             {...props}
             component={EditProject}
           />
@@ -317,11 +104,11 @@ const App = (props) => {
             activeProject={user.activeProject}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            deleteColor={deleteColor}
-            typeset={typeset}
-            assets={assets}
-            textstyles={textstyles}
+            // colorPalette={colorPalette}
+            // // deleteColor={deleteColor}
+            // typeset={typeset}
+            // assets={assets}
+            // textstyles={textstyles}
             component={ColorPalette}
           />
 
@@ -331,11 +118,11 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            addColorToPalette={addColorToPalette}
-            typeset={typeset}
-            assets={assets}
-            textstyles={textstyles}
+            // colorPalette={colorPalette}
+            // // addColorToPalette={addColorToPalette}
+            // typeset={typeset}
+            // assets={assets}
+            // textstyles={textstyles}
             component={NewColor}
           />
 
@@ -345,11 +132,11 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            deleteType={deleteType}
-            assets={assets}
-            typeset={typeset}
-            textstyles={textstyles}
+            // colorPalette={colorPalette}
+            // // deleteType={deleteType}
+            // assets={assets}
+            // typeset={typeset}
+            // textstyles={textstyles}
             component={TypeSet}
           />
 
@@ -358,12 +145,12 @@ const App = (props) => {
             path="/project/:id/edit/typeset/new/:source?"
             user={user}
             toggleMenu={toggleMenu}
-            colorPalette={colorPalette}
+            // colorPalette={colorPalette}
             menuIsOpen={menuIsOpen}
-            typeset={typeset}
-            saveType={saveType}
-            assets={assets}
-            textstyles={textstyles}
+            // typeset={typeset}
+            // saveType={saveType}
+            // assets={assets}
+            // textstyles={textstyles}
             component={NewType}
           />
 
@@ -373,15 +160,15 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            typeset={typeset}
-            assets={assets}
-            addAsset={addAsset}
-            deleteAsset={deleteAsset}
-            onDragStart={onDragStart}
-            onDrop={onDrop}
-            file={file}
-            textstyles={textstyles}
+            // colorPalette={colorPalette}
+            // typeset={typeset}
+            // assets={assets}
+            // // addAsset={addAsset}
+            // // deleteAsset={deleteAsset}
+            // // onDragStart={onDragStart}
+            // // onDrop={onDrop}
+            // file={file}
+            // textstyles={textstyles}
             component={Assets}
           />
 
@@ -391,10 +178,10 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            typeset={typeset}
-            assets={assets}
-            textstyles={textstyles}
+            // colorPalette={colorPalette}
+            // typeset={typeset}
+            // assets={assets}
+            // textstyles={textstyles}
             component={TextStyles}
           />
 
@@ -404,11 +191,11 @@ const App = (props) => {
             user={user}
             toggleMenu={toggleMenu}
             menuIsOpen={menuIsOpen}
-            colorPalette={colorPalette}
-            typeset={typeset}
-            assets={assets}
-            textstyles={textstyles}
-            addTextStyle={addTextStyle}
+            // colorPalette={colorPalette}
+            // typeset={typeset}
+            // assets={assets}
+            // textstyles={textstyles}
+            // addTextStyle={addTextStyle}
             component={NewTextStyle}
           />
         </Switch>
@@ -418,3 +205,169 @@ const App = (props) => {
 };
 
 export default App;
+
+// const addFontsLinks = (typeset) => {
+//   typeset.map((type) => {
+//     const link = document.createElement("link");
+//     link.setAttribute(
+//       "href",
+//       `https://fonts.googleapis.com/css?family=${type.fontFamily.replace(
+//         " ",
+//         "+"
+//       )}&display=swap`
+//     );
+//     link.setAttribute("rel", `stylesheet`);
+//     return document.head.appendChild(link);
+//   });
+// };
+
+// const deleteProject = (projectId) => {
+//   projectService.deleteProject(projectId).then(
+//     (response) => {
+//       //Esto aqui pa què
+//       // setUser(user);
+//     },
+//     (error) => {
+//       console.error(error.message);
+//     }
+//   );
+// };
+
+// const addColorToPalette = ({ name, hexadecimal, id, colorId, history }) => {
+//   projectService.addColorToPalette({ name, hexadecimal, id, colorId }).then(
+//     (updatedProject) => {
+//       // aquí parece que se guardan los datos de la paleta en el estado, pero no tiene que ver con el active project
+
+//       setProject({ ...project, colorPalette: updatedProject.colorPalette });
+//       // setState({
+//       //   ...this.state,
+//       //   name: '',
+//       //   hexadecimal: '',
+//       //   colorPalette: updatedProject.colorPalette
+//       // });
+//       history.push(`/project/${id}/edit/colorPalette`, {
+//         state: this.state.colorPalette,
+//       });
+//     },
+//     (error) => console.error(error)
+//   );
+// };
+
+// const deleteColor = (colorId) => {
+//   projectService.deleteColor(colorId).then(
+//     (project) => {
+//       // otra vez setear el usuario pa qué
+//       // this.setUser(user);
+//     },
+//     (error) => console.error(error.message)
+//   );
+// };
+
+// const saveType = ({ fontFamily, type, path, history }) => {
+//   projectService.addTypeToTypeSet({ fontFamily, type, path }).then(
+//     (updatedProject) => {
+//       // setea la nueva tipografia
+
+//       // setState({
+//       //   ...this.state,
+//       //   fontFamily: '',
+//       //   typeset: updatedProject.typeset
+//       // });
+//       history.push(`/project/${user.activeProject}/edit/typeSet`);
+//     },
+//     (error) => console.error(error)
+//   );
+// };
+
+// const deleteType = (typeId) => {
+//   projectService.deleteType(typeId).then(
+//     (project) => {
+//       // this.setUser(user);
+//     },
+//     (error) => console.log(error.message)
+//   );
+// };
+
+// const addTextStyle = ({ textstyle, path, styleId, history }) => {
+//   projectService.addTextStyle({ ...textstyle, path, styleId, history }).then(
+//     () => {
+//       // tampoco tengo ni idea de cómo se articula esta parte del estado
+
+//       // this.setState({
+//       //   ...this.state,
+//       //   name: '',
+//       //   fontFamily: '',
+//       //   fontSize: 1,
+//       //   fontWeight: null,
+//       //   lineHeight: 1,
+//       //   letterSpacing: 0,
+//       //   uppercase: false
+//       // });
+//       history.push(`/project/${user.activeProject}/edit/textStyles`);
+//     },
+//     (error) => console.error(error)
+//   );
+// };
+
+// const addAsset = ({ uploadData, path }) => {
+//   // Esto puede suceder en el scope local y sacarlo del estado???
+//   const loadingImg = document.createElement("img");
+//   loadingImg.setAttribute("src", "http://localhost:3000/loading.svg");
+//   const loadingParent = document.querySelector(".file-label");
+//   loadingParent.appendChild(this.loadingImg);
+
+//   projectService
+//     .uploadAsset({ uploadData, path })
+//     .then(() => {
+//       // this.setUser(user);
+//       loadingParent.removeChild(loadingImg);
+//     })
+//     .catch((error) => console.log(error));
+// };
+
+// const deleteAsset = (assetId) => {
+//   projectService.deleteAsset(assetId).then(
+//     (project) => {
+//       // this.setUser(user);
+//     },
+//     (error) => {
+//       const { message } = error;
+//       console.error(message);
+//     }
+//   );
+// };
+
+// const onDragStart = (ev, id) => {
+//   console.log("dragstart:", id);
+//   ev.dataTransfer.setData("id", id);
+// };
+
+// const onDrop = (ev, slotIdx) => {
+//   let fileId = ev.dataTransfer.getData("id");
+//   setFile(fileId);
+// };
+
+// const createProject = ({ title, path, history }) => {
+//   projectService.createProject({ title, path }).then(
+//     (projectCreated) => {
+//       // esto es para limpiar algo??
+//       // this.setState({ ...this.state, title: '', path: '' });
+
+//       history.push(`/panel/${user.username}`);
+//     },
+//     (error) => console.error(error)
+//   );
+// };
+
+// const shareMessage = ({ email, projectId }) => {
+//   projectService.shareMessage({ email, projectId }).then((response) => {
+//     if (response.msg === "success") {
+//       alert("Message Sent.");
+//       this.resetForm();
+//     } else if (response.msg === "fail") {
+//       alert("Message failed to send.");
+//     }
+//   });
+// };
+
+// const resetForm = () => document.getElementById("contact-form").reset();
