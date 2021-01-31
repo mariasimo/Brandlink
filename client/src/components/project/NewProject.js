@@ -23,7 +23,6 @@ const NewProject = ({ username, toggleMenu, menuIsOpen }) => {
 
   useEffect(() => setNumberOfProjects(projects.length), []);
   useEffect(() => {
-    console.log(projects.length, numberOfProjects, error);
     if (projects.length > numberOfProjects && !error) {
       history.push(`/panel/${username}`);
     }

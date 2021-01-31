@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ProjectService from "../../services/ProjectService";
 import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
 import MainContent from "../layout/MainContent";
@@ -9,7 +8,7 @@ export default class ColorPalette extends Component {
   constructor(props) {
     super(props);
     // this.authService = new AuthService();
-    this.projectService = new ProjectService();
+    this.projectService = () => {};
     this.state = {
       path: "",
       title: "",

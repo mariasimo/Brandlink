@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ProjectService from "../../services/ProjectService";
 import Dropzone from "react-dropzone";
 import TextEditor from "../utils/TextEditor";
 import { useUserState } from "../../context/UserContext";
 
-const projectService = new ProjectService();
-
 const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
   const [state, setState] = useState({});
   const user = useUserState();
+  const projectService = () => {};
 
   const displayRows = () => {
     projectService.displayRows(user.activeProject).then((projectData) => {

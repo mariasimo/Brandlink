@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
-import ProjectService from '../../services/ProjectService';
-import BrandHeader from '../layout/BrandHeader';
-import SideMenu from '../layout/SideMenu';
-import MainContent from '../layout/MainContent';
+import React, { Component } from "react";
+import Dropzone from "react-dropzone";
+import BrandHeader from "../layout/BrandHeader";
+import SideMenu from "../layout/SideMenu";
+import MainContent from "../layout/MainContent";
 
 export default class Assets extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService();
+    this.projectService = () => {};
     this.state = {
-      path: '',
-      title: '',
-      assets: null
+      path: "",
+      title: "",
+      assets: null,
     };
   }
 
-  handleUpload = file => {
+  handleUpload = (file) => {
     const uploadData = new FormData();
-    uploadData.append('file', file[0]);
+    uploadData.append("file", file[0]);
     const { path } = this.props.match.params;
 
     this.props.addAsset({ uploadData, path });
@@ -35,17 +34,17 @@ export default class Assets extends Component {
           menuIsOpen={this.props.menuIsOpen}
         >
           <BrandHeader
-            title='Assets Library'
+            title="Assets Library"
             {...this.props}
             url={`/project/${id}/edit`}
           ></BrandHeader>
 
           <div>
             <Dropzone
-              onDrop={acceptedFiles => this.handleUpload(acceptedFiles)}
+              onDrop={(acceptedFiles) => this.handleUpload(acceptedFiles)}
             >
               {({ getRootProps, getInputProps }) => (
-                <section class='file-label'>
+                <section class="file-label">
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <p>
@@ -57,34 +56,34 @@ export default class Assets extends Component {
             </Dropzone>
             <p>File formats allowed: .png, .jpg, .pdf, .zip, .svg, .gif</p>
 
-            <div className='assets-list columns is-multiline'>
+            <div className="assets-list columns is-multiline">
               {assets &&
-                assets.map(asset => (
+                assets.map((asset) => (
                   <div
                     key={asset._id}
                     draggable
-                    className='draggable'
-                    onDragStart={e => this.props.onDragStart(e, asset._id)}
-                    onDrop={e => this.props.onDrop(e, asset._id)}
+                    className="draggable"
+                    onDragStart={(e) => this.props.onDragStart(e, asset._id)}
+                    onDrop={(e) => this.props.onDrop(e, asset._id)}
                   >
-                    <figure className='column is-half'>
+                    <figure className="column is-half">
                       <button
                         onClick={() => this.props.deleteAsset(asset._id)}
-                        className='button is-rounded is-small is-danger is-outlined'
+                        className="button is-rounded is-small is-danger is-outlined"
                       >
                         Delete
                       </button>
-                      {(asset.format === 'png' ||
-                        asset.format === 'jpg' ||
-                        asset.format === 'svg' ||
-                        asset.format === 'gif') && (
+                      {(asset.format === "png" ||
+                        asset.format === "jpg" ||
+                        asset.format === "svg" ||
+                        asset.format === "gif") && (
                         <span>
-                          <img src={asset.secure_url} alt='' />
+                          <img src={asset.secure_url} alt="" />
                         </span>
                       )}
-                      {asset.format === 'pdf' && <p>esto es un pdf</p>}
-                      {asset.format === 'zip' && (
-                        <p className='box'>esto es un zip</p>
+                      {asset.format === "pdf" && <p>esto es un pdf</p>}
+                      {asset.format === "zip" && (
+                        <p className="box">esto es un zip</p>
                       )}
                     </figure>
                     {/* <div className="asset-name" onClick={this.editName}>
@@ -108,8 +107,6 @@ export default class Assets extends Component {
           assets={assets}
           onDragStart={this.props.onDragStart}
           permissionToEdit
-
-          
         ></MainContent>
       </React.Fragment>
     );

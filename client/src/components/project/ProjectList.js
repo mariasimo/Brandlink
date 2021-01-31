@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
-import ProjectService from "../../services/ProjectService";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Project from "./Project";
-import { useUserState } from "../../context/UserContext";
-
-const projectService = new ProjectService();
+import {
+  useProjectsActions,
+  useProjectsState,
+} from "../../context/ProjectContext";
 
 const ProjectList = () => {
-  const [projects, setProjects] = useState(null);
-  const { user } = useUserState();
-  useEffect(() => {
-    async function fetchProjects() {
-      const projects = await projectService.fetchProjects();
-      console.log(projects);
-      setProjects(projects);
-    }
+  const { fetchProjects } = useProjectsActions();
+  const { projects, loading, error } = useProjectsState();
 
+  useEffect(() => {
     fetchProjects();
-  }, [user.projects]);
+  }, [fetchProjects]);
 
   return (
     <div>
@@ -34,16 +29,19 @@ const ProjectList = () => {
                 </p>
               </div>
             </div>
-            <div className="column projects-wrapper">
-              {projects &&
-                projects.map((project, idx) => (
+            {loading && "Loading"}
+            {error && error}
+            {!loading && projects && (
+              <div className="column projects-wrapper">
+                {projects.map((project, idx) => (
                   <Project key={idx} project={project} />
                 ))}
 
-              <Link to="/project/new" className="project-card">
-                Create new project
-              </Link>
-            </div>
+                <Link to="/project/new" className="project-card">
+                  Create new project
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>

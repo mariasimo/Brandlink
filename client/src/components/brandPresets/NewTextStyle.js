@@ -7,7 +7,7 @@ import MainContent from "../layout/MainContent";
 export default class NewTextStyle extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService();
+    this.projectService = () => {};
 
     this.state = {
       textstyle: {},

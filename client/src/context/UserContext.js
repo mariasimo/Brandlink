@@ -77,8 +77,6 @@ const UserProvider = ({ children }) => {
   const asyncMiddlewares = useAuthService(state, dispatch);
   const { user } = state;
 
-  console.log(state);
-
   useEffect(() => {
     if (user?.id) {
       localStorage.setItem("sessionUser", JSON.stringify(user));

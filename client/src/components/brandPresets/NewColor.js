@@ -8,7 +8,7 @@ import { TwitterPicker } from "react-color";
 export default class NewColor extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService();
+    this.projectService = () => {};
 
     this.state = {
       name: "",

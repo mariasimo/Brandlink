@@ -4,32 +4,32 @@ import ProjectService from "../../services/ProjectService";
 export default class AdobeFontsImporter extends Component {
   constructor(props) {
     super(props);
-    this.projectService = new ProjectService();
+    this.projectService = () => {};
 
     this.state = {
       projectId: "gnh6ghd",
-      token: "0bb2988cbd31ce44bda853c78df227e26a0d86c8"
+      token: "0bb2988cbd31ce44bda853c78df227e26a0d86c8",
     };
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     // const projectId = document.querySelector('input[name="projectId"]').value;
     // const token = document.querySelector('input[name="token"]').value;
 
-    this.projectService.getGoogleFonts()
-    .then(fonts => { 
-      this.setState({
-        ...this.state,
-        ...fonts
-      })
-    },
-      error => console.error(error)
+    this.projectService.getGoogleFonts().then(
+      (fonts) => {
+        this.setState({
+          ...this.state,
+          ...fonts,
+        });
+      },
+      (error) => console.error(error)
     );
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
   };
