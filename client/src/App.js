@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 import Signup from "./components/auth/Signup";
 import Profile from "./components/auth/Profile";
@@ -21,9 +21,11 @@ import Assets from "./components/brandPresets/Assets";
 import TextStyles from "./components/brandPresets/TextStyles";
 import NewTextStyle from "./components/brandPresets/NewTextStyle";
 import { useUserState } from "./context/UserContext";
+import { useProjectsState } from "./context/ProjectContext";
 
 const App = (props) => {
   const { user } = useUserState();
+  const { currentProject } = useProjectsState();
 
   // move this into a UIContext??
   const [menuIsOpen, setMenuIsOpen] = useState("show");
@@ -59,20 +61,48 @@ const App = (props) => {
           menuIsOpen={menuIsOpen}
         />
         <PrivateRoute
+          path="/:id/project/:path"
+          component={EditProject}
+          {...props}
+        />
+      </Switch>
+
+      {/* <Switch>
+        <Route exact path="/login" render={(match) => <Login {...match} />} />
+        <Route exact path="/signup" render={(match) => <Signup {...match} />} />
+        <Route exact path="/" component={LandingPage} />
+        <PrivateRoute
           exact
-          path="/:id/project/:projectPath/"
+          path="/panel/:username"
+          redirectPath="/login"
+          component={ProjectList}
+        />
+        <PrivateRoute
+          exact
+          path="/profile/:username"
+          user={user}
+          redirectPath="/login"
+          component={Profile}
+        />
+        <PrivateRoute
+          exact
+          path="/project/new"
+          component={NewProject}
+          username={user?.username}
+          toggleMenu={toggleMenu}
+          menuIsOpen={menuIsOpen}
+        />
+        <Route
+          exact
+          path="/:id/project/:path/"
           user={user}
           toggleMenu={toggleMenu}
           menuIsOpen={menuIsOpen}
           component={EditProject}
-          // colorPalette={colorPalette}
-          // typeset={typeset}
-          // assets={assets}
-          // textstyles={textstyles}
-          // projectTitle={projectTitle}
-          // shareMessage={shareMessage}
+          username={user?.username}
+          {...props}
         />
-      </Switch>
+      </Switch> */}
 
       {/* {user?.id && (
         <Switch>

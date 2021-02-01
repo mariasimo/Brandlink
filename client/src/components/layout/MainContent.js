@@ -8,24 +8,24 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
   const user = useUserState();
   const projectService = () => {};
 
-  const displayRows = () => {
-    projectService.displayRows(user.activeProject).then((projectData) => {
-      const { rows, colorPalette, typeset, textstyles } = projectData;
+  // const displayRows = () => {
+  //   projectService.displayRows(user.activeProject).then((projectData) => {
+  //     const { rows, colorPalette, typeset, textstyles } = projectData;
 
-      setState(
-        {
-          ...state,
-          rows: rows,
-          colorPalette: colorPalette,
-          typeset: typeset,
-          textstyles: textstyles,
-        },
-        () => {
-          console.log(state.rows);
-        }
-      );
-    });
-  };
+  //     setState(
+  //       {
+  //         ...state,
+  //         rows: rows,
+  //         colorPalette: colorPalette,
+  //         typeset: typeset,
+  //         textstyles: textstyles,
+  //       },
+  //       () => {
+  //         console.log(state.rows);
+  //       }
+  //     );
+  //   });
+  // };
 
   const addNewRow = (layout) => {
     const userId = user.id;
@@ -43,7 +43,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
   const deleteRow = (rowId) => {
     projectService.deleteRow(rowId).then(
       (project) => {
-        displayRows();
+        // displayRows();
       },
       (error) => {
         const { message } = error;
@@ -54,7 +54,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
 
   const addContent = (rowId, slotIdx, type) => {
     projectService.addContent({ rowId, slotIdx, type }).then((payload) => {
-      displayRows();
+      // displayRows();
     });
   };
 
@@ -66,7 +66,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
 
       projectService
         .insertSlot(content, rowId)
-        .then((payload) => displayRows())
+        .then((payload) => {})
         .catch((err) => console.log(err));
     });
   };
@@ -98,7 +98,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
           .insertSlot(content, rowId)
           .then((payload) => {
             console.log(payload);
-            displayRows();
+            // displayRows();
           })
           .catch((err) => console.log(err));
       });
@@ -123,7 +123,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
           .insertSlot(content, rowId)
           .then((payload) => {
             console.log(payload);
-            displayRows();
+            // displayRows();
           })
           .catch((err) => console.log(err));
       });
@@ -131,7 +131,7 @@ const MainContent = ({ menuIsOpen, permissionToEdit, ...props }) => {
   };
 
   useEffect(() => {
-    displayRows();
+    // displayRows();
   }, []);
 
   const path = props.match.params.id;

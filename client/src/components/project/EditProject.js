@@ -1,73 +1,98 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
 import MainContent from "../layout/MainContent";
 import { useProjectsState } from "../../context/ProjectContext";
+import PrivateRoute from "../../guards/PrivateRoute";
+import ColorPalette from "../brandPresets/ColorPalette";
+import TypeSet from "../brandPresets/TypeSet";
+import TextStyles from "../brandPresets/TextStyles";
+import Assets from "../brandPresets/Assets";
 
-const EditProject = () => {
+const EditProject = ({ toggleMenu, menuIsOpen, username, ...props }) => {
   const { currentProject } = useProjectsState();
-  return currentProject.title;
+  const {
+    colorPalette,
+    typeset,
+    assets,
+    id,
+    title,
+    path: projectPath,
+  } = currentProject;
+  let { path, url } = useRouteMatch();
+
+  console.log(path, url);
+  return (
+    <div>
+      <SideMenu
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        projectId={id}
+        // shareMessage={shareMessage}
+        permissionToShare
+      >
+        <BrandHeader
+          title={title}
+          subtitle="Brand presets"
+          url={`/panel/${username}`}
+        />
+        <Switch>
+          <Route exact path={path}>
+            <p>
+              Let's begin! Start by adding some brand presets to your project
+            </p>
+
+            <ul className="project-presets-list">
+              <li>
+                <Link to={`${url}/typography`}>
+                  <h3 className="is-size-5 has-text-primary">Typography</h3>
+                </Link>
+              </li>
+              <li>
+                <Link to={`${url}/text-styles`}>
+                  <h3 className="is-size-5 has-text-primary">Text Styles</h3>
+                </Link>
+              </li>
+              <li>
+                <Link to={`${url}/color-palette`}>
+                  <h3 className="is-size-5 has-text-primary">Color Palette</h3>
+                </Link>
+              </li>
+              <li>
+                <Link to={`${url}/assets`}>
+                  <h3 className="is-size-5 has-text-primary">Assets</h3>
+                </Link>
+              </li>
+            </ul>
+          </Route>
+
+          <PrivateRoute
+            exact
+            path={`${path}/color-palette`}
+            component={ColorPalette}
+          />
+          <PrivateRoute exact path={`${path}/typography`} component={TypeSet} />
+          <PrivateRoute
+            exact
+            path={`${path}/text-styles`}
+            component={TextStyles}
+          />
+          <PrivateRoute exact path={`${path}/assets`} component={Assets} />
+        </Switch>
+      </SideMenu>
+      <MainContent
+        toggleMenu={toggleMenu}
+        menuIsOpen={menuIsOpen}
+        colorPalette={colorPalette}
+        typeset={typeset}
+        // user={user}
+        assets={assets}
+        permissionToEdit
+        {...props}
+      ></MainContent>
+    </div>
+  );
 };
 
 export default EditProject;
-
-// export default class EditProject extends Component {
-//   render() {
-//     const { colorPalette, typeset, assets } = this.props;
-//     return (
-//       <>
-//         <SideMenu
-//           {...this.props}
-//           toggleMenu={this.props.toggleMenu}
-//           menuIsOpen={this.props.menuIsOpen}
-//           projectId={this.props.user.activeProject}
-//           shareMessage={this.props.shareMessage}
-//           permissionToShare
-//         >
-//           <BrandHeader
-//             title={this.props.projectTitle}
-//             subtitle="Brand presets"
-//             {...this.props}
-//             url={`/panel/${this.props.user.username}`}
-//           ></BrandHeader>
-
-//           <p>Let's begin! Start by adding some brand presets to your project</p>
-
-//           <ul className="project-presets-list">
-//             <li>
-//               <Link to={`${this.props.activeProject}/typeset`}>
-//                 <h3 className="is-size-5 has-text-primary">Typography</h3>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link to={`${this.props.activeProject}/textStyles`}>
-//                 <h3 className="is-size-5 has-text-primary">Text Styles</h3>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link to={`${this.props.activeProject}/colorPalette`}>
-//                 <h3 className="is-size-5 has-text-primary">Color Palette</h3>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link to={`${this.props.activeProject}/assets`}>
-//                 <h3 className="is-size-5 has-text-primary">Assets</h3>
-//               </Link>
-//             </li>
-//           </ul>
-//         </SideMenu>
-//         <MainContent
-//           toggleMenu={this.props.toggleMenu}
-//           menuIsOpen={this.props.menuIsOpen}
-//           colorPalette={colorPalette}
-//           typeset={typeset}
-//           user={this.props.user}
-//           assets={assets}
-//           permissionToEdit
-//           {...this.props}
-//         ></MainContent>
-//       </>
-//     );
-//   }
-// }

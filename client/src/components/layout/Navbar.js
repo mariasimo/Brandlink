@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useUserActions, useUserState } from "../../context/UserContext";
+import { hyphenString } from "../../utils";
 
 const Navbar = () => {
   const { user } = useUserState();
@@ -47,11 +48,11 @@ const LoggedInNav = ({ id, username, picture }) => {
   return (
     <ul>
       <li>
-        <Link to={`/panel/${username}`}>Admin Panel</Link>
+        <Link to={`/panel/${hyphenString(username)}`}>Admin Panel</Link>
       </li>
 
       <li>
-        <Link to={`/profile/${username}`} className="profile">
+        <Link to={`/profile/${hyphenString(username)}`} className="profile">
           <div
             style={{ backgroundImage: `url(${picture || fallbackPicture})` }}
             className="avatar"
