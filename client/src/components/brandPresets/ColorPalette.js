@@ -5,8 +5,8 @@ import SideMenu from "../layout/SideMenu";
 import MainContent from "../layout/MainContent";
 
 const ColorPalette = () => {
-  console.log("holi");
-  return "holi";
+  console.log("color palette");
+  return "color palette";
 };
 
 export default ColorPalette;

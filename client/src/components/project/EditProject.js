@@ -32,11 +32,7 @@ const EditProject = ({ toggleMenu, menuIsOpen, username, ...props }) => {
         // shareMessage={shareMessage}
         permissionToShare
       >
-        <BrandHeader
-          title={title}
-          subtitle="Brand presets"
-          url={`/panel/${username}`}
-        />
+        <BrandHeader title={title} subtitle="Brand presets" url={url} />
         <Switch>
           <Route exact path={path}>
             <p>

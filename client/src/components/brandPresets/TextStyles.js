@@ -5,82 +5,89 @@ import BrandHeader from "../layout/BrandHeader";
 import SideMenu from "../layout/SideMenu";
 import MainContent from "../layout/MainContent";
 
-export default class TextStyles extends Component {
-  constructor(props) {
-    super(props);
-    this.projectService = () => {};
-    this.state = {
-      path: "",
-      title: "",
-      typeset: [],
-      textstyles: [],
-    };
-  }
+const TextStyles = () => {
+  console.log("textstyles");
+  return "textstyles";
+};
 
-  render() {
-    const { id } = this.props.match.params;
-    const { colorPalette, typeset, assets, textstyles } = this.props;
+export default TextStyles;
 
-    return (
-      <>
-        <SideMenu
-          toggleMenu={this.props.toggleMenu}
-          menuIsOpen={this.props.menuIsOpen}
-        >
-          <BrandHeader
-            title="Text Styles"
-            {...this.props}
-            url={`/project/${id}/edit`}
-          ></BrandHeader>
+// export default class TextStyles extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.projectService = () => {};
+//     this.state = {
+//       path: "",
+//       title: "",
+//       typeset: [],
+//       textstyles: [],
+//     };
+//   }
 
-          <div className="content">
-            <div className="type-set columns is-multiline">
-              {textstyles && <p>This are some default styles you cant edit</p>}
-              {textstyles &&
-                textstyles.map((style) => (
-                  <div className="column is-full box" key={style._id}>
-                    <div className="element">
-                      <span
-                        style={{
-                          fontFamily: style.fontFamily,
-                          fontWeight: style.fontWeight,
-                          fontSize: `${style.fontSize}rem`,
-                          letterSpacing: `${style.letterSpacing}rem`,
-                          lineHeight: style.lineHeight,
-                        }}
-                      >
-                        {style.name}
-                      </span>
-                    </div>
-                    <div className="is-grouped">
-                      <Link
-                        to={{
-                          pathname: `${this.props.location.pathname}/new/${style._id}`,
-                          state: this.state,
-                        }}
-                        className="button is-rounded is-small is-success is-outlined"
-                      >
-                        Edit
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+//   render() {
+//     const { id } = this.props.match.params;
+//     const { colorPalette, typeset, assets, textstyles } = this.props;
 
-              {!textstyles && <div>You dont have any text styles yet</div>}
-            </div>
-          </div>
-        </SideMenu>
-        <MainContent
-          {...this.props}
-          toggleMenu={this.props.toggleMenu}
-          menuIsOpen={this.props.menuIsOpen}
-          user={this.props.loggedInUser}
-          colorPalette={colorPalette}
-          typeset={typeset}
-          assets={assets}
-          permissionToEdit
-        ></MainContent>
-      </>
-    );
-  }
-}
+//     return (
+//       <>
+//         <SideMenu
+//           toggleMenu={this.props.toggleMenu}
+//           menuIsOpen={this.props.menuIsOpen}
+//         >
+//           <BrandHeader
+//             title="Text Styles"
+//             {...this.props}
+//             url={`/project/${id}/edit`}
+//           ></BrandHeader>
+
+//           <div className="content">
+//             <div className="type-set columns is-multiline">
+//               {textstyles && <p>This are some default styles you cant edit</p>}
+//               {textstyles &&
+//                 textstyles.map((style) => (
+//                   <div className="column is-full box" key={style._id}>
+//                     <div className="element">
+//                       <span
+//                         style={{
+//                           fontFamily: style.fontFamily,
+//                           fontWeight: style.fontWeight,
+//                           fontSize: `${style.fontSize}rem`,
+//                           letterSpacing: `${style.letterSpacing}rem`,
+//                           lineHeight: style.lineHeight,
+//                         }}
+//                       >
+//                         {style.name}
+//                       </span>
+//                     </div>
+//                     <div className="is-grouped">
+//                       <Link
+//                         to={{
+//                           pathname: `${this.props.location.pathname}/new/${style._id}`,
+//                           state: this.state,
+//                         }}
+//                         className="button is-rounded is-small is-success is-outlined"
+//                       >
+//                         Edit
+//                       </Link>
+//                     </div>
+//                   </div>
+//                 ))}
+
+//               {!textstyles && <div>You dont have any text styles yet</div>}
+//             </div>
+//           </div>
+//         </SideMenu>
+//         <MainContent
+//           {...this.props}
+//           toggleMenu={this.props.toggleMenu}
+//           menuIsOpen={this.props.menuIsOpen}
+//           user={this.props.loggedInUser}
+//           colorPalette={colorPalette}
+//           typeset={typeset}
+//           assets={assets}
+//           permissionToEdit
+//         ></MainContent>
+//       </>
+//     );
+//   }
+// }
