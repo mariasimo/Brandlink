@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const User = require("../../models/User");
+const Project = require('../../models/Project');
 
 const uploader = require('../../configs/cloudinary.config')
 
@@ -10,19 +11,14 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const salt = bcrypt.genSaltSync(bcryptSalt);
 
-router.post("/signup", (req, res, next) => {
+router.post("/signup", ( req, res, next) => {
   const { username, password } = req.body;
-
-  if (!username || !password ) {
-    return res.status(400).json({ message: "Provide username and password" });
-  }
+  if (!username || !password ) res.status(400).json({ message: "Provide username and password" });
 
   if (password.length < 2) {
     res.status(400).json({
-      message:
-        "Please make your password at least 8 characters long for security purposes."
+      message: "Please make your password at least 3 characters long"
     });
-    return;
   }
 
   User.findOne({ username }, (err, foundUser) => {
@@ -30,13 +26,10 @@ router.post("/signup", (req, res, next) => {
       res.status(500).json({ message: "Username check went bad." });
       return;
     }
-
     if (foundUser) {
-      res.status(400).json({ message: "Username taken. Choose another one." });
+      res.status(400).json({ message: "Username taken" });
       return;
     }
-
-    const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
@@ -102,9 +95,63 @@ router.post("/logout", (req, res, next) => {
   res.status(200).json({ message: "Log out success!" });
 });
 
+
+router.post('/new-project', (req, res, next) => {
+  const { title, path } = req.body;
+  const id = req.user._id;
+
+  Project.findOne({ path }).then(haveFoundPath => {
+
+    if (haveFoundPath) {
+      res.status(400).json({ message: 'Path taken. Choose another one.' });
+      return;
+    }
+
+    const newProject = new Project({
+      title,
+      path,
+      colorPalette: []
+    });
+
+
+    Project.findByIdAndDelete(id).then(deletedProject => {
+      return User.findByIdAndUpdate(UserId, {
+        $pull: { projects: deletedProject._id },
+        new: true
+      })
+        .then(project => {
+          res.status(200).json(project);
+        })
+        .catch(error => {
+          res.status(500).json({ message: 'Something went wrong' });
+        });
+    });
+
+
+    newProject
+      .save()
+      .then(projectSaved => {
+        return User.findByIdAndUpdate(id, {
+          $push: { projects: projectSaved._id },
+          new: true
+        })
+        .then(_ => res.status(200).json(projectSaved._id))
+        .catch(error => {
+          res.status(500).json({ message: 'Error updating user', error });
+        });
+      })
+      .catch(error => {
+        res.status(500).json({ message: 'Error saving new Project', error });
+      });
+  });
+});
+
+
+
 router.get("/loggedin", (req, res, next) => {
   // req.isAuthenticated() is defined by passport
   if (req.isAuthenticated()) {
+
     res.status(200).json(req.user);
     return;
   }

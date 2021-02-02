@@ -56,38 +56,7 @@ router.get('/getGoogleFonts', (req, res, next) => {
     });
 });
 
-router.post('/new', (req, res, next) => {
-  const { title, path } = req.body;
-  const id = req.user._id;
 
-  Project.findOne({ path }).then(haveFoundPath => {
-    // Path has to be unique
-    if (haveFoundPath) {
-      res.status(400).json({ message: 'Path taken. Choose another one.' });
-      return;
-    }
-
-    const newProject = new Project({
-      title,
-      path,
-      colorPalette: []
-    });
-
-    newProject
-      .save()
-      .then(projectSaved => {
-        return User.findByIdAndUpdate(id, {
-          $push: { projects: projectSaved._id }
-        });
-      })
-      .then(projectSaved => {
-        res.status(200).json(projectSaved);
-      })
-      .catch(error => {
-        res.status(500).json({ message: 'Error saving new Project' });
-      });
-  });
-});
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
@@ -96,28 +65,27 @@ router.delete('/:id', (req, res, next) => {
   Project.findByIdAndDelete(id).then(deletedProject => {
     return User.findByIdAndUpdate(UserId, {
       $pull: { projects: deletedProject._id },
-      new: true
-    })
-      .then(project => {
-        res.status(200).json(project);
+    }, {new: true})
+      .then(updatedUser => {
+        res.status(200).json(updatedUser.projects);
       })
       .catch(error => {
-        res.status(500).json({ message: 'Something went wrong' });
+        res.status(500).json({ message: 'Something went wrong', error });
       });
   });
 });
 
-router.get('/project/:userId', (req, res, next) => {
-  const { userId } = req.params;
+// router.get('/project/:userId', (req, res, next) => {
+//   const { userId } = req.params;
 
-    Project.findById({ _id: req.user.activeProject })
-      .then(project => {
-        res.status(200).json(project);
-      })
-      .catch(error => {
-        res.status(500).json({ message: 'Something went wrong' });
-      });
-});
+//     Project.findById({ _id: req.user.activeProject })
+//       .then(project => {
+//         res.status(200).json(project);
+//       })
+//       .catch(error => {
+//         res.status(500).json({ message: 'Something went wrong' });
+//       });
+// });
 
 // Updated project (add brand preset)
 router.put('/color/:projectId/:id?', (req, res, next) => {
@@ -344,7 +312,7 @@ router.delete('/rows/:rowId', (req, res, next) => {
 router.put('/rows/:rowId', (req, res, next) => {
   const { rowId } = req.params;
   const { slotIdx, type } = req.body;
-  
+
       Rows.findByIdAndUpdate(
         { _id: rowId },
         { $push: { content: { type: type} } },
@@ -419,7 +387,7 @@ router.put(`/content/:rowId`, (req, res) => {
 //   }
 // });
 
-router.post('/rows/image', uploader.single('file'), (req, res, next) => { 
+router.post('/rows/image', uploader.single('file'), (req, res, next) => {
   if (req.file) {
     Project.findByIdAndUpdate(
       { _id: req.user.activeProject },
@@ -429,7 +397,7 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
             secure_url: req.file.secure_url,
             format: req.file.format,
             name: req.file.originalname,
-            
+
           }
         }
       }
@@ -441,7 +409,7 @@ router.post('/rows/image', uploader.single('file'), (req, res, next) => {
   }
 });
 
-router.post('/rows/download', uploader.single('file'), (req, res, next) => { 
+router.post('/rows/download', uploader.single('file'), (req, res, next) => {
   if (req.file) {
     Project.findByIdAndUpdate(
       { _id: req.user.activeProject },
@@ -451,7 +419,7 @@ router.post('/rows/download', uploader.single('file'), (req, res, next) => {
             secure_url: req.file.secure_url,
             format: req.file.format,
             name: req.file.originalname,
-            
+
           }
         }
       }
@@ -460,7 +428,7 @@ router.post('/rows/download', uploader.single('file'), (req, res, next) => {
         secure_url: req.file.secure_url,
         format: req.file.format,
         name: req.file.originalname,
-        
+
       });
     });
   } else {
@@ -481,7 +449,7 @@ router.post('/send-email', (req, res, next) => {
     text: message,
     html: templates.templateNotification(projectId),
   }
-  
+
   transporter.sendMail(mail, (err, data) => {
     if (err) {
       res.json({

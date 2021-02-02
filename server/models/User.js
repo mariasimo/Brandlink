@@ -14,7 +14,6 @@ const userSchema = new Schema({
       ret.id = doc._id;
       delete ret._id;
       delete ret.__v;
-      // delete ret.password;
       delete ret.createdAt;
       return ret;
     }

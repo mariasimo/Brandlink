@@ -21,13 +21,18 @@ passport.use(
         return;
       }
 
+      if (!password) {
+        next(null, false, { message: "Contraseña requerida" });
+        return;
+      }
+
       if (!foundUser) {
         next(null, false, { message: "Usuario no registrado." });
         return;
       }
 
       if (!bcrypt.compareSync(password, foundUser.password)) {
-        next(null, false, { message: "Contraseña incorrecta." });
+        next(null, false, { message: "Contraseña incorrecta" });
         return;
       }
 
