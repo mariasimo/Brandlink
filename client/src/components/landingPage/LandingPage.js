@@ -13,7 +13,7 @@ export class LandingPage extends Component {
             <div>
               <h1 className='title is-1'>Brand guidelines always on point.</h1>
               <p>
-              BrandLink help designers to create and mantain neat, synced and always up-to-date brand guidelines they can share with their clients.  
+              BrandLink help designers to create and mantain neat, synced and always up-to-date brand guidelines they can share with their clients.
               </p>
               <div className="is-grouped">
               <Link to='/signup' className='button is-rounded is-primary is-inverted is-medium'>
@@ -123,7 +123,7 @@ export class LandingPage extends Component {
         <div className="container">
             <Link to='/' className='navbar-item'>
               <img
-              src={`${process.env.REACT_APP_URL}/logo.svg`}
+              src={`/images/logo.svg`}
               height='24'
                 alt='BrandLink'
               ></img>
@@ -131,7 +131,7 @@ export class LandingPage extends Component {
             <p className="small">Created with hope and fear at Ironhack, 2019</p>
         </div>
       </footer>
-      </React.Fragment>  
+      </React.Fragment>
     );
   }
 }

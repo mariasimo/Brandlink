@@ -13,11 +13,11 @@ export default class Navbar extends Component {
 
     return (
       <nav className='navbar' role='navigation' aria-label='main navigation'>
-        
+
         <div className='navbar-brand'>
             <Link to='/' className='navbar-item'>
               <img
-              src={`${process.env.REACT_APP_URL}/logo.svg`}
+              src={`/images/logo.svg`}
               height='24'
                 alt='BrandLink'
               ></img>
@@ -26,7 +26,7 @@ export default class Navbar extends Component {
 
         <div id='navbarBasicExample' className='navbar-menu is-active'>
           <div className='navbar-start'>
-            {user && 
+            {user &&
               <Link to={`/panel/${user.username}`} className='back-projects-link navbar-item'>
                 <img src={`${process.env.REACT_APP_URL}/back.svg`} alt="go back"></img>
                 <span>Back to projects</span>
