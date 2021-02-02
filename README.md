@@ -31,6 +31,7 @@ I'm working on it! 👷🏻‍♀️
 
 
 
+
 📁
 
 #### Download the project
@@ -39,6 +40,7 @@ I'm working on it! 👷🏻‍♀️
 git clone https://github.com/mariasimo/Brandlink.git
 
 ```
+
 
 ⚙️
 
@@ -76,6 +78,7 @@ CLOUD_SECRET=<cloudinary-secret>
 ```
 
 
+
 🚀
 
 #### Run the project
@@ -98,6 +101,7 @@ Ta-da! The project will run on http://localhost:3000
 
 
 
+
  🏗
 
 #### Built with
@@ -109,6 +113,7 @@ Ta-da! The project will run on http://localhost:3000
 - React (create-react-app) — https://github.com/facebook/react
 - Sass — https://github.com/sass/node-sass
 -  Axios — https://github.com/axios/axios
+
 
 
 
