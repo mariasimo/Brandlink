@@ -5,7 +5,7 @@ Brandlink is my final project at Ironhack bootcamp. It is an SPA where designers
 The aim is to offer designers a tool to present their work in a centralized, maintainable and and always up-to-date manner.
 Built with React + Express.
 
-<p align="center"><img src="https://mariasimo.github.io/brandlink/screenshots/image.png" alt="Pulp Fiction" width="400"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/mariasimo/Brandlink/master/screenshots/image.png" alt="Brandlink" width="600"/></p>
 
 
 🚧
