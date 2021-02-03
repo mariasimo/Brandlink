@@ -1,6 +1,6 @@
 # Brandlink
 
-Brandlink is my final project at Ironhack bootcamp. It is an SPA where designers can **sign up, create projects containing the brand guidelines and share them** with their clients.
+Brandlink is my final project at Ironhack bootcamp. It is a SPA where designers can **sign up, create projects containing the brand guidelines and share them** with their clients.
 
 The aim is to offer designers a tool to present their work in a centralized, maintainable and and always up-to-date manner.
 Built with React + Express.
